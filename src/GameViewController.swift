@@ -21,7 +21,7 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .dark
+        view.backgroundColor = PlayerSettings.theme.asColor()
         
         if let view = self.view as? SKView {
             let scene = GameScene(size: view.frame.size)
@@ -32,17 +32,27 @@ class GameViewController: UIViewController {
         }
         
         interstitial = createInterstitial()
-        
-        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(options: options) { (_, _) in }
-        UIApplication.shared.registerForRemoteNotifications()
+        registerRemoteNotifications()
     }
     
-    func createInterstitial() -> GADInterstitial {
+    func setTheme() {
+        view.backgroundColor = PlayerSettings.theme.asColor()
+        if let view = self.view as? SKView, let gameScene = view.scene as? GameScene {
+            gameScene.setTheme()
+        }
+    }
+    
+    private func createInterstitial() -> GADInterstitial {
         let interstitial = GADInterstitial(adUnitID: AppDelegate.interstitialIdentifier)
         interstitial.delegate = self
         interstitial.load(GADRequest())
         return interstitial
+    }
+    
+    private func registerRemoteNotifications() {
+        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { (_, _) in }
+        UIApplication.shared.registerForRemoteNotifications()
     }
     
     override var shouldAutorotate: Bool {
@@ -69,12 +79,18 @@ extension GameViewController: GameSceneDelegate {
         if interstitial.isReady {
             interstitial.present(fromRootViewController: self)
         } else {
-            let request = GADRequest()
-            interstitial.load(request)
+            interstitial.load(GADRequest())
         }
     }
     
     func scene(_ scene: GameScene, didCreateNewScene newScene: GameScene) {
         newScene.gameDelegate = self
+    }
+    
+    func scene(_ scene: GameScene, didTapRate rate: Bool) {
+        let urlString = "https://itunes.apple.com/app/id\(1482539751)?action=write-review"
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 }

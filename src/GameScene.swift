@@ -9,33 +9,35 @@
 import SpriteKit
 import GameplayKit
 
-/// TODO
-// music & ayarlar & tutorial & darkMode
-// bugta kalıyor bazen top
-// change debug profile
-
-let FONT_NAME: String = "Chalkduster"
-
 enum Identifier: String {
     case ball = "ball"
     case barrier = "barrier"
-    case tapToPlay = "tap_to_play"
+    case play = "play"
+    case settings = "settings"
     case totalScore = "total_score"
+    case theme = "theme"
+    case sound = "sound"
+    case rateUs = "rate_us"
 }
 
 protocol GameSceneDelegate: class {
     func scene(_ scene: GameScene, didOverGame gameOver: Bool)
     func scene(_ scene: GameScene, didCreateNewScene newScene: GameScene)
+    func scene(_ scene: GameScene, didTapRate rate: Bool)
 }
 
 class GameScene: SKScene {
     
+    let blipSound = SKAction.playSoundFileNamed("pongBlip", waitForCompletion: false)
+    
+    static let fontName: String = "Chalkduster"
     static var gameCount: Double = 0
     weak var gameDelegate: GameSceneDelegate?
-    
+        
     lazy var gameState: GKStateMachine = GKStateMachine(
         states: [
             WaitingForTap(scene: self),
+            Settings(scene: self),
             Playing(scene: self),
             GameOver(scene: self)
     ])
@@ -45,8 +47,6 @@ class GameScene: SKScene {
         let ball = SKShapeNode(circleOfRadius: radius)
         ball.name = Identifier.ball.rawValue
         ball.zPosition = 1
-        ball.fillColor = .white
-        ball.strokeColor = .white
         ball.lineWidth = 1
         ball.lineCap = .round
         ball.lineJoin = .round
@@ -103,8 +103,7 @@ class GameScene: SKScene {
     private var duration: TimeInterval = 1.0
     
     lazy var scoreLabel: SKLabelNode = {
-        let lbl = SKLabelNode(fontNamed: FONT_NAME)
-        lbl.fontColor = .white
+        let lbl = SKLabelNode(fontNamed: GameScene.fontName)
         lbl.fontSize = 24
         lbl.horizontalAlignmentMode = .right
         lbl.verticalAlignmentMode = .top
@@ -119,7 +118,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        self.backgroundColor = .dark
+        self.setTheme()
         self.physicsWorld.contactDelegate = self
         
         let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
@@ -142,9 +141,19 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        
         switch gameState.currentState {
         case is WaitingForTap:
-            gameState.enter(Playing.self)
+            guard let touch = touches.first else { return }
+            let location = touch.location(in: self)
+            let node = self.atPoint(location)
+            
+            if node.name == Identifier.settings.rawValue {
+                gameState.enter(Settings.self)
+            } else if node.name == Identifier.play.rawValue {
+                gameState.enter(Playing.self)
+            }
+            
         case is Playing:
             break
         case is GameOver:
@@ -152,17 +161,63 @@ class GameScene: SKScene {
             gameDelegate?.scene(self, didCreateNewScene: newScene)
             newScene.scaleMode = .aspectFill
             self.view?.presentScene(newScene)
+        case is Settings:
+            guard let touch = touches.first else { return }
+            let location = touch.location(in: self)
+            let node = self.atPoint(location)
+            
+            if node.name == Identifier.settings.rawValue {
+                gameState.enter(WaitingForTap.self)
+            } else if node.name == Identifier.play.rawValue {
+                gameState.enter(WaitingForTap.self)
+                gameState.enter(Playing.self)
+            } else {
+                nodeTapped(node)
+            }
         default:
             break
         }
     }
-    
+        
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         if gameState.currentState is Playing {
             guard let touch = touches.first else { return }
             removeBarrier(at: touch.location(in: self))
         }
+    }
+    
+    func nodeTapped(_ node: SKNode) {
+        if let name = node.name, let identifier = Identifier(rawValue: name) {
+            switch identifier {
+            case .sound:
+                PlayerSettings.toggleSound()
+                let imageName = PlayerSettings.soundEnabled ? "ic_sound_enabled" : "ic_sound_disabled"
+                let spriteNode = node as! SKSpriteNode
+                spriteNode.texture = SKTexture(imageNamed: imageName)
+            case .rateUs:
+                gameDelegate?.scene(self, didTapRate: true)
+            case .theme:
+                PlayerSettings.toggleTheme()
+            default:
+                break
+            }
+        }
+    }
+    
+    func setTheme() {
+        let theme = PlayerSettings.theme
+        self.setBallColor()
+        self.backgroundColor = theme.asColor()
+        scoreLabel.fontColor = theme.inverseColor()
+        if let label = childNode(withName: Identifier.totalScore.rawValue) as? SKLabelNode {
+            label.fontColor = theme.inverseColor()
+        }
+    }
+    
+    private func setBallColor() {
+        ball.fillColor = PlayerSettings.theme.inverseColor()
+        ball.strokeColor = PlayerSettings.theme.inverseColor()
     }
 
     func decreaseDurationAndIncreaseVelocity() {
@@ -215,6 +270,10 @@ class GameScene: SKScene {
     private func increaseHeat() {
         if gameState.currentState is Playing {
             heatOfBall += 1
+
+            if PlayerSettings.soundEnabled {
+                run(blipSound)
+            }
         }
     }
 }
@@ -227,11 +286,13 @@ extension GameScene: SKPhysicsContactDelegate {
         if nodeA?.name == Identifier.barrier.rawValue {
             increaseHeat()
             removeBarrier(nodeA as! SKShapeNode)
+            return
         }
         
         if nodeB?.name == Identifier.barrier.rawValue {
             increaseHeat()
             removeBarrier(nodeB as! SKShapeNode)
+            return
         }
     }
 }
@@ -262,6 +323,7 @@ extension GameScene {
     }
     
     private func removeBarrier(_ barrier: SKShapeNode) {
+        barrier.physicsBody!.categoryBitMask = 0x0
         let fade = SKAction.fadeAlpha(to: 0, duration: 0.05)
         barrier.run(fade) { [weak self] in
             barrier.removeFromParent()
@@ -283,9 +345,7 @@ extension GameScene {
     
     private func removeAllBarriers() {
         scoreLabel.removeFromParent()
-        for barrier in barriers {
-            barrier.removeFromParent()
-        }
+        barriers.forEach { $0.removeFromParent() }
         barriers = Set()
     }
     
@@ -313,13 +373,7 @@ extension GameScene {
 extension GameScene {
     func resetBall() {
         ball.position = .zero
-        ball.fillColor = .white
-        ball.strokeColor = .white
-        resetVelocity()
-    }
-
-    private func resetVelocity() {
+        self.setBallColor()
         self.velocity = .init(dx: 300, dy: 300)
-        ball.physicsBody!.velocity = self.velocity
     }
 }

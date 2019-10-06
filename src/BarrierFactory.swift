@@ -12,7 +12,7 @@ struct BarrierFactory {
 
     func generateBarrier() -> SKShapeNode? {
         let fillColor: UIColor = .random
-        if fillColor == .dark {
+        if fillColor == PlayerSettings.theme.asColor() {
             return nil
         }
         

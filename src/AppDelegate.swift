@@ -31,12 +31,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
 
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.backgroundColor = .dark
+        window.backgroundColor = PlayerSettings.theme.asColor()
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
         self.window = window
         
+        NotificationCenter.default.addObserver(self, selector: #selector(setTheme), name: .didUpdateThemeNotification, object: nil)
+        
         return true
+    }
+    
+    @objc
+    func setTheme() {
+        window?.backgroundColor = PlayerSettings.theme.asColor()
+        rootViewController.setTheme()
     }
     
     func application(_ application: UIApplication,

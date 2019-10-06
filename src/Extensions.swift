@@ -8,6 +8,10 @@
 
 import UIKit
 
+extension Notification.Name {
+    static let didUpdateThemeNotification = Notification.Name(rawValue: "didUpdateThemeNotification")
+}
+
 extension UIView {
     var safeTopAnchor: NSLayoutYAxisAnchor {
         if #available(iOS 11.0, *) {
