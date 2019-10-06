@@ -10,16 +10,11 @@ import SpriteKit
 
 struct BarrierFactory {
 
-    func generateBarrier() -> SKShapeNode? {
-        let fillColor: UIColor = .random
-        if fillColor == PlayerSettings.theme.asColor() {
-            return nil
-        }
+    func generateBarrier(withRadius radius: CGFloat? = nil) -> SKShapeNode {
+        let fillColor: UIColor = .random        
+        let rad: CGFloat = radius != nil ? radius! : (.random(in: 10...35) / 2)
         
-        let diameter: CGFloat = .random(in: 10...35)
-        let radius = diameter / 2
-        
-        let barrier = SKShapeNode(circleOfRadius: radius)
+        let barrier = SKShapeNode(circleOfRadius: rad)
         barrier.name = Identifier.barrier.rawValue
         barrier.zPosition = 1
         barrier.fillColor = fillColor
@@ -28,7 +23,7 @@ struct BarrierFactory {
         barrier.lineJoin = .round
         barrier.lineCap = .round
         
-        let body = SKPhysicsBody(circleOfRadius: radius)
+        let body = SKPhysicsBody(circleOfRadius: rad)
         body.friction = 0
         body.angularDamping = 0
         body.linearDamping = 0

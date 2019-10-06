@@ -15,6 +15,9 @@ enum Asset: String {
     case icSettings = "ic_settings"
     case icRate = "ic_rate"
     case icPlay = "ic_play"
+    case icFingerBlack = "ic_finger_black"
+    case icFingerWhite = "ic_finger_white"
+    case icInfo = "ic_info"
     
     var asNode: SKSpriteNode {
         return SKSpriteNode(imageNamed: self.rawValue)

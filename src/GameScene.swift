@@ -14,15 +14,15 @@ enum Identifier: String {
     case barrier = "barrier"
     case play = "play"
     case settings = "settings"
-    case totalScore = "total_score"
+    case score = "total_score"
     case theme = "theme"
     case sound = "sound"
     case rateUs = "rate_us"
+    case info = "info"
 }
 
 var gameCount: Double = 0
 let fontName: String = "Chalkduster"
-let blipSound = SKAction.playSoundFileNamed("pongBlip", waitForCompletion: false)
 
 protocol GameSceneDelegate: class {
     func scene(_ scene: GameScene, didOverGame gameOver: Bool)
@@ -31,9 +31,10 @@ protocol GameSceneDelegate: class {
 }
 
 class GameScene: SKScene {
-        
+    
+    let blipSound = SKAction.playSoundFileNamed("pongBlip", waitForCompletion: false)
     weak var gameDelegate: GameSceneDelegate?
-        
+    
     lazy var gameState: GKStateMachine = GKStateMachine(
         states: [
             WaitingForTap(scene: self),
@@ -85,7 +86,7 @@ class GameScene: SKScene {
             ball.physicsBody!.velocity = velocity
         }
     }
-        
+    
     var score: Int = 0 {
         didSet {
             scoreLabel.text = "\(score)"
@@ -133,7 +134,7 @@ class GameScene: SKScene {
         
         self.addChild(ball)
         gameState.enter(WaitingForTap.self)
-
+        
         setRepeatAction()
         run(.repeatForever(.sequence([
             .wait(forDuration: 60),
@@ -161,9 +162,9 @@ class GameScene: SKScene {
                 gameState.enter(Playing.self)
             }
         case is GameOver:
-            let newScene = GameScene(fileNamed: "GameScene")!
+            let newScene = GameScene(size: frame.size)
             gameDelegate?.scene(self, didCreateNewScene: newScene)
-            newScene.scaleMode = .aspectFill
+            newScene.scaleMode = UIDevice.current.userInterfaceIdiom == .pad ? .aspectFit : .aspectFill
             self.view?.presentScene(newScene)
         case is Settings:
             guard let touch = touches.first else { return }
@@ -182,7 +183,7 @@ class GameScene: SKScene {
             break
         }
     }
-        
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         if gameState.currentState is Playing {
@@ -203,6 +204,11 @@ class GameScene: SKScene {
                 gameDelegate?.scene(self, didTapRate: true)
             case .theme:
                 PlayerSettings.toggleTheme()
+            case .info:
+                let tutorialScene = TutorialScene(size: frame.size)
+                tutorialScene.gameDelegate = gameDelegate
+                tutorialScene.scaleMode = UIDevice.current.userInterfaceIdiom == .pad ? .aspectFit : .aspectFill
+                self.view?.presentScene(tutorialScene)
             default:
                 break
             }
@@ -214,7 +220,7 @@ class GameScene: SKScene {
         self.setBallColor()
         self.backgroundColor = theme.asColor()
         scoreLabel.fontColor = theme.inverseColor()
-        if let label = childNode(withName: Identifier.totalScore.rawValue) as? SKLabelNode {
+        if let label = childNode(withName: Identifier.score.rawValue) as? SKLabelNode {
             label.fontColor = theme.inverseColor()
         }
     }
@@ -237,7 +243,7 @@ class GameScene: SKScene {
         
         lastPositionOfTheBall = ball.position
     }
-
+    
     func decreaseDurationAndIncreaseVelocity() {
         if gameState.currentState is Playing {
             let newDuration = duration - 0.1
@@ -264,7 +270,7 @@ class GameScene: SKScene {
         resetBall()
         setRepeatAction()
     }
-        
+    
     func startGame() {
         score = 0
         resetGame()
@@ -274,7 +280,7 @@ class GameScene: SKScene {
         ball.removeFromParent()
         addChild(ball)
     }
-        
+    
     func gameOver() {
         gameCount += 1
         if gameCount.truncatingRemainder(dividingBy: 2) == 0 {
@@ -287,7 +293,7 @@ class GameScene: SKScene {
     private func increaseHeat() {
         if gameState.currentState is Playing {
             heatOfBall += 1
-
+            
             if PlayerSettings.soundEnabled {
                 run(blipSound)
             }
@@ -317,7 +323,11 @@ extension GameScene: SKPhysicsContactDelegate {
 // MARK: Barrier Management
 extension GameScene {
     private func addBarrier() {
-        guard let newBarrier = barrierFactory.generateBarrier() else { return }
+        let newBarrier = barrierFactory.generateBarrier()
+        if newBarrier.fillColor == PlayerSettings.theme.asColor() {
+            return
+        }
+        
         let extendedArea = self.ball.frame.insetBy(dx: -20, dy: -20)
         var newPosition = self.generateRandomPosition(barrierSize: newBarrier.frame.size)
         

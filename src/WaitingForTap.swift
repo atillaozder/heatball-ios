@@ -38,19 +38,18 @@ class WaitingForTap: GKState {
         let score = SKLabelNode(fontNamed: fontName)
         score.fontSize = 24
         score.fontColor = PlayerSettings.theme.inverseColor()
-        score.name = Identifier.totalScore.rawValue
+        score.name = Identifier.score.rawValue
         score.zPosition = 1
         
         let posY = gameScene.frame.midY - playSize.height
         score.position = CGPoint(x: gameScene.frame.midX, y: posY)
-
         gameScene.addChild(score)
     }
     
     override func didEnter(from previousState: GKState?) {
         if previousState is GameOver {
             scaleChildNodes(.scale(to: 1, duration: 0.15))
-            let lbl = scene?.childNode(withName: Identifier.totalScore.rawValue) as! SKLabelNode
+            let lbl = scene?.childNode(withName: Identifier.score.rawValue) as! SKLabelNode
             lbl.text = "Ball overheated. Score \(scene?.score ?? 0)"
         }
     }
@@ -62,7 +61,7 @@ class WaitingForTap: GKState {
     }
     
     func scaleChildNodes(_ scale: SKAction) {
-        let identifiers: [Identifier] = [.play, .settings, .totalScore]
+        let identifiers: [Identifier] = [.play, .settings, .score]
         identifiers.forEach { (identifier) in
             scene!
                 .childNode(withName: identifier.rawValue)!

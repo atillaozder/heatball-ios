@@ -29,4 +29,12 @@ struct PlayerSettings {
     static var soundEnabled: Bool {
         return defaults.bool(forKey: "sound_enabled")
     }
+    
+    static func setHighestScore(_ score: Int) {
+        defaults.set(score, forKey: "highest_score")
+    }
+    
+    static var highestScore: Int {
+        return defaults.integer(forKey: "highest_score")
+    }
 }

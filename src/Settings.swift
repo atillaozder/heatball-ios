@@ -43,10 +43,17 @@ class Settings: GKState {
             imageNamed: Asset.icTheme.rawValue,
             withIdentifier: .theme)
 
+        let ratePosX = themePosX - Settings.iconSize.width - spacing
         addChildNode(
-            at: .init(x: themePosX - Settings.iconSize.width - spacing, y: posY),
+            at: .init(x: ratePosX, y: posY),
             imageNamed: Asset.icRate.rawValue,
             withIdentifier: .rateUs)
+        
+        let infoPosX = ratePosX - Settings.iconSize.width - spacing
+        addChildNode(
+            at: .init(x: infoPosX, y: posY),
+            imageNamed: Asset.icInfo.rawValue,
+            withIdentifier: .info)
     }
     
     func addChildNode(at position: CGPoint,
@@ -73,8 +80,8 @@ class Settings: GKState {
         }
     }
     
-    private func scaleChildNodes(_ scale: SKAction, nextStateIsPlaying: Bool = false) {
-        let identifiers: [Identifier] = [.sound, .theme, .rateUs]
+    private func scaleChildNodes(_ scale: SKAction) {
+        let identifiers: [Identifier] = [.sound, .theme, .rateUs, .info]
         identifiers.forEach { (identifier) in
             scene!
                 .childNode(withName: identifier.rawValue)!
