@@ -9,19 +9,6 @@
 import SpriteKit
 import GameplayKit
 
-enum Identifier: String {
-    case ball = "ball"
-    case barrier = "barrier"
-    case play = "play"
-    case settings = "settings"
-    case score = "total_score"
-    case theme = "theme"
-    case sound = "sound"
-    case rateUs = "rate_us"
-    case info = "info"
-    case bestScore = "best_score"
-}
-
 var gameCount: Double = 0
 let fontName: String = UIFont.systemFont(ofSize: 1).fontName // "Chalkduster"
 
@@ -115,7 +102,6 @@ class GameScene: SKScene {
         }
     }
     
-    private let barrierFactory = BarrierFactory()
     private var barriers = Set<SKShapeNode>()
     private var duration: TimeInterval = 1.0
     private var lastPositionOfTheBall = CGPoint.zero
@@ -136,7 +122,7 @@ class GameScene: SKScene {
         self.addChild(ball)
         gameState.enter(WaitingForTap.self)
         
-        setRepeatAction()
+        addObstaclesSequence()
         run(.repeatForever(.sequence([
             .wait(forDuration: 60),
             .run(decreaseDurationAndIncreaseVelocity)
@@ -144,7 +130,7 @@ class GameScene: SKScene {
         
         run(.repeatForever(.sequence([
             .wait(forDuration: 2),
-            .run(updateLastPositionOfBall)
+            .run(setBallLastPosition)
         ])))
     }
     
@@ -206,10 +192,10 @@ class GameScene: SKScene {
             case .theme:
                 UserSettings.toggleTheme()
             case .info:
-                let tutorialScene = TutorialScene(size: frame.size)
-                tutorialScene.gameDelegate = gameDelegate
-                tutorialScene.scaleMode = UIDevice.current.userInterfaceIdiom == .pad ? .aspectFit : .aspectFill
-                self.view?.presentScene(tutorialScene)
+                let scene = TutorialScene(size: frame.size)
+                scene.gameDelegate = gameDelegate
+                scene.scaleMode = UIDevice.current.userInterfaceIdiom == .pad ? .aspectFit : .aspectFill
+                self.view?.presentScene(scene)
             default:
                 break
             }
@@ -221,55 +207,13 @@ class GameScene: SKScene {
         self.setBallColor()
         self.backgroundColor = theme.asColor()
         scoreLabel.fontColor = theme.inverseColor()
-        if let label = childNode(withName: Identifier.score.rawValue) as? SKLabelNode {
-            label.fontColor = theme.inverseColor()
+
+        let identifiers: [Identifier] = [.score, .bestScore]
+        identifiers.forEach { (identifier) in
+            if let lbl = childNode(withName: identifier.rawValue) as? SKLabelNode {
+                lbl.fontColor = theme.inverseColor()
+            }
         }
-    }
-    
-    private func setBallColor() {
-        ball.fillColor = UserSettings.theme.inverseColor()
-        ball.strokeColor = UserSettings.theme.inverseColor()
-    }
-    
-    func updateLastPositionOfBall() {
-        if ball.position.x == lastPositionOfTheBall.x {
-            let pos = SKAction.moveTo(x: ball.position.x + 0.5, duration: 0.1)
-            ball.run(pos)
-        }
-        
-        if ball.position.y == lastPositionOfTheBall.y {
-            let pos = SKAction.moveTo(y: ball.position.y + 0.5, duration: 0.1)
-            ball.run(pos)
-        }
-        
-        lastPositionOfTheBall = ball.position
-    }
-    
-    func decreaseDurationAndIncreaseVelocity() {
-        if gameState.currentState is Playing {
-            let newDuration = duration - 0.1
-            duration = max(newDuration, 0.5)
-            setRepeatAction()
-            self.velocity = CGVector(dx: velocity.dx + 15, dy: velocity.dy + 15)
-        }
-    }
-    
-    func setRepeatAction() {
-        let key = "add_barrier_action"
-        self.removeAction(forKey: key)
-        let action = SKAction.sequence([
-            .wait(forDuration: duration),
-            .run(addBarrier)
-        ])
-        run(.repeatForever(action), withKey: key)
-    }
-    
-    func resetGame() {
-        heatOfBall = 0
-        duration = 1.0
-        removeAllBarriers()
-        resetBall()
-        setRepeatAction()
     }
     
     func startGame() {
@@ -291,7 +235,59 @@ class GameScene: SKScene {
         resetGame()
         gameState.enter(WaitingForTap.self)
     }
+        
+    private func decreaseDurationAndIncreaseVelocity() {
+        if gameState.currentState is Playing {
+            let newDuration = duration - 0.1
+            duration = max(newDuration, 0.5)
+            addObstaclesSequence()
+            self.velocity = CGVector(dx: velocity.dx + 15, dy: velocity.dy + 15)
+        }
+    }
     
+    private func addObstaclesSequence() {
+        let key = "add_barrier_action_key"
+        self.removeAction(forKey: key)
+        let action = SKAction.sequence([
+            .wait(forDuration: duration),
+            .run(addBarrier)
+        ])
+        run(.repeatForever(action), withKey: key)
+    }
+    
+    private func resetGame() {
+        heatOfBall = 0
+        duration = 1.0
+        removeAllBarriers()
+        resetBall()
+        addObstaclesSequence()
+    }
+    
+    private func resetBall() {
+        ball.position = .zero
+        self.setBallColor()
+        self.velocity = .init(dx: 300, dy: 300)
+    }
+    
+    private func setBallColor() {
+        ball.fillColor = UserSettings.theme.inverseColor()
+        ball.strokeColor = UserSettings.theme.inverseColor()
+    }
+    
+    private func setBallLastPosition() {
+        if ball.position.x == lastPositionOfTheBall.x {
+            let pos = SKAction.moveTo(x: ball.position.x + 1, duration: 0.1)
+            ball.run(pos)
+        }
+        
+        if ball.position.y == lastPositionOfTheBall.y {
+            let pos = SKAction.moveTo(y: ball.position.y + 1, duration: 0.1)
+            ball.run(pos)
+        }
+        
+        lastPositionOfTheBall = ball.position
+    }
+
     private func increaseHeat() {
         if gameState.currentState is Playing {
             heatOfBall += 1
@@ -323,10 +319,10 @@ extension GameScene: SKPhysicsContactDelegate {
     }
 }
 
-// MARK: Barrier Management
+// MARK: Obstacles Management
 extension GameScene {
     private func addBarrier() {
-        let newBarrier = barrierFactory.generateBarrier()
+        let newBarrier = BarrierFactory().generateBarrier()
         if newBarrier.fillColor == UserSettings.theme.asColor() {
             return
         }
@@ -340,15 +336,15 @@ extension GameScene {
         }
         
         newBarrier.position = newPosition
-        newBarrier.zPosition = 1
-        
         for barrier in self.barriers {
             if barrier.intersects(newBarrier) {
                 return
             }
         }
         
+        newBarrier.setScale(0)
         self.addChild(newBarrier)
+        newBarrier.run(.scale(to: 1, duration: 0.05))
         self.barriers.insert(newBarrier)
     }
     
@@ -396,14 +392,5 @@ extension GameScene {
         }
         
         return CGPoint(x: xPos, y: yPos)
-    }
-}
-
-// MARK: Ball Management
-extension GameScene {
-    func resetBall() {
-        ball.position = .zero
-        self.setBallColor()
-        self.velocity = .init(dx: 300, dy: 300)
     }
 }

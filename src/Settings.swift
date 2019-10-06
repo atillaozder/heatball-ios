@@ -64,28 +64,28 @@ class Settings: GKState {
         node.position = position
         node.size = Settings.iconSize
         node.zPosition = 1
-        node.setScale(0)
-        scene?.addChild(node)
+        node.alpha = 0
+        self.scene?.addChild(node)
     }
         
     override func didEnter(from previousState: GKState?) {
         if previousState is WaitingForTap {
-            scaleChildNodes(.scale(to: 1, duration: 0.15))
+            animChildNodes(.fadeIn(withDuration: 0.1))
         }
     }
     
     override func willExit(to nextState: GKState) {
         if nextState is WaitingForTap {
-            scaleChildNodes(.scale(to: 0, duration: 0.15))
+            animChildNodes(.fadeOut(withDuration: 0.1))
         }
     }
-    
-    private func scaleChildNodes(_ scale: SKAction) {
+
+    private func animChildNodes(_ anim: SKAction) {
         let identifiers: [Identifier] = [.sound, .theme, .rateUs, .info]
         identifiers.forEach { (identifier) in
             scene!
                 .childNode(withName: identifier.rawValue)!
-                .run(scale)
+                .run(anim)
         }
     }
     
