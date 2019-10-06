@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
 
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.backgroundColor = PlayerSettings.theme.asColor()
+        window.backgroundColor = UserSettings.theme.asColor()
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
         self.window = window
@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @objc
     func setTheme() {
-        window?.backgroundColor = PlayerSettings.theme.asColor()
+        window?.backgroundColor = UserSettings.theme.asColor()
         rootViewController.setTheme()
     }
     

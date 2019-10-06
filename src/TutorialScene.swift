@@ -17,7 +17,7 @@ class TutorialScene: SKScene {
         let ball = SKShapeNode(circleOfRadius: 25 / 2)
         ball.zPosition = 1
         ball.position = .init(x: frame.minX + 50, y: frame.midY)
-        ball.fillColor = PlayerSettings.theme.inverseColor()
+        ball.fillColor = UserSettings.theme.inverseColor()
         ball.lineCap = .round
         ball.lineJoin = .round
         return ball
@@ -30,7 +30,7 @@ class TutorialScene: SKScene {
     }()
     
     lazy var fingerNode: SKSpriteNode = {
-        let asset: Asset = PlayerSettings.theme == .dark ? .icFingerWhite : .icFingerBlack
+        let asset: Asset = UserSettings.theme == .dark ? .icFingerWhite : .icFingerBlack
         let node = asset.asNode
         node.zPosition = 1
         node.position = .init(x: frame.midX + 60, y: frame.midY - 20)
@@ -39,7 +39,7 @@ class TutorialScene: SKScene {
     }()
     
     override func didMove(to view: SKView) {
-        backgroundColor = PlayerSettings.theme.asColor()
+        backgroundColor = UserSettings.theme.asColor()
         addChild(ball)
         addChild(barrier)
         

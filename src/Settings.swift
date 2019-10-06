@@ -31,7 +31,7 @@ class Settings: GKState {
         let posY = gameScene.frame.maxY - 40
         
         let soundPosX = gameScene.frame.maxX - 40 - Settings.iconSize.width - spacing
-        let asset: Asset = PlayerSettings.soundEnabled ? .icSoundEnabled : .icSoundDisabled
+        let asset: Asset = UserSettings.soundEnabled ? .icSoundEnabled : .icSoundDisabled
         addChildNode(
             at: .init(x: soundPosX, y: posY),
             imageNamed: asset.rawValue,

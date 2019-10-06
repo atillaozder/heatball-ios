@@ -35,22 +35,32 @@ class WaitingForTap: GKState {
         settings.zPosition = 1
         gameScene.addChild(settings)
         
-        let score = SKLabelNode(fontNamed: fontName)
-        score.fontSize = 24
-        score.fontColor = PlayerSettings.theme.inverseColor()
+        let score = generateLabel()
         score.name = Identifier.score.rawValue
-        score.zPosition = 1
+        
+        let bestScore = generateLabel()
+        bestScore.name = Identifier.bestScore.rawValue
         
         let posY = gameScene.frame.midY - playSize.height
         score.position = CGPoint(x: gameScene.frame.midX, y: posY)
         gameScene.addChild(score)
+        
+        let bestScorePosY = posY - 32
+        bestScore.position = CGPoint(x: gameScene.frame.midX, y: bestScorePosY)
+        gameScene.addChild(bestScore)
     }
     
     override func didEnter(from previousState: GKState?) {
         if previousState is GameOver {
             scaleChildNodes(.scale(to: 1, duration: 0.15))
-            let lbl = scene?.childNode(withName: Identifier.score.rawValue) as! SKLabelNode
-            lbl.text = "Ball overheated. Score \(scene?.score ?? 0)"
+            let scoreLabel = scene?.childNode(withName: Identifier.score.rawValue) as! SKLabelNode
+            scoreLabel.text = "Ball overheated. Score: \(scene?.score ?? 0)"
+
+            let highest = UserSettings.highestScore
+            if highest > 0 {
+                let bestLabel = scene?.childNode(withName: Identifier.bestScore.rawValue) as! SKLabelNode
+                bestLabel.text = "Best: \(highest)"
+            }
         }
     }
     
@@ -60,8 +70,16 @@ class WaitingForTap: GKState {
         }
     }
     
+    private func generateLabel() -> SKLabelNode {
+        let lbl = SKLabelNode(fontNamed: fontName)
+        lbl.fontSize = 24
+        lbl.fontColor = UserSettings.theme.inverseColor()
+        lbl.zPosition = 1
+        return lbl
+    }
+    
     func scaleChildNodes(_ scale: SKAction) {
-        let identifiers: [Identifier] = [.play, .settings, .score]
+        let identifiers: [Identifier] = [.play, .settings, .score, .bestScore]
         identifiers.forEach { (identifier) in
             scene!
                 .childNode(withName: identifier.rawValue)!

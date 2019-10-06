@@ -1,5 +1,5 @@
 //
-//  PlayerSettings.swift
+//  UserSettings.swift
 //  HeatBall
 //
 //  Created by Atilla Özder on 6.10.2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PlayerSettings {
+struct UserSettings {
     
     static let defaults = UserDefaults.standard
     
@@ -31,7 +31,9 @@ struct PlayerSettings {
     }
     
     static func setHighestScore(_ score: Int) {
-        defaults.set(score, forKey: "highest_score")
+        if highestScore < score {
+            defaults.set(score, forKey: "highest_score")
+        }
     }
     
     static var highestScore: Int {

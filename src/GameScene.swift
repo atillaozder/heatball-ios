@@ -19,10 +19,11 @@ enum Identifier: String {
     case sound = "sound"
     case rateUs = "rate_us"
     case info = "info"
+    case bestScore = "best_score"
 }
 
 var gameCount: Double = 0
-let fontName: String = "Chalkduster"
+let fontName: String = UIFont.systemFont(ofSize: 1).fontName // "Chalkduster"
 
 protocol GameSceneDelegate: class {
     func scene(_ scene: GameScene, didOverGame gameOver: Bool)
@@ -196,14 +197,14 @@ class GameScene: SKScene {
         if let name = node.name, let identifier = Identifier(rawValue: name) {
             switch identifier {
             case .sound:
-                PlayerSettings.toggleSound()
-                let asset: Asset = PlayerSettings.soundEnabled ? .icSoundEnabled : .icSoundDisabled
+                UserSettings.toggleSound()
+                let asset: Asset = UserSettings.soundEnabled ? .icSoundEnabled : .icSoundDisabled
                 let spriteNode = node as! SKSpriteNode
                 spriteNode.texture = SKTexture(imageNamed: asset.rawValue)
             case .rateUs:
                 gameDelegate?.scene(self, didTapRate: true)
             case .theme:
-                PlayerSettings.toggleTheme()
+                UserSettings.toggleTheme()
             case .info:
                 let tutorialScene = TutorialScene(size: frame.size)
                 tutorialScene.gameDelegate = gameDelegate
@@ -216,7 +217,7 @@ class GameScene: SKScene {
     }
     
     func setTheme() {
-        let theme = PlayerSettings.theme
+        let theme = UserSettings.theme
         self.setBallColor()
         self.backgroundColor = theme.asColor()
         scoreLabel.fontColor = theme.inverseColor()
@@ -226,8 +227,8 @@ class GameScene: SKScene {
     }
     
     private func setBallColor() {
-        ball.fillColor = PlayerSettings.theme.inverseColor()
-        ball.strokeColor = PlayerSettings.theme.inverseColor()
+        ball.fillColor = UserSettings.theme.inverseColor()
+        ball.strokeColor = UserSettings.theme.inverseColor()
     }
     
     func updateLastPositionOfBall() {
@@ -286,6 +287,7 @@ class GameScene: SKScene {
         if gameCount.truncatingRemainder(dividingBy: 2) == 0 {
             gameDelegate?.scene(self, didOverGame: true)
         }
+        UserSettings.setHighestScore(score)
         resetGame()
         gameState.enter(WaitingForTap.self)
     }
@@ -294,13 +296,14 @@ class GameScene: SKScene {
         if gameState.currentState is Playing {
             heatOfBall += 1
             
-            if PlayerSettings.soundEnabled {
+            if UserSettings.soundEnabled {
                 run(blipSound)
             }
         }
     }
 }
 
+// MARK: SKPhysicsContactDelegate
 extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let nodeA = contact.bodyA.node
@@ -324,7 +327,7 @@ extension GameScene: SKPhysicsContactDelegate {
 extension GameScene {
     private func addBarrier() {
         let newBarrier = barrierFactory.generateBarrier()
-        if newBarrier.fillColor == PlayerSettings.theme.asColor() {
+        if newBarrier.fillColor == UserSettings.theme.asColor() {
             return
         }
         
