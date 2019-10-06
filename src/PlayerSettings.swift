@@ -9,7 +9,7 @@
 import Foundation
 
 struct PlayerSettings {
-        
+    
     static let defaults = UserDefaults.standard
     
     static func toggleTheme() {

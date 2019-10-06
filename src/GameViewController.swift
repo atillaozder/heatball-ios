@@ -15,6 +15,13 @@ class GameViewController: UIViewController {
     
     private var interstitial: GADInterstitial!
     
+    private var scene: GameScene? {
+        if let view = self.view as? SKView, let gameScene = view.scene as? GameScene {
+            return gameScene
+        }
+        return nil
+    }
+    
     override func loadView() {
         view = SKView(frame: UIScreen.main.bounds)
     }
@@ -26,9 +33,9 @@ class GameViewController: UIViewController {
         if let view = self.view as? SKView {
             let scene = GameScene(size: view.frame.size)
             scene.gameDelegate = self
-            scene.scaleMode = .aspectFill
-            view.presentScene(scene)
+            scene.scaleMode = UIDevice.current.userInterfaceIdiom == .pad ? .aspectFit : .aspectFill
             view.ignoresSiblingOrder = true
+            view.presentScene(scene)
         }
         
         interstitial = createInterstitial()
@@ -37,9 +44,7 @@ class GameViewController: UIViewController {
     
     func setTheme() {
         view.backgroundColor = PlayerSettings.theme.asColor()
-        if let view = self.view as? SKView, let gameScene = view.scene as? GameScene {
-            gameScene.setTheme()
-        }
+        scene?.setTheme()
     }
     
     private func createInterstitial() -> GADInterstitial {
@@ -51,8 +56,13 @@ class GameViewController: UIViewController {
     
     private func registerRemoteNotifications() {
         let options: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(options: options) { (_, _) in }
-        UIApplication.shared.registerForRemoteNotifications()
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: options) { (_, _) in
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+        }
+        
     }
     
     override var shouldAutorotate: Bool {

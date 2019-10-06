@@ -20,6 +20,10 @@ enum Identifier: String {
     case rateUs = "rate_us"
 }
 
+var gameCount: Double = 0
+let fontName: String = "Chalkduster"
+let blipSound = SKAction.playSoundFileNamed("pongBlip", waitForCompletion: false)
+
 protocol GameSceneDelegate: class {
     func scene(_ scene: GameScene, didOverGame gameOver: Bool)
     func scene(_ scene: GameScene, didCreateNewScene newScene: GameScene)
@@ -27,11 +31,7 @@ protocol GameSceneDelegate: class {
 }
 
 class GameScene: SKScene {
-    
-    let blipSound = SKAction.playSoundFileNamed("pongBlip", waitForCompletion: false)
-    
-    static let fontName: String = "Chalkduster"
-    static var gameCount: Double = 0
+        
     weak var gameDelegate: GameSceneDelegate?
         
     lazy var gameState: GKStateMachine = GKStateMachine(
@@ -61,8 +61,23 @@ class GameScene: SKScene {
         body.affectedByGravity = true
         body.contactTestBitMask = body.collisionBitMask
         body.velocity = velocity
+        
         ball.physicsBody = body
         return ball
+    }()
+    
+    lazy var scoreLabel: SKLabelNode = {
+        let lbl = SKLabelNode(fontNamed: fontName)
+        lbl.fontSize = 24
+        lbl.horizontalAlignmentMode = .right
+        lbl.verticalAlignmentMode = .top
+        lbl.position = CGPoint(x: size.width - 16, y: size.height - 16)
+        lbl.zPosition = 1
+        lbl.text = "0"
+        if #available(iOS 11.0, *) {
+            lbl.numberOfLines = 1
+        }
+        return lbl
     }()
     
     var velocity: CGVector = .init(dx: 300, dy: 300) {
@@ -101,20 +116,7 @@ class GameScene: SKScene {
     private let barrierFactory = BarrierFactory()
     private var barriers = Set<SKShapeNode>()
     private var duration: TimeInterval = 1.0
-    
-    lazy var scoreLabel: SKLabelNode = {
-        let lbl = SKLabelNode(fontNamed: GameScene.fontName)
-        lbl.fontSize = 24
-        lbl.horizontalAlignmentMode = .right
-        lbl.verticalAlignmentMode = .top
-        lbl.position = CGPoint(x: size.width - 16, y: size.height - 16)
-        lbl.zPosition = 1
-        lbl.text = "0"
-        if #available(iOS 11.0, *) {
-            lbl.numberOfLines = 1
-        }
-        return lbl
-    }()
+    private var lastPositionOfTheBall = CGPoint.zero
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -137,6 +139,11 @@ class GameScene: SKScene {
             .wait(forDuration: 60),
             .run(decreaseDurationAndIncreaseVelocity)
         ])))
+        
+        run(.repeatForever(.sequence([
+            .wait(forDuration: 2),
+            .run(updateLastPositionOfBall)
+        ])))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -153,9 +160,6 @@ class GameScene: SKScene {
             } else if node.name == Identifier.play.rawValue {
                 gameState.enter(Playing.self)
             }
-            
-        case is Playing:
-            break
         case is GameOver:
             let newScene = GameScene(fileNamed: "GameScene")!
             gameDelegate?.scene(self, didCreateNewScene: newScene)
@@ -192,9 +196,9 @@ class GameScene: SKScene {
             switch identifier {
             case .sound:
                 PlayerSettings.toggleSound()
-                let imageName = PlayerSettings.soundEnabled ? "ic_sound_enabled" : "ic_sound_disabled"
+                let asset: Asset = PlayerSettings.soundEnabled ? .icSoundEnabled : .icSoundDisabled
                 let spriteNode = node as! SKSpriteNode
-                spriteNode.texture = SKTexture(imageNamed: imageName)
+                spriteNode.texture = SKTexture(imageNamed: asset.rawValue)
             case .rateUs:
                 gameDelegate?.scene(self, didTapRate: true)
             case .theme:
@@ -218,6 +222,20 @@ class GameScene: SKScene {
     private func setBallColor() {
         ball.fillColor = PlayerSettings.theme.inverseColor()
         ball.strokeColor = PlayerSettings.theme.inverseColor()
+    }
+    
+    func updateLastPositionOfBall() {
+        if ball.position.x == lastPositionOfTheBall.x {
+            let pos = SKAction.moveTo(x: ball.position.x + 0.5, duration: 0.1)
+            ball.run(pos)
+        }
+        
+        if ball.position.y == lastPositionOfTheBall.y {
+            let pos = SKAction.moveTo(y: ball.position.y + 0.5, duration: 0.1)
+            ball.run(pos)
+        }
+        
+        lastPositionOfTheBall = ball.position
     }
 
     func decreaseDurationAndIncreaseVelocity() {
@@ -258,11 +276,10 @@ class GameScene: SKScene {
     }
         
     func gameOver() {
-        GameScene.gameCount += 1
-        if GameScene.gameCount.truncatingRemainder(dividingBy: 2) == 0 {
+        gameCount += 1
+        if gameCount.truncatingRemainder(dividingBy: 2) == 0 {
             gameDelegate?.scene(self, didOverGame: true)
         }
-        
         resetGame()
         gameState.enter(WaitingForTap.self)
     }

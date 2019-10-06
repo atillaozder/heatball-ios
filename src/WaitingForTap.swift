@@ -21,21 +21,21 @@ class WaitingForTap: GKState {
     private func initialize() {
         guard let gameScene = self.scene else { return }
         let playSize = CGSize(width: 75, height: 75)
-        let play = SKSpriteNode(imageNamed: "ic_play")
+        let play = Asset.icPlay.asNode
         play.name = Identifier.play.rawValue
         play.position = CGPoint(x: gameScene.frame.midX, y: gameScene.frame.midY)
         play.size = playSize
         play.zPosition = 1
         gameScene.addChild(play)
         
-        let settings = SKSpriteNode(imageNamed: "ic_settings")
+        let settings = Asset.icSettings.asNode
         settings.name = Identifier.settings.rawValue
         settings.position = CGPoint(x: gameScene.frame.maxX - 40, y: gameScene.frame.maxY - 40)
         settings.size = Settings.iconSize
         settings.zPosition = 1
         gameScene.addChild(settings)
         
-        let score = SKLabelNode(fontNamed: GameScene.fontName)
+        let score = SKLabelNode(fontNamed: fontName)
         score.fontSize = 24
         score.fontColor = PlayerSettings.theme.inverseColor()
         score.name = Identifier.totalScore.rawValue

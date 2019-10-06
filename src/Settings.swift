@@ -31,20 +31,21 @@ class Settings: GKState {
         let posY = gameScene.frame.maxY - 40
         
         let soundPosX = gameScene.frame.maxX - 40 - Settings.iconSize.width - spacing
+        let asset: Asset = PlayerSettings.soundEnabled ? .icSoundEnabled : .icSoundDisabled
         addChildNode(
             at: .init(x: soundPosX, y: posY),
-            imageNamed: PlayerSettings.soundEnabled ? "ic_sound_enabled" : "ic_sound_disabled",
+            imageNamed: asset.rawValue,
             withIdentifier: .sound)
         
         let themePosX = soundPosX - Settings.iconSize.width - spacing
         addChildNode(
             at: .init(x: themePosX, y: posY),
-            imageNamed: "ic_theme",
+            imageNamed: Asset.icTheme.rawValue,
             withIdentifier: .theme)
 
         addChildNode(
             at: .init(x: themePosX - Settings.iconSize.width - spacing, y: posY),
-            imageNamed: "ic_rate",
+            imageNamed: Asset.icRate.rawValue,
             withIdentifier: .rateUs)
     }
     
