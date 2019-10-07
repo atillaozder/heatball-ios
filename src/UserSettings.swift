@@ -6,37 +6,40 @@
 //  Copyright © 2019 Atilla Özder. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import SpriteKit
 
 struct UserSettings {
     
-    static let defaults = UserDefaults.standard
+    let sound = SKAction.playSoundFileNamed("pongBlip", waitForCompletion: false)
+    let fontName = UIFont.systemFont(ofSize: 1).fontName
+    let defaults = UserDefaults.standard
     
-    static func toggleTheme() {
-        defaults.set(theme.inverse.rawValue, forKey: "current_theme")
-        NotificationCenter.default.post(.init(name: .didUpdateThemeNotification))
-    }
-    
-    static var theme: Theme {
+    var currentTheme: Theme {
         let rawValue = defaults.value(forKey: "current_theme") as? String
         return Theme(rawValue: rawValue ?? "") ?? .normal
     }
-    
-    static func toggleSound() {
-        defaults.set(!soundEnabled, forKey: "sound_enabled")
+
+    var isSoundEnabled: Bool {
+        return defaults.bool(forKey: "is_sound_enabled")
     }
     
-    static var soundEnabled: Bool {
-        return defaults.bool(forKey: "sound_enabled")
+    var highestScore: Int {
+        return defaults.integer(forKey: "highest_score")
     }
     
-    static func setHighestScore(_ score: Int) {
+    func toggleTheme() {
+        defaults.set(currentTheme.inverse.rawValue, forKey: "current_theme")
+        NotificationCenter.default.post(.init(name: .didUpdateThemeNotification))
+    }
+    
+    func toggleSound() {
+        defaults.set(!isSoundEnabled, forKey: "sound_enabled")
+    }
+
+    func setHighestScore(_ score: Int) {
         if highestScore < score {
             defaults.set(score, forKey: "highest_score")
         }
-    }
-    
-    static var highestScore: Int {
-        return defaults.integer(forKey: "highest_score")
     }
 }

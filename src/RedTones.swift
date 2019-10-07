@@ -1,5 +1,5 @@
 //
-//  RedTones.swift
+//  HeatTone.swift
 //  Ball
 //
 //  Created by Atilla Özder on 5.10.2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum RedTones: Int {
+enum HeatTone: Int {
     case red1 = 1
     case red2 = 2
     case red3 = 3
@@ -17,6 +17,7 @@ enum RedTones: Int {
     case red6 = 6
     case red7 = 7
     case red8 = 8
+    case advRed = 9
     
     func asColor() -> UIColor {
         switch self {
@@ -36,6 +37,8 @@ enum RedTones: Int {
             return .init(red: 211, green: 47, blue: 47)
         case .red8:
             return .init(red: 190, green: 40, blue: 40)
+        case .advRed:
+            return .init(red: 255, green: 0, blue: 0)
         }
     }
 }

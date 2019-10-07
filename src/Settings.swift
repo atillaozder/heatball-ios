@@ -10,7 +10,8 @@ import SpriteKit
 import GameplayKit
 
 class Settings: GKState {
-    weak var scene: GameScene?
+    
+    weak var scene: GameScene!
     
     static var iconSize: CGSize {
         return .init(width: 50, height: 50)
@@ -30,8 +31,11 @@ class Settings: GKState {
         guard let gameScene = self.scene else { return }
         let posY = gameScene.frame.maxY - 40
         
+        let asset: Asset = userSettings.isSoundEnabled ?
+            .icSoundEnabled :
+            .icSoundDisabled
+        
         let soundPosX = gameScene.frame.maxX - 40 - Settings.iconSize.width - spacing
-        let asset: Asset = UserSettings.soundEnabled ? .icSoundEnabled : .icSoundDisabled
         addChildNode(
             at: .init(x: soundPosX, y: posY),
             imageNamed: asset.rawValue,
@@ -49,11 +53,11 @@ class Settings: GKState {
             imageNamed: Asset.icRate.rawValue,
             withIdentifier: .rateUs)
         
-        let infoPosX = ratePosX - Settings.iconSize.width - spacing
+        let tutorialPosX = ratePosX - Settings.iconSize.width - spacing
         addChildNode(
-            at: .init(x: infoPosX, y: posY),
-            imageNamed: Asset.icInfo.rawValue,
-            withIdentifier: .info)
+            at: .init(x: tutorialPosX, y: posY),
+            imageNamed: Asset.icTutorial.rawValue,
+            withIdentifier: .tutorial)
     }
     
     func addChildNode(at position: CGPoint,
@@ -65,7 +69,7 @@ class Settings: GKState {
         node.size = Settings.iconSize
         node.zPosition = 1
         node.alpha = 0
-        self.scene?.addChild(node)
+        self.scene.addChild(node)
     }
         
     override func didEnter(from previousState: GKState?) {
@@ -81,7 +85,7 @@ class Settings: GKState {
     }
 
     private func animChildNodes(_ anim: SKAction) {
-        let identifiers: [Identifier] = [.sound, .theme, .rateUs, .info]
+        let identifiers: [Identifier] = [.sound, .theme, .rateUs, .tutorial]
         identifiers.forEach { (identifier) in
             scene!
                 .childNode(withName: identifier.rawValue)!

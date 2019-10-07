@@ -20,6 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return "ca-app-pub-3176546388613754/7237544772"
         #endif
     }
+    
+    static var rewardBasedVideoAdIdentifier: String {
+        #if DEBUG
+        return "ca-app-pub-3940256099942544/1712485313"
+        #else
+        return "ca-app-pub-3176546388613754/7634389777"
+        #endif
+    }
 
     var window: UIWindow?
     lazy var rootViewController = GameViewController()
@@ -28,38 +36,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        GADRewardBasedVideoAd.sharedInstance()
+            .load(GADRequest(), withAdUnitID: AppDelegate.rewardBasedVideoAdIdentifier)
 
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.backgroundColor = UserSettings.theme.asColor()
+        window.backgroundColor = userSettings.currentTheme.asColor()
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
         self.window = window
         
-        NotificationCenter.default.addObserver(self, selector: #selector(setTheme), name: .didUpdateThemeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTheme), name: .didUpdateThemeNotification, object: nil)
         
         return true
     }
     
     @objc
-    func setTheme() {
-        window?.backgroundColor = UserSettings.theme.asColor()
-        rootViewController.setTheme()
+    func updateTheme() {
+        window?.backgroundColor = userSettings.currentTheme.asColor()
+        rootViewController.updateTheme()
     }
     
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
-    }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-        if let view = rootViewController.view as? SKView {
-            view.scene?.view?.isPaused = true
-        }
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        if let view = rootViewController.view as? SKView {
-            view.scene?.view?.isPaused = false
-        }
     }
 }

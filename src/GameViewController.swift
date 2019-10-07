@@ -13,6 +13,7 @@ import GoogleMobileAds
 
 class GameViewController: UIViewController {
     
+    private var reward: GADAdReward?
     private var interstitial: GADInterstitial!
     
     private var scene: GameScene? {
@@ -28,23 +29,31 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UserSettings.theme.asColor()
+        setBackgroundColor()
         
         if let view = self.view as? SKView {
             let scene = GameScene(size: view.frame.size)
-            scene.gameDelegate = self
-            scene.scaleMode = UIDevice.current.userInterfaceIdiom == .pad ? .aspectFit : .aspectFill
+            scene.sceneDelegate = self
+            scene.scaleMode = UIDevice.current.scaleMode
             view.ignoresSiblingOrder = true
             view.presentScene(scene)
+            
+            view.showsFPS = true
+            view.showsNodeCount = true
         }
         
         interstitial = createInterstitial()
         registerRemoteNotifications()
+        GADRewardBasedVideoAd.sharedInstance().delegate = self
     }
     
-    func setTheme() {
-        view.backgroundColor = UserSettings.theme.asColor()
-        scene?.setTheme()
+    func updateTheme() {
+        setBackgroundColor()
+        scene?.updateTheme()
+    }
+    
+    private func setBackgroundColor() {
+        view.backgroundColor = userSettings.currentTheme.asColor()
     }
     
     private func createInterstitial() -> GADInterstitial {
@@ -62,7 +71,6 @@ class GameViewController: UIViewController {
                     UIApplication.shared.registerForRemoteNotifications()
                 }
         }
-        
     }
     
     override var shouldAutorotate: Bool {
@@ -78,26 +86,49 @@ class GameViewController: UIViewController {
     }
 }
 
+extension GameViewController: GADRewardBasedVideoAdDelegate {
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd,
+                            didRewardUserWith reward: GADAdReward) {
+        self.reward = reward
+    }
+
+    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        let _ = reward != nil ?
+            scene?.state.enter(Playing.self) :
+            scene?.state.enter(GameOver.self)
+        
+        reward = nil
+        GADRewardBasedVideoAd.sharedInstance()
+            .load(GADRequest(), withAdUnitID: AppDelegate.rewardBasedVideoAdIdentifier)
+    }
+}
+
 extension GameViewController: GADInterstitialDelegate {
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         interstitial = createInterstitial()
     }
 }
 
-extension GameViewController: GameSceneDelegate {
-    func scene(_ scene: GameScene, didOverGame gameOver: Bool) {
-        if interstitial.isReady {
-            interstitial.present(fromRootViewController: self)
-        } else {
-            interstitial.load(GADRequest())
+extension GameViewController: SceneDelegate {
+    func scene(_ scene: GameScene,
+               shouldPresentRewardBasedVideoAd shouldPresent: Bool) {
+        if GADRewardBasedVideoAd.sharedInstance().isReady == true {
+            GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: self)
         }
     }
     
+    func scene(_ scene: GameScene,
+               shouldPresentInterstitialAfterGame shouldPresent: Bool) {
+        interstitial.isReady ?
+            interstitial.present(fromRootViewController: self) :
+            interstitial.load(.init())
+    }
+
     func scene(_ scene: GameScene, didCreateNewScene newScene: GameScene) {
-        newScene.gameDelegate = self
+        newScene.sceneDelegate = self
     }
     
-    func scene(_ scene: GameScene, didTapRate rate: Bool) {
+    func scene(_ scene: GameScene, didTapRateNode node: SKNode) {
         let urlString = "https://itunes.apple.com/app/id\(1482539751)?action=write-review"
         if let url = URL(string: urlString) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)

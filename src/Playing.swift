@@ -10,7 +10,8 @@ import SpriteKit
 import GameplayKit
 
 class Playing: GKState {
-    weak var scene: GameScene?
+    
+    weak var scene: GameScene!
     
     init(scene: SKScene) {
         self.scene = scene as? GameScene
@@ -25,6 +26,7 @@ class Playing: GKState {
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         return stateClass is GameOver.Type
+            || stateClass is Reward.Type
     }
 }
 

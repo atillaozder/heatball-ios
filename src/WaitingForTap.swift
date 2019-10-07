@@ -10,85 +10,95 @@ import SpriteKit
 import GameplayKit
 
 class WaitingForTap: GKState {
-    weak var scene: GameScene?
+    
+    weak var scene: GameScene!
     
     init(scene: SKScene) {
         self.scene = scene as? GameScene
         super.init()
         self.initialize()
     }
-    
-    private func initialize() {
-        guard let gameScene = self.scene else { return }
-        let playSize = CGSize(width: 75, height: 75)
-        let play = Asset.icPlay.asNode
-        play.name = Identifier.play.rawValue
-        play.position = CGPoint(x: gameScene.frame.midX, y: gameScene.frame.midY)
-        play.size = playSize
-        play.zPosition = 1
-        gameScene.addChild(play)
-        
-        let settings = Asset.icSettings.asNode
-        settings.name = Identifier.settings.rawValue
-        settings.position = CGPoint(x: gameScene.frame.maxX - 40, y: gameScene.frame.maxY - 40)
-        settings.size = Settings.iconSize
-        settings.zPosition = 1
-        gameScene.addChild(settings)
-        
-        let score = generateLabel()
-        score.name = Identifier.score.rawValue
-        
-        let bestScore = generateLabel()
-        bestScore.name = Identifier.bestScore.rawValue
-        
-        let posY = gameScene.frame.midY - playSize.height
-        score.position = CGPoint(x: gameScene.frame.midX, y: posY)
-        gameScene.addChild(score)
-        
-        let bestScorePosY = posY - 32
-        bestScore.position = CGPoint(x: gameScene.frame.midX, y: bestScorePosY)
-        gameScene.addChild(bestScore)
-    }
-    
+
     override func didEnter(from previousState: GKState?) {
         if previousState is GameOver {
-            scaleChildNodes(.scale(to: 1, duration: 0.15))
-            let scoreLabel = scene?.childNode(withName: Identifier.score.rawValue) as! SKLabelNode
-            scoreLabel.text = "Ball overheated. Score: \(scene?.score ?? 0)"
+            setChildNodes(isHidden: false)
+            let totalScore = scene.childNode(withIdentifier: .totalScore) as! SKLabelNode
+            totalScore.text = "Ball overheated. Score: \(scene.score)"
 
-            let highest = UserSettings.highestScore
-            if highest > 0 {
-                let bestLabel = scene?.childNode(withName: Identifier.bestScore.rawValue) as! SKLabelNode
-                bestLabel.text = "Best: \(highest)"
+            let highestScore = userSettings.highestScore
+            if highestScore > 0 {
+                let bestScore = scene.childNode(withIdentifier: .bestScore) as! SKLabelNode
+                bestScore.text = "Best: \(highestScore)"
             }
         }
     }
     
     override func willExit(to nextState: GKState) {
         if nextState is Playing {
-            scaleChildNodes(.scale(to: 0, duration: 0))
-        }
-    }
-    
-    private func generateLabel() -> SKLabelNode {
-        let lbl = SKLabelNode(fontNamed: fontName)
-        lbl.fontSize = 24
-        lbl.fontColor = UserSettings.theme.inverseColor()
-        lbl.zPosition = 1
-        return lbl
-    }
-    
-    func scaleChildNodes(_ scale: SKAction) {
-        let identifiers: [Identifier] = [.play, .settings, .score, .bestScore]
-        identifiers.forEach { (identifier) in
-            scene!
-                .childNode(withName: identifier.rawValue)!
-                .run(scale)
+            setChildNodes(isHidden: true)
         }
     }
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         return stateClass is Playing.Type || stateClass is Settings.Type
+    }
+    
+    private func initialize() {
+        let playSize = CGSize(width: 75, height: 75)
+        setupPlayButton(size: playSize)
+        setupSettingsButton()
+        
+        guard let gameScene = scene else { return }
+        let totalScore = SKLabelNode.defaultLabel
+        totalScore.name = Identifier.totalScore.rawValue
+    
+        let bestScore = SKLabelNode.defaultLabel
+        bestScore.name = Identifier.bestScore.rawValue
+        
+        let totalScorePosY = gameScene.frame.midY - playSize.height
+        totalScore.position = CGPoint(
+            x: gameScene.frame.midX,
+            y: totalScorePosY)
+        gameScene.addChild(totalScore)
+        
+        let bestScorePosY = totalScorePosY - 32
+        bestScore.position = CGPoint(
+            x: gameScene.frame.midX,
+            y: bestScorePosY)
+        gameScene.addChild(bestScore)
+    }
+    
+    private func setupPlayButton(size: CGSize) {
+        guard let gameScene = self.scene else { return }
+        let node = Asset.icPlay.asNode
+        node.name = Identifier.play.rawValue
+        node.size = size
+        node.zPosition = 1
+        node.position = CGPoint(
+            x: gameScene.frame.midX,
+            y: gameScene.frame.midY)
+        gameScene.addChild(node)
+    }
+    
+    private func setupSettingsButton() {
+        guard let gameScene = self.scene else { return }
+        let node = Asset.icSettings.asNode
+        node.name = Identifier.settings.rawValue
+        node.position = CGPoint(
+            x: gameScene.frame.maxX - 40,
+            y: gameScene.frame.maxY - 40)
+        node.size = Settings.iconSize
+        node.zPosition = 1
+        gameScene.addChild(node)
+    }
+    
+    func setChildNodes(isHidden: Bool) {
+        let identifiers: [Identifier] = [.play, .settings, .totalScore, .bestScore]
+        identifiers.forEach { (identifier) in
+            scene!
+                .childNode(withName: identifier.rawValue)!
+                .isHidden = isHidden
+        }
     }
 }
 

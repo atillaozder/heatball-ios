@@ -9,8 +9,8 @@
 import UIKit
 
 enum Theme: String {
-    case normal = "normal"
     case dark = "dark"
+    case normal = "normal"
     
     var inverse: Theme {
         switch self {

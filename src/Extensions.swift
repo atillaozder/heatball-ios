@@ -7,39 +7,10 @@
 //
 
 import UIKit
+import SpriteKit
 
 extension Notification.Name {
     static let didUpdateThemeNotification = Notification.Name(rawValue: "didUpdateThemeNotification")
-}
-
-extension UIView {
-    var safeTopAnchor: NSLayoutYAxisAnchor {
-        if #available(iOS 11.0, *) {
-            return safeAreaLayoutGuide.topAnchor
-        }
-        return topAnchor
-    }
-    
-    var safeBottomAnchor: NSLayoutYAxisAnchor {
-        if #available(iOS 11.0, *) {
-            return safeAreaLayoutGuide.bottomAnchor
-        }
-        return bottomAnchor
-    }
-    
-    var safeLeadingAnchor: NSLayoutXAxisAnchor {
-        if #available(iOS 11.0, *) {
-            return safeAreaLayoutGuide.leadingAnchor
-        }
-        return leadingAnchor
-    }
-    
-    var safeTrailingAnchor: NSLayoutXAxisAnchor {
-        if #available(iOS 11.0, *) {
-            return safeAreaLayoutGuide.trailingAnchor
-        }
-        return trailingAnchor
-    }
 }
 
 extension UIColor {
@@ -55,9 +26,63 @@ extension UIColor {
     }
     
     class var random: UIColor {
-        return UIColor(red: .random(in: 0..<1),
-                       green: .random(in: 0..<1),
-                       blue: .random(in: 0..<1),
-                       alpha: 1)
+        let color = UIColor(red: .random(in: 0..<1),
+                            green: .random(in: 0..<1),
+                            blue: .random(in: 0..<1),
+                            alpha: 1)
+        
+        return userSettings.currentTheme == .dark ?
+            color.lighter() :
+            color.darker()
+    }
+    
+    func lighter(by percentage: CGFloat = 30.0) -> UIColor {
+        return self.adjust(by: abs(percentage))
+    }
+
+    func darker(by percentage: CGFloat = 30.0) -> UIColor {
+        return self.adjust(by: -1 * abs(percentage))
+    }
+
+    func adjust(by percentage: CGFloat = 30.0) -> UIColor {
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        if self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
+            return UIColor(red: min(red + percentage/100, 1.0),
+                           green: min(green + percentage/100, 1.0),
+                           blue: min(blue + percentage/100, 1.0),
+                           alpha: alpha)
+        } else {
+            return self
+        }
+    }
+}
+
+extension CGFloat {
+    func radians() -> CGFloat {
+        return CGFloat.pi * (self / 180)
+    }
+}
+
+extension UIDevice {
+    var scaleMode: SKSceneScaleMode {
+        return self.userInterfaceIdiom == .pad ?
+            .aspectFit :
+            .aspectFill
+    }
+}
+
+extension SKScene {
+    func childNode(withIdentifier identifier: Identifier) -> SKNode? {
+        return childNode(withName: identifier.rawValue)
+    }
+}
+
+extension SKLabelNode {
+    static var defaultLabel: SKLabelNode {
+        let lbl = SKLabelNode(fontNamed: userSettings.fontName)
+        lbl.fontSize = 24
+        lbl.fontColor = userSettings.currentTheme.inverseColor()
+        lbl.zPosition = 999
+        return lbl
     }
 }

@@ -10,7 +10,8 @@ import SpriteKit
 import GameplayKit
 
 class GameOver: GKState {
-    weak var scene: GameScene?
+    
+    weak var scene: GameScene!
     
     init(scene: SKScene) {
         self.scene = scene as? GameScene
@@ -18,8 +19,8 @@ class GameOver: GKState {
     }
     
     override func didEnter(from previousState: GKState?) {
-        if previousState is Playing {
-            scene?.gameOver()
+        if previousState is Playing || previousState is Reward {
+            scene.gameOver()
         }
     }
     

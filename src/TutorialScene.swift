@@ -11,26 +11,26 @@ import GameplayKit
 
 class TutorialScene: SKScene {
     
-    weak var gameDelegate: GameSceneDelegate?
+    weak var sceneDelegate: SceneDelegate?
     
     lazy var ball: SKShapeNode = {
         let ball = SKShapeNode(circleOfRadius: 25 / 2)
         ball.zPosition = 1
         ball.position = .init(x: frame.minX + 50, y: frame.midY)
-        ball.fillColor = UserSettings.theme.inverseColor()
+        ball.fillColor = userSettings.currentTheme.inverseColor()
         ball.lineCap = .round
         ball.lineJoin = .round
         return ball
     }()
     
     lazy var barrier: SKShapeNode = {
-        let shape = BarrierFactory().generateBarrier(withRadius: 15)
+        let shape = Circle(radius: 15).node
         shape.position = .init(x: frame.midX + 50, y: frame.midY)
         return shape
     }()
     
     lazy var fingerNode: SKSpriteNode = {
-        let asset: Asset = UserSettings.theme == .dark ? .icFingerWhite : .icFingerBlack
+        let asset: Asset = userSettings.currentTheme == .dark ? .icWhiteHand : .icBlackHand
         let node = asset.asNode
         node.zPosition = 1
         node.position = .init(x: frame.midX + 60, y: frame.midY - 20)
@@ -39,7 +39,7 @@ class TutorialScene: SKScene {
     }()
     
     override func didMove(to view: SKView) {
-        backgroundColor = UserSettings.theme.asColor()
+        backgroundColor = userSettings.currentTheme.asColor()
         addChild(ball)
         addChild(barrier)
         
@@ -69,7 +69,7 @@ class TutorialScene: SKScene {
             ball.run(.moveTo(x: frame.maxX - 50, duration: 0.5), completion: { [weak self] in
                 guard let `self` = self else { return }
                 let newScene = GameScene(size: self.frame.size)
-                newScene.gameDelegate = self.gameDelegate
+                newScene.sceneDelegate = self.sceneDelegate
                 self.view?.presentScene(newScene)
             })
         }
