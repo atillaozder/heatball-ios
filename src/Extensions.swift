@@ -98,9 +98,13 @@ extension SKNode {
         label.text = text
         label.fontColor = color
         label.zPosition = 999
+        
+        let width = UIDevice.current.userInterfaceIdiom != .pad ?
+            UIScreen.main.bounds.width - 32 :
+            232
 
         let shape = SKShapeNode(
-            rectOf: .init(width: UIScreen.main.bounds.width - 32, height: 40),
+            rectOf: .init(width: width, height: 40),
             cornerRadius: 14)
         shape.strokeColor = color
         shape.fillColor = userSettings.currentTheme.asColor()
