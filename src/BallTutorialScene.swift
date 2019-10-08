@@ -1,5 +1,5 @@
 //
-//  LastTutorialScene.swift
+//  BallTutorialScene.swift
 //  HeatBall
 //
 //  Created by Atilla Özder on 8.10.2019.
@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class LastTutorialScene: TutorialScene {
+class BallTutorialScene: TutorialScene {
     
     lazy var ball: GameBall = {
         let ball = GameBall(radius: 25 / 2)
@@ -56,8 +56,7 @@ class LastTutorialScene: TutorialScene {
             shape.removeFromParent()
             [Identifier.tutorialHand,
              Identifier.tutorialDesc1,
-             Identifier.tutorialDesc2,
-             Identifier.tutorialDesc3].forEach {
+             Identifier.tutorialDesc2].forEach {
                 childNode(withIdentifier: $0)?.removeFromParent()
             }
             
@@ -95,21 +94,17 @@ class LastTutorialScene: TutorialScene {
     override func presentDescription() {
         let first = SKLabelNode.defaultLabel
         first.position = .init(x: frame.midX, y: frame.maxY - 120)
-        first.text = "Clear the shapes to"
+        first.text = "Clear shapes to"
+        first.horizontalAlignmentMode = .center
         first.name = Identifier.tutorialDesc1.rawValue
         
         let second = SKLabelNode.defaultLabel
         second.position = .init(x: frame.midX, y: frame.maxY - 150)
-        second.text = "prevent ball to heat"
+        second.text = "keep the ball cold"
+        second.horizontalAlignmentMode = .center
         second.name = Identifier.tutorialDesc2.rawValue
-        
-        let third = SKLabelNode.defaultLabel
-        third.position = .init(x: frame.midX, y: frame.maxY - 180)
-        third.text = "and get more score"
-        third.name = Identifier.tutorialDesc3.rawValue
         
         addChild(first)
         addChild(second)
-        addChild(third)
     }
 }

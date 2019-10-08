@@ -52,7 +52,7 @@ class GameBall: Circle {
     }
     
     func increaseSpeed() {
-        self.velocity = CGVector(dx: velocity.dx + 15, dy: velocity.dy + 15)
+        self.velocity = CGVector(dx: velocity.dx + 30, dy: velocity.dy + 30)
     }
     
     func resetSpeed() {

@@ -26,7 +26,6 @@ enum Identifier: String {
     case playAnotherGameLabel = "play_another_game_label"
     case tutorialDesc1 = "tutorial_desc_1"
     case tutorialDesc2 = "tutorial_desc_2"
-    case tutorialDesc3 = "tutorial_desc_3"
     case tutorialHand = "tutorial_hand"
     case nextButton = "next_button"
     case nextLabel = "next_label"

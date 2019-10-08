@@ -194,7 +194,7 @@ class GameScene: Scene {
             case .theme:
                 userSettings.toggleTheme()
             case .tutorial:
-                let newScene = FirstTutorialScene(size: frame.size)
+                let newScene = ScoreTutorialScene(size: frame.size)
                 self.presentTutorial(newScene, delegate: sceneDelegate)
             default:
                 break
@@ -206,10 +206,11 @@ class GameScene: Scene {
         self.childNode(withName: Identifier.gameScore.rawValue)?.removeFromParent()
         let score = SKLabelNode.defaultLabel
         score.text = "0"
+        score.fontName = UIFont.systemFont(ofSize: 16).fontName
         score.name = Identifier.gameScore.rawValue
         score.position = CGPoint(
-            x: frame.maxX - 32,
-            y: frame.maxY - 32 - safeAreaInsets.top)
+            x: frame.maxX - 16,
+            y: frame.maxY - 24 - safeAreaInsets.top)
         self.addChild(score)
     }
         
@@ -235,8 +236,8 @@ class GameScene: Scene {
     }
     
     func continueGame() {
-        let posX = frame.minX + HeartNode.nodeSize.width + 16
-        let posY = frame.maxY - HeartNode.nodeSize.height - 16
+        let posX = frame.minX + HeartNode.nodeSize.width
+        let posY = frame.maxY - HeartNode.nodeSize.height - 8
         presentHeart(in: .init(x: posX, y: posY))
         ball.setColor(HeatTone.advRed.asColor())
         ball.resetSpeed()
@@ -270,8 +271,8 @@ class GameScene: Scene {
     
     private func presentHearts() {
         removeHearts()
-        let posX = frame.minX + HeartNode.nodeSize.width + 16
-        let posY = frame.maxY - HeartNode.nodeSize.height - 16
+        let posX = frame.minX + HeartNode.nodeSize.width
+        let posY = frame.maxY - HeartNode.nodeSize.height - 8
         
         for i in 0..<8 {
             let rodPosX = posX + ((HeartNode.nodeSize.width + 4) * CGFloat(i))
