@@ -17,11 +17,15 @@ struct UserSettings {
     
     var currentTheme: Theme {
         let rawValue = defaults.value(forKey: "current_theme") as? String
-        return Theme(rawValue: rawValue ?? "") ?? .normal
+        return Theme(rawValue: rawValue ?? "") ?? .dark
     }
 
     var isSoundEnabled: Bool {
         return defaults.bool(forKey: "is_sound_enabled")
+    }
+    
+    var isTutorialPresented: Bool {
+        return defaults.bool(forKey: "is_tutorial_presented")
     }
     
     var highestScore: Int {
@@ -34,7 +38,11 @@ struct UserSettings {
     }
     
     func toggleSound() {
-        defaults.set(!isSoundEnabled, forKey: "sound_enabled")
+        defaults.set(!isSoundEnabled, forKey: "is_sound_enabled")
+    }
+    
+    func tutorialPresented() {
+        defaults.set(true, forKey: "is_tutorial_presented")
     }
 
     func setHighestScore(_ score: Int) {

@@ -65,9 +65,10 @@ extension CGFloat {
 
 extension UIDevice {
     var scaleMode: SKSceneScaleMode {
-        return self.userInterfaceIdiom == .pad ?
-            .aspectFit :
-            .aspectFill
+        return .aspectFit
+//        return self.userInterfaceIdiom == .pad ?
+//            .aspectFit :
+//            .aspectFill
     }
 }
 
@@ -85,4 +86,31 @@ extension SKLabelNode {
         lbl.zPosition = 999
         return lbl
     }
+}
+
+extension SKNode {
+    static func generateButton(withText text: String) -> (button: SKShapeNode, label: SKLabelNode) {
+        let color = userSettings.currentTheme.inverseColor()
+        let font = UIFont.systemFont(ofSize: 16, weight: .medium)
+
+        let label = SKLabelNode.defaultLabel
+        label.fontName = font.fontName
+        label.text = text
+        label.fontColor = color
+        label.zPosition = 999
+
+        let shape = SKShapeNode(
+            rectOf: .init(width: UIScreen.main.bounds.width - 32, height: 40),
+            cornerRadius: 14)
+        shape.strokeColor = color
+        shape.fillColor = userSettings.currentTheme.asColor()
+        shape.zPosition = 999
+        
+        return (button: shape, label: label)
+    }
+}
+
+extension Int {
+    var toRadians: Double { return Double(self) * .pi / 180 }
+    var toDegrees: Double { return Double(self) * 180 / .pi }
 }

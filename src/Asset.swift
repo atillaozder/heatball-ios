@@ -18,6 +18,8 @@ enum Asset: String {
     case icWhiteHand = "ic_white_hand"
     case icBlackHand = "ic_black_hand"
     case icTutorial = "ic_tutorial"
+    case icWhiteArrow = "ic_white_arrow"
+    case icBlackArrow = "ic_black_arrow"
     
     var asNode: SKSpriteNode {
         return SKSpriteNode(imageNamed: self.rawValue)

@@ -12,10 +12,14 @@ class GameBall: Circle {
     
     private var lastPosition = CGPoint.zero
 
-    var velocity: CGVector = .init(dx: 300, dy: 300) {
+    var velocity: CGVector = .init(dx: 200, dy: 200) {
         didSet {
             shapeNode.physicsBody!.velocity = velocity
         }
+    }
+    
+    var position: CGPoint {
+        return shapeNode.position
     }
     
     override init(radius: CGFloat) {
@@ -33,7 +37,7 @@ class GameBall: Circle {
     func reset() {
         self.setColor()
         self.shapeNode.position = .zero
-        self.resetVelocity()
+        self.resetSpeed()
     }
         
     func setColor(_ color: SKColor? = nil) {
@@ -42,28 +46,32 @@ class GameBall: Circle {
         shapeNode.fillColor = ballColor
     }
     
-    func add(to scene: GameScene) {
+    func add(to scene: SKScene) {
         self.shapeNode.removeFromParent()
         scene.addChild(shapeNode)
     }
     
-    func increaseVelocity() {
+    func increaseSpeed() {
         self.velocity = CGVector(dx: velocity.dx + 15, dy: velocity.dy + 15)
     }
     
-    func resetVelocity() {
-        self.velocity = .init(dx: 300, dy: 300)
+    func resetSpeed() {
+        self.velocity = .init(dx: 200, dy: 200)
     }
     
     func updateLastPosition() {
         if shapeNode.position.x == lastPosition.x {
-            let location = SKAction.moveTo(x: shapeNode.position.x + 5, duration: 0.1)
-            shapeNode.run(location)
+            shapeNode.run(
+                .moveTo(
+                    x: shapeNode.position.x + 5,
+                    duration: 0.1))
         }
         
         if shapeNode.position.y == lastPosition.y {
-            let location = SKAction.moveTo(y: shapeNode.position.y + 5, duration: 0.1)
-            shapeNode.run(location)
+            shapeNode.run(
+                .moveTo(
+                    y: shapeNode.position.y + 5,
+                    duration: 0.1))
         }
         
         lastPosition = shapeNode.position

@@ -9,69 +9,46 @@
 import SpriteKit
 import GameplayKit
 
-class TutorialScene: SKScene {
-    
-    weak var sceneDelegate: SceneDelegate?
-    
-    lazy var ball: SKShapeNode = {
-        let ball = SKShapeNode(circleOfRadius: 25 / 2)
-        ball.zPosition = 1
-        ball.position = .init(x: frame.minX + 50, y: frame.midY)
-        ball.fillColor = userSettings.currentTheme.inverseColor()
-        ball.lineCap = .round
-        ball.lineJoin = .round
-        return ball
-    }()
-    
-    lazy var barrier: SKShapeNode = {
-        let shape = Circle(radius: 15).node
-        shape.position = .init(x: frame.midX + 50, y: frame.midY)
-        return shape
-    }()
-    
-    lazy var fingerNode: SKSpriteNode = {
-        let asset: Asset = userSettings.currentTheme == .dark ? .icWhiteHand : .icBlackHand
-        let node = asset.asNode
-        node.zPosition = 1
-        node.position = .init(x: frame.midX + 60, y: frame.midY - 20)
-        node.size = .init(width: 60, height: 60)
-        return node
-    }()
-    
-    override func didMove(to view: SKView) {
-        backgroundColor = userSettings.currentTheme.asColor()
-        addChild(ball)
-        addChild(barrier)
+class TutorialScene: Scene {
         
-        ball.run(.moveTo(x: frame.midX, duration: 0.5)) { [weak self] in
-            guard let `self` = self else { return }
-            self.addFingerAndScale()
-        }
+    override func didMove(to view: SKView) {
+        super.didMove(to: view)
+        setupScene()
     }
-    
-    func addFingerAndScale() {
-        addChild(fingerNode)
-        fingerNode.run(.repeatForever(.sequence([
-            .scale(to: 0.8, duration: 1),
-            .scale(to: 1, duration: 1)
-        ])))
-    }
-    
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
-        
-        let barrierArea = barrier.frame.insetBy(dx: -15, dy: -15)
-        if barrierArea.contains(location) {
-            fingerNode.removeFromParent()
-            barrier.removeFromParent()
-            ball.run(.moveTo(x: frame.maxX - 50, duration: 0.5), completion: { [weak self] in
-                guard let `self` = self else { return }
-                let newScene = GameScene(size: self.frame.size)
-                newScene.sceneDelegate = self.sceneDelegate
-                self.view?.presentScene(newScene)
-            })
+        let node = atPoint(location)
+        switch node.name {
+        case Identifier.nextLabel.rawValue,
+             Identifier.nextButton.rawValue:
+            nextTapped()
+        default:
+            touchesEnd(at: location)
         }
     }
+    
+    func setupScene() {
+        backgroundColor = userSettings.currentTheme.asColor()
+        presentNextButton()
+        presentDescription()
+    }
+    
+    func presentNextButton() {
+        let (button, label) = SKNode.generateButton(withText: "Next")
+        button.position = CGPoint(x: frame.midX, y: frame.minY + 60)
+        button.name = Identifier.nextButton.rawValue
+        label.position = CGPoint(x: frame.midX, y: frame.minY + 52)
+        label.name = Identifier.nextLabel.rawValue
+        addChild(label)
+        addChild(button)
+    }
+    
+    func presentDescription() {}
+    
+    func touchesEnd(at location: CGPoint) {}
+    
+    func nextTapped() {}
 }

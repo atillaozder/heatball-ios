@@ -29,33 +29,33 @@ class Settings: GKState {
     
     private func initialize() {
         guard let gameScene = self.scene else { return }
-        let posY = gameScene.frame.maxY - 40
+        let posX = gameScene.frame.maxX - 40
         
         let asset: Asset = userSettings.isSoundEnabled ?
             .icSoundEnabled :
             .icSoundDisabled
         
-        let soundPosX = gameScene.frame.maxX - 40 - Settings.iconSize.width - spacing
+        let soundPosY = gameScene.frame.maxY - 40 - Settings.iconSize.height - spacing
         addChildNode(
-            at: .init(x: soundPosX, y: posY),
+            at: .init(x: posX, y: soundPosY),
             imageNamed: asset.rawValue,
             withIdentifier: .sound)
         
-        let themePosX = soundPosX - Settings.iconSize.width - spacing
+        let themePosY = soundPosY - Settings.iconSize.height - spacing
         addChildNode(
-            at: .init(x: themePosX, y: posY),
+            at: .init(x: posX, y: themePosY),
             imageNamed: Asset.icTheme.rawValue,
             withIdentifier: .theme)
 
-        let ratePosX = themePosX - Settings.iconSize.width - spacing
+        let ratePosY = themePosY - Settings.iconSize.height - spacing
         addChildNode(
-            at: .init(x: ratePosX, y: posY),
+            at: .init(x: posX, y: ratePosY),
             imageNamed: Asset.icRate.rawValue,
             withIdentifier: .rateUs)
         
-        let tutorialPosX = ratePosX - Settings.iconSize.width - spacing
+        let tutorialPosY = ratePosY - Settings.iconSize.height - spacing
         addChildNode(
-            at: .init(x: tutorialPosX, y: posY),
+            at: .init(x: posX, y: tutorialPosY),
             imageNamed: Asset.icTutorial.rawValue,
             withIdentifier: .tutorial)
     }

@@ -23,7 +23,7 @@ class WaitingForTap: GKState {
         if previousState is GameOver {
             setChildNodes(isHidden: false)
             let totalScore = scene.childNode(withIdentifier: .totalScore) as! SKLabelNode
-            totalScore.text = "Ball overheated. Score: \(scene.score)"
+            totalScore.text = "Score: \(scene.score)"
 
             let highestScore = userSettings.highestScore
             if highestScore > 0 {

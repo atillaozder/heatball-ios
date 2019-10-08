@@ -19,13 +19,12 @@ protocol SceneDelegate: class {
     func scene(_ scene: GameScene, didTapRateNode node: SKNode)
 }
 
-class GameScene: SKScene {
+class GameScene: Scene {
     
-    weak var sceneDelegate: SceneDelegate?
     private var heartNodes = [SKShapeNode]()
     private lazy var isAdShowed = false
     private lazy var blockManager = BlockManager(scene: self)
-    
+
     var heat: Int = 0 {
         didSet {
             if state.currentState is Playing && heat > 0 {
@@ -43,10 +42,12 @@ class GameScene: SKScene {
                 }
                 
                 ball.setColor(tone.asColor())
-                decreaseDurationAndIncreaseVelocity()
+                speedUpGame()
 
                 if tone == .red8 {
-                    _ = isAdShowed ? state.enter(GameOver.self) : state.enter(Reward.self)
+                    _ = isAdShowed ?
+                        state.enter(GameOver.self) :
+                        state.enter(Reward.self)
                 } else if tone == .advRed {
                     state.enter(GameOver.self)
                 }
@@ -56,7 +57,7 @@ class GameScene: SKScene {
     
     var score: Int = 0 {
         didSet {
-            if let label = childNode(withName: Identifier.gameScore.rawValue) as? SKLabelNode {
+            if let label = childNode(withIdentifier: .gameScore) as? SKLabelNode {
                 label.text = "\(score)"
             }
         }
@@ -77,6 +78,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+        userSettings.tutorialPresented()
         self.updateTheme()
         self.physicsWorld.contactDelegate = self
         
@@ -89,13 +91,12 @@ class GameScene: SKScene {
         self.physicsWorld.gravity = .zero
         
         ball.add(to: self)
-        
         state.enter(WaitingForTap.self)
 
         blockManager.runSequence()
         run(.repeatForever(.sequence([
             .wait(forDuration: 60),
-            .run(decreaseDurationAndIncreaseVelocity)
+            .run(speedUpGame)
         ])))
         
         run(.repeatForever(.sequence([
@@ -114,6 +115,7 @@ class GameScene: SKScene {
         case is GameOver:
             let newScene = GameScene(size: frame.size)
             sceneDelegate?.scene(self, didCreateNewScene: newScene)
+            newScene.safeAreaInsets = self.safeAreaInsets
             newScene.scaleMode = UIDevice.current.scaleMode
             self.view?.presentScene(newScene)
         case is Settings:
@@ -124,7 +126,7 @@ class GameScene: SKScene {
             break
         }
     }
-    
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         if state.currentState is Playing {
@@ -132,14 +134,11 @@ class GameScene: SKScene {
             let location = touch.location(in: self)
             if blockManager.removeBlock(at: location) {
                 score += 1
-            } else {
-                let ballPosition = ball.node.position
-                var velocity = ball.velocity
-                
-                let dx = (ballPosition.x + location.x) / velocity.dx
-                let dy = (ballPosition.y + location.y) / velocity.dy
-                print(dx, dy)
             }
+            
+//            else {
+//                // change direction of ball
+//            }
         }
     }
     
@@ -156,10 +155,12 @@ class GameScene: SKScene {
     
     func touchesBeganInRewardMode(_ node: SKNode) {
         switch node.name {
-        case Identifier.continueWithVideo.rawValue:
+        case Identifier.continueWithVideoButton.rawValue,
+             Identifier.continueWithVideoLabel.rawValue:
             isAdShowed = true
             sceneDelegate?.scene(self, shouldPresentRewardBasedVideoAd: true)
-        case Identifier.gameOver.rawValue:
+        case Identifier.playAnotherGameButton.rawValue,
+             Identifier.playAnotherGameLabel.rawValue:
             state.enter(GameOver.self)
         default:
             break
@@ -193,23 +194,23 @@ class GameScene: SKScene {
             case .theme:
                 userSettings.toggleTheme()
             case .tutorial:
-                let scene = TutorialScene(size: frame.size)
-                scene.sceneDelegate = sceneDelegate
-                scene.scaleMode = UIDevice.current.scaleMode
-                self.view?.presentScene(scene)
+                let newScene = FirstTutorialScene(size: frame.size)
+                self.presentTutorial(newScene, delegate: sceneDelegate)
             default:
                 break
             }
         }
     }
     
-    private func addScoreLabel() {
+    private func presentScore() {
         self.childNode(withName: Identifier.gameScore.rawValue)?.removeFromParent()
-        let lbl = SKLabelNode.defaultLabel
-        lbl.text = "0"
-        lbl.name = Identifier.gameScore.rawValue
-        lbl.position = CGPoint(x: frame.maxX - 32, y: frame.maxY - 32)
-        self.addChild(lbl)
+        let score = SKLabelNode.defaultLabel
+        score.text = "0"
+        score.name = Identifier.gameScore.rawValue
+        score.position = CGPoint(
+            x: frame.maxX - 32,
+            y: frame.maxY - 32 - safeAreaInsets.top)
+        self.addChild(score)
     }
         
     func updateTheme() {
@@ -229,16 +230,16 @@ class GameScene: SKScene {
         score = 0
         resetGame()
         ball.add(to: self)
-        addScoreLabel()
-        addHearts()
+        presentScore()
+        presentHearts()
     }
     
     func continueGame() {
         let posX = frame.minX + HeartNode.nodeSize.width + 16
         let posY = frame.maxY - HeartNode.nodeSize.height - 16
-        addHeart(to: .init(x: posX, y: posY))
+        presentHeart(in: .init(x: posX, y: posY))
         ball.setColor(HeatTone.advRed.asColor())
-        ball.resetVelocity()
+        ball.resetSpeed()
         blockManager.reset()
         self.isPaused = false
     }
@@ -267,19 +268,21 @@ class GameScene: SKScene {
         isAdShowed = false
     }
     
-    private func addHearts() {
+    private func presentHearts() {
         removeHearts()
         let posX = frame.minX + HeartNode.nodeSize.width + 16
         let posY = frame.maxY - HeartNode.nodeSize.height - 16
         
         for i in 0..<8 {
             let rodPosX = posX + ((HeartNode.nodeSize.width + 4) * CGFloat(i))
-            addHeart(to: .init(x: rodPosX, y: posY))
+            presentHeart(in: .init(x: rodPosX, y: posY))
         }
     }
 
-    private func addHeart(to origin: CGPoint) {
-        let node = HeartNode(origin: origin)
+    private func presentHeart(in origin: CGPoint) {
+        var mutableOrigin = origin
+        mutableOrigin.y -= safeAreaInsets.top
+        let node = HeartNode(origin: mutableOrigin)
         self.heartNodes.append(node)
         self.addChild(node)
     }
@@ -289,10 +292,10 @@ class GameScene: SKScene {
         self.heartNodes = []
     }
         
-    private func decreaseDurationAndIncreaseVelocity() {
+    private func speedUpGame() {
         if state.currentState is Playing {
             blockManager.decreaseDuration()
-            ball.increaseVelocity()
+            ball.increaseSpeed()
         }
     }
 }
@@ -305,13 +308,13 @@ extension GameScene: SKPhysicsContactDelegate {
         
         if nodeA?.name == Identifier.block.rawValue {
             blockManager.removeBlock(nodeA as! SKShapeNode)
-            // heat += 1
+            heat += 1
             return
         }
         
         if nodeB?.name == Identifier.block.rawValue {
             blockManager.removeBlock(nodeB as! SKShapeNode)
-            // heat += 1
+            heat += 1
             return
         }
     }

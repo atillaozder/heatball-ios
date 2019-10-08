@@ -27,19 +27,27 @@ class GameViewController: UIViewController {
         view = SKView(frame: UIScreen.main.bounds)
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if #available(iOS 11.0, *) {
+            if let view = self.view as? SKView, let scene = view.scene as? Scene {
+                scene.safeAreaInsets = view.safeAreaInsets
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setBackgroundColor()
         
         if let view = self.view as? SKView {
-            let scene = GameScene(size: view.frame.size)
+            let scene: Scene = userSettings.isTutorialPresented ?
+                GameScene(size: view.frame.size) :
+                FirstTutorialScene(size: view.frame.size)
             scene.sceneDelegate = self
             scene.scaleMode = UIDevice.current.scaleMode
             view.ignoresSiblingOrder = true
             view.presentScene(scene)
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
         }
         
         interstitial = createInterstitial()
@@ -78,7 +86,7 @@ class GameViewController: UIViewController {
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscape
+        return .init(arrayLiteral: .portrait)
     }
     
     override var prefersStatusBarHidden: Bool {
