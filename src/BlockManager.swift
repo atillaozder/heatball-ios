@@ -49,12 +49,13 @@ class BlockManager {
             return
         }
         
-        let ball = scene!.ball
-        let area = ball.node.frame.insetBy(dx: -20, dy: -20)
         var location = self.randomLocation(size: newBlock.frame.size)
+        let ball = scene!.ball.node
+        var area = ball.frame.insetBy(dx: -20, dy: -20)
         
         // Position should not be near of game ball
         while area.contains(location) {
+            area = ball.frame.insetBy(dx: -20, dy: -20)
             location = self.randomLocation(size: newBlock.frame.size)
         }
         

@@ -58,7 +58,14 @@ class GameScene: Scene {
     var score: Int = 0 {
         didSet {
             if let label = childNode(withIdentifier: .gameScore) as? SKLabelNode {
-                label.text = "\(score)"
+                let text = "\(score)"
+                let size = (text as NSString)
+                    .size(withAttributes: [.font: UIFont.systemFont(ofSize: label.fontSize)])
+                
+                label.position = CGPoint(
+                    x: frame.maxX - (size.width / 2) - 6,
+                    y: frame.maxY - 24 - safeAreaInsets.top)
+                label.text = text
             }
         }
     }
@@ -95,7 +102,7 @@ class GameScene: Scene {
 
         blockManager.runSequence()
         run(.repeatForever(.sequence([
-            .wait(forDuration: 60),
+            .wait(forDuration: 30),
             .run(speedUpGame)
         ])))
         
