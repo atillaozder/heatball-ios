@@ -21,8 +21,8 @@ protocol SceneDelegate: class {
 
 class GameScene: Scene {
     
+    lazy var rewardBasedVideoAdPresented = false
     private var heartNodes = [SKShapeNode]()
-    private lazy var isAdShowed = false
     private lazy var blockManager = BlockManager(scene: self)
 
     var heat: Int = 0 {
@@ -45,7 +45,7 @@ class GameScene: Scene {
                 speedUpGame()
 
                 if tone == .red8 {
-                    _ = isAdShowed ?
+                    let _ = rewardBasedVideoAdPresented ?
                         state.enter(GameOver.self) :
                         state.enter(Reward.self)
                 } else if tone == .advRed {
@@ -59,8 +59,9 @@ class GameScene: Scene {
         didSet {
             if let label = childNode(withIdentifier: .gameScore) as? SKLabelNode {
                 let text = "\(score)"
-                let size = (text as NSString)
+                var size = (text as NSString)
                     .size(withAttributes: [.font: UIFont.systemFont(ofSize: label.fontSize)])
+                size.width += 8
                 
                 label.position = CGPoint(
                     x: frame.maxX - (size.width / 2) - 6,
@@ -102,7 +103,7 @@ class GameScene: Scene {
 
         blockManager.runSequence()
         run(.repeatForever(.sequence([
-            .wait(forDuration: 30),
+            .wait(forDuration: 15),
             .run(speedUpGame)
         ])))
         
@@ -164,8 +165,7 @@ class GameScene: Scene {
         switch node.name {
         case Identifier.continueWithVideoButton.rawValue,
              Identifier.continueWithVideoLabel.rawValue:
-            isAdShowed = true
-            sceneDelegate?.scene(self, shouldPresentRewardBasedVideoAd: true)
+            sceneDelegate?.scene(self, shouldPresentRewardBasedVideoAd: rewardBasedVideoAdPresented)
         case Identifier.playAnotherGameButton.rawValue,
              Identifier.playAnotherGameLabel.rawValue:
             state.enter(GameOver.self)
@@ -234,7 +234,7 @@ class GameScene: Scene {
         }
     }
         
-    func startGame() {
+    func initializeGame() {
         score = 0
         resetGame()
         ball.add(to: self)
@@ -242,7 +242,7 @@ class GameScene: Scene {
         presentHearts()
     }
     
-    func continueGame() {
+    func startGame() {
         let posX = frame.minX + HeartNode.nodeSize.width
         let posY = frame.maxY - HeartNode.nodeSize.height - 8
         presentHeart(in: .init(x: posX, y: posY))
@@ -273,7 +273,7 @@ class GameScene: Scene {
         ball.reset()
         childNode(withIdentifier: .gameScore)?.removeFromParent()
         removeHearts()
-        isAdShowed = false
+        rewardBasedVideoAdPresented = false
     }
     
     private func presentHearts() {

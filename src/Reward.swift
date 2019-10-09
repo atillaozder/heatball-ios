@@ -28,11 +28,6 @@ class Reward: GKState {
     
     override func willExit(to nextState: GKState) {
         removeChildNodes()
-        if nextState is Playing {
-            scene.continueGame()
-        } else if nextState is GameOver {
-            scene.gameOver()
-        }
     }
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {

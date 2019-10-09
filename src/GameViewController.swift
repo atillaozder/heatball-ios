@@ -67,7 +67,7 @@ class GameViewController: UIViewController {
     private func createInterstitial() -> GADInterstitial {
         let interstitial = GADInterstitial(adUnitID: AppDelegate.interstitialIdentifier)
         interstitial.delegate = self
-        interstitial.load(GADRequest())
+        interstitial.load(.init())
         return interstitial
     }
     
@@ -104,10 +104,11 @@ extension GameViewController: GADRewardBasedVideoAdDelegate {
         let _ = reward != nil ?
             scene?.state.enter(Playing.self) :
             scene?.state.enter(GameOver.self)
-        
         reward = nil
-        GADRewardBasedVideoAd.sharedInstance()
-            .load(GADRequest(), withAdUnitID: AppDelegate.rewardBasedVideoAdIdentifier)
+        
+        GADRewardBasedVideoAd
+            .sharedInstance()
+            .load(.init(), withAdUnitID: AppDelegate.rewardBasedVideoAdIdentifier)
     }
 }
 
@@ -120,8 +121,15 @@ extension GameViewController: GADInterstitialDelegate {
 extension GameViewController: SceneDelegate {
     func scene(_ scene: GameScene,
                shouldPresentRewardBasedVideoAd shouldPresent: Bool) {
-        if GADRewardBasedVideoAd.sharedInstance().isReady == true {
-            GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: self)
+        let rewardBasedVideoAd = GADRewardBasedVideoAd.sharedInstance()
+        
+        if rewardBasedVideoAd.isReady {
+            rewardBasedVideoAd.present(fromRootViewController: self)
+            scene.rewardBasedVideoAdPresented = true
+        } else {
+            scene.state.enter(GameOver.self)
+            rewardBasedVideoAd
+                .load(.init(), withAdUnitID: AppDelegate.rewardBasedVideoAdIdentifier)
         }
     }
     

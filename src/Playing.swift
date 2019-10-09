@@ -20,7 +20,9 @@ class Playing: GKState {
         
     override func didEnter(from previousState: GKState?) {
         if previousState is WaitingForTap {
-            scene?.startGame()
+            scene.initializeGame()
+        } else if previousState is Reward {
+            scene.startGame()
         }
     }
     
