@@ -8,6 +8,13 @@
 
 import SpriteKit
 
+protocol SceneDelegate: class {
+    func scene(_ scene: GameScene, shouldPresentRewardBasedVideoAd present: Bool)
+    func scene(_ scene: GameScene, shouldPresentInterstitial present: Bool)
+    func scene(_ scene: GameScene, didCreateNewScene newScene: GameScene)
+    func scene(_ scene: GameScene, didTapRateNode node: SKNode)
+}
+
 class Scene: SKScene {
     weak var sceneDelegate: SceneDelegate?
     
@@ -17,8 +24,8 @@ class Scene: SKScene {
         }
     }
     
-    func presentTutorial(_ scene: TutorialScene, delegate: SceneDelegate?) {
-        scene.sceneDelegate = delegate
+    func presentTutorial(_ scene: TutorialScene) {
+        scene.sceneDelegate = sceneDelegate
         scene.safeAreaInsets = safeAreaInsets
         scene.scaleMode = UIDevice.current.scaleMode
         self.view?.presentScene(scene)

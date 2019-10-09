@@ -12,13 +12,6 @@ import GameplayKit
 var playedGameCount: Double = 0
 let userSettings = UserSettings()
 
-protocol SceneDelegate: class {
-    func scene(_ scene: GameScene, shouldPresentRewardBasedVideoAd shouldPresent: Bool)
-    func scene(_ scene: GameScene, shouldPresentInterstitialAfterGame shouldPresent: Bool)
-    func scene(_ scene: GameScene, didCreateNewScene newScene: GameScene)
-    func scene(_ scene: GameScene, didTapRateNode node: SKNode)
-}
-
 class GameScene: Scene {
     
     lazy var rewardBasedVideoAdPresented = false
@@ -143,10 +136,6 @@ class GameScene: Scene {
             if blockManager.removeBlock(at: location) {
                 score += 1
             }
-            
-//            else {
-//                // change direction of ball
-//            }
         }
     }
     
@@ -202,7 +191,7 @@ class GameScene: Scene {
                 userSettings.toggleTheme()
             case .tutorial:
                 let newScene = ScoreTutorialScene(size: frame.size)
-                self.presentTutorial(newScene, delegate: sceneDelegate)
+                self.presentTutorial(newScene)
             default:
                 break
             }
@@ -259,9 +248,7 @@ class GameScene: Scene {
     func gameOver() {
         self.isPaused = false
         playedGameCount += 1
-        if playedGameCount.truncatingRemainder(dividingBy: 3) == 0 {
-            sceneDelegate?.scene(self, shouldPresentInterstitialAfterGame: true)
-        }
+        sceneDelegate?.scene(self, shouldPresentInterstitial: playedGameCount.truncatingRemainder(dividingBy: 3) == 0)
         userSettings.setHighestScore(score)
         resetGame()
         state.enter(WaitingForTap.self)

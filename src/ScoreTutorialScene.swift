@@ -26,7 +26,7 @@ class ScoreTutorialScene: TutorialScene {
     override func nextTapped() {
         super.nextTapped()
         let newScene = BallTutorialScene(size: frame.size)
-        self.presentTutorial(newScene, delegate: sceneDelegate)
+        self.presentTutorial(newScene)
     }
     
     override func presentDescription() {

@@ -120,7 +120,7 @@ extension GameViewController: GADInterstitialDelegate {
 
 extension GameViewController: SceneDelegate {
     func scene(_ scene: GameScene,
-               shouldPresentRewardBasedVideoAd shouldPresent: Bool) {
+               shouldPresentRewardBasedVideoAd present: Bool) {
         let rewardBasedVideoAd = GADRewardBasedVideoAd.sharedInstance()
         
         if rewardBasedVideoAd.isReady {
@@ -134,10 +134,12 @@ extension GameViewController: SceneDelegate {
     }
     
     func scene(_ scene: GameScene,
-               shouldPresentInterstitialAfterGame shouldPresent: Bool) {
-        interstitial.isReady ?
-            interstitial.present(fromRootViewController: self) :
-            interstitial.load(.init())
+               shouldPresentInterstitial present: Bool) {
+        if present {
+            interstitial.isReady ?
+                interstitial.present(fromRootViewController: self) :
+                interstitial.load(.init())
+        }
     }
 
     func scene(_ scene: GameScene, didCreateNewScene newScene: GameScene) {
