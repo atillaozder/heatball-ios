@@ -17,7 +17,8 @@ class GameViewController: UIViewController {
     private var interstitial: GADInterstitial!
     
     private var scene: GameScene? {
-        if let view = self.view as? SKView, let gameScene = view.scene as? GameScene {
+        if let view = self.view as? SKView,
+            let gameScene = view.scene as? GameScene {
             return gameScene
         }
         return nil
@@ -121,6 +122,7 @@ extension GameViewController: GADInterstitialDelegate {
 extension GameViewController: SceneDelegate {
     func scene(_ scene: GameScene,
                shouldPresentRewardBasedVideoAd present: Bool) {
+        
         let rewardBasedVideoAd = GADRewardBasedVideoAd.sharedInstance()
         
         if rewardBasedVideoAd.isReady {
