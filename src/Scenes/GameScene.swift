@@ -15,7 +15,7 @@ let userSettings = UserSettings()
 class GameScene: Scene {
     
     lazy var rewardBasedVideoAdPresented = false
-    private var heartNodes = [SKShapeNode]()
+    private var liveNodes = [SKShapeNode]()
     private lazy var blockManager = BlockManager(scene: self)
 
     var heat: Int = 0 {
@@ -25,8 +25,8 @@ class GameScene: Scene {
                     run(userSettings.sound)
                 }
                 
-                heartNodes.last?.removeFromParent()
-                heartNodes.removeLast(1)
+                liveNodes.last?.removeFromParent()
+                liveNodes.removeLast(1)
                 
                 guard let tone = HeatTone(rawValue: heat)
                     else {
@@ -51,13 +51,13 @@ class GameScene: Scene {
     var score: Int = 0 {
         didSet {
             if let label = childNode(withIdentifier: .gameScore) as? SKLabelNode {
-                let text = "\(score)"
-                var size = (text as NSString)
-                    .size(withAttributes: [.font: UIFont.systemFont(ofSize: label.fontSize)])
-                size.width += 8
+                let text = "Score: \(score)"
+                let font = UIFont(name: label.fontName!, size: label.fontSize)!
+                let size = (text as NSString)
+                    .size(withAttributes: [.font: font])
                 
                 label.position = CGPoint(
-                    x: frame.maxX - (size.width / 2) - 6,
+                    x: frame.maxX - (size.width / 2) - 8,
                     y: frame.maxY - 24 - safeAreaInsets.top)
                 label.text = text
             }
@@ -190,7 +190,7 @@ class GameScene: Scene {
             case .theme:
                 userSettings.toggleTheme()
             case .tutorial:
-                let newScene = ScoreTutorialScene(size: frame.size)
+                let newScene = TutorialScene(size: frame.size)
                 self.presentTutorial(newScene)
             default:
                 break
@@ -201,11 +201,11 @@ class GameScene: Scene {
     private func presentScore() {
         self.childNode(withName: Identifier.gameScore.rawValue)?.removeFromParent()
         let score = SKLabelNode.defaultLabel
-        score.text = "0"
-        score.fontName = UIFont.systemFont(ofSize: 16).fontName
+        score.text = "Score: 0"
         score.name = Identifier.gameScore.rawValue
+        score.zPosition = -1
         score.position = CGPoint(
-            x: frame.maxX - 16,
+            x: frame.maxX - 56,
             y: frame.maxY - 24 - safeAreaInsets.top)
         self.addChild(score)
     }
@@ -228,13 +228,13 @@ class GameScene: Scene {
         resetGame()
         ball.add(to: self)
         presentScore()
-        presentHearts()
+        presentLives()
     }
     
     func startGame() {
-        let posX = frame.minX + HeartNode.nodeSize.width
-        let posY = frame.maxY - HeartNode.nodeSize.height - 8
-        presentHeart(in: .init(x: posX, y: posY))
+        let posX = frame.minX + LiveCircle.diameter
+        let posY = frame.maxY - LiveCircle.diameter - 8
+        presentLive(in: .init(x: posX, y: posY))
         ball.setColor(HeatTone.advRed.asColor())
         ball.resetSpeed()
         blockManager.reset()
@@ -259,32 +259,32 @@ class GameScene: Scene {
         blockManager.reset()
         ball.reset()
         childNode(withIdentifier: .gameScore)?.removeFromParent()
-        removeHearts()
+        removeLives()
         rewardBasedVideoAdPresented = false
     }
     
-    private func presentHearts() {
-        removeHearts()
-        let posX = frame.minX + HeartNode.nodeSize.width
-        let posY = frame.maxY - HeartNode.nodeSize.height - 8
+    private func presentLives() {
+        removeLives()
+        let posX = frame.minX + LiveCircle.diameter + 4
+        let posY = frame.maxY - LiveCircle.diameter - 8
         
         for i in 0..<8 {
-            let rodPosX = posX + ((HeartNode.nodeSize.width + 4) * CGFloat(i))
-            presentHeart(in: .init(x: rodPosX, y: posY))
+            let rodPosX = posX + ((LiveCircle.diameter + 4) * CGFloat(i))
+            presentLive(in: .init(x: rodPosX, y: posY))
         }
     }
 
-    private func presentHeart(in origin: CGPoint) {
+    private func presentLive(in origin: CGPoint) {
         var mutableOrigin = origin
         mutableOrigin.y -= safeAreaInsets.top
-        let node = HeartNode(origin: mutableOrigin)
-        self.heartNodes.append(node)
-        self.addChild(node)
+        let circle = LiveCircle(origin: mutableOrigin)
+        self.liveNodes.append(circle.node)
+        self.addChild(circle.node)
     }
     
-    private func removeHearts() {
-        self.heartNodes.forEach { $0.removeFromParent() }
-        self.heartNodes = []
+    private func removeLives() {
+        self.liveNodes.forEach { $0.removeFromParent() }
+        self.liveNodes = []
     }
         
     private func speedUpGame() {

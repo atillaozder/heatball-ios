@@ -12,7 +12,7 @@ import SpriteKit
 struct UserSettings {
     
     let sound = SKAction.playSoundFileNamed("pongBlip", waitForCompletion: false)
-    let fontName = UIFont.systemFont(ofSize: 1).fontName
+    let fontName = "AmericanTypewriter-semibold" // UIFont.systemFont(ofSize: 1).fontName
     let defaults = UserDefaults.standard
     
     var currentTheme: Theme {

@@ -1,5 +1,5 @@
 //
-//  BallTutorialScene.swift
+//  TutorialScene.swift
 //  HeatBall
 //
 //  Created by Atilla Özder on 8.10.2019.
@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class BallTutorialScene: TutorialScene {
+class TutorialScene: Scene {
     
     lazy var ball: GameBall = {
         let ball = GameBall(radius: 25 / 2)
@@ -27,8 +27,22 @@ class BallTutorialScene: TutorialScene {
         return shape
     }()
     
-    override func setupScene() {
-        super.setupScene()
+    override func didMove(to view: SKView) {
+        super.didMove(to: view)
+        setupScene()
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: self)
+        touchesEnd(at: location)
+    }
+    
+    func setupScene() {
+        backgroundColor = userSettings.currentTheme.asColor()
+        presentDescription()
+        
         ball.add(to: self)
         addChild(shape)
         
@@ -43,12 +57,7 @@ class BallTutorialScene: TutorialScene {
         }
     }
     
-    override func presentNextButton() {
-        return
-    }
-    
-    override func touchesEnd(at location: CGPoint) {
-        super.touchesEnd(at: location)
+    func touchesEnd(at location: CGPoint) {
         guard childNode(withIdentifier: .tutorialHand) != nil else { return }
         
         let area = shape.frame.insetBy(dx: -15, dy: -15)
@@ -91,7 +100,7 @@ class BallTutorialScene: TutorialScene {
         ])))
     }
     
-    override func presentDescription() {
+    func presentDescription() {
         let first = SKLabelNode.defaultLabel
         first.position = .init(x: frame.midX, y: frame.maxY - 120)
         first.text = "Clear shapes to"

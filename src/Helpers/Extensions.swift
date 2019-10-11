@@ -91,10 +91,10 @@ extension SKLabelNode {
 extension SKNode {
     static func generateButton(withText text: String) -> (button: SKShapeNode, label: SKLabelNode) {
         let color = userSettings.currentTheme.inverseColor()
-        let font = UIFont.systemFont(ofSize: 16, weight: .medium)
 
         let label = SKLabelNode.defaultLabel
-        label.fontName = font.fontName
+        label.fontName = userSettings.fontName
+        label.fontSize = 24
         label.text = text
         label.fontColor = color
         label.zPosition = 999
