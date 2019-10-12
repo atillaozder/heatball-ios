@@ -101,7 +101,7 @@ extension SKNode {
         
         let width = UIDevice.current.userInterfaceIdiom != .pad ?
             UIScreen.main.bounds.width - 32 :
-            232
+            264
 
         let shape = SKShapeNode(
             rectOf: .init(width: width, height: 40),
