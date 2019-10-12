@@ -9,7 +9,7 @@
 import SpriteKit
 
 class TutorialScene: Scene {
-    
+        
     lazy var ball: GameBall = {
         let ball = GameBall(radius: 25 / 2)
         let color = userSettings.currentTheme.inverseColor()
@@ -75,10 +75,16 @@ class TutorialScene: Scene {
             
             ball.node.run(move) { [weak self] in
                 guard let `self` = self else { return }
-                let newScene = GameScene(size: self.frame.size)
-                newScene.sceneDelegate = self.sceneDelegate
-                newScene.safeAreaInsets = self.safeAreaInsets
-                self.view?.presentScene(newScene)
+                let scene = GameScene(size: self.frame.size)
+                scene.sceneDelegate = self.sceneDelegate
+                scene.safeAreaInsets = self.safeAreaInsets
+                
+                self.view?.presentScene(scene)
+
+                if !userSettings.isTutorialPresented {
+                    userSettings.tutorialPresented()
+                    scene.state.enter(Playing.self)
+                }
             }
         }
     }

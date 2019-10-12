@@ -42,9 +42,7 @@ class GameViewController: UIViewController {
         setBackgroundColor()
         
         if let view = self.view as? SKView {
-            let scene: Scene = userSettings.isTutorialPresented ?
-                GameScene(size: view.frame.size) :
-                TutorialScene(size: view.frame.size)
+            let scene = GameScene(size: view.frame.size)
             scene.sceneDelegate = self
             scene.scaleMode = UIDevice.current.scaleMode
             view.ignoresSiblingOrder = true

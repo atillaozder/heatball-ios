@@ -24,7 +24,8 @@ class Scene: SKScene {
         }
     }
     
-    func presentTutorial(_ scene: TutorialScene) {
+    func presentTutorial() {
+        let scene = TutorialScene(size: frame.size)
         scene.sceneDelegate = sceneDelegate
         scene.safeAreaInsets = safeAreaInsets
         scene.scaleMode = UIDevice.current.scaleMode

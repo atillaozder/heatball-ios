@@ -79,7 +79,7 @@ class GameScene: Scene {
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        userSettings.tutorialPresented()
+
         self.updateTheme()
         self.physicsWorld.contactDelegate = self
         
@@ -92,6 +92,7 @@ class GameScene: Scene {
         self.physicsWorld.gravity = .zero
         
         ball.add(to: self)
+        
         state.enter(WaitingForTap.self)
 
         blockManager.runSequence()
@@ -144,7 +145,13 @@ class GameScene: Scene {
         case Identifier.settings.rawValue:
             state.enter(Settings.self)
         case Identifier.play.rawValue:
-            state.enter(Playing.self)
+            
+            if userSettings.isTutorialPresented {
+                state.enter(Playing.self)
+            } else {
+                self.presentTutorial()
+            }
+            
         default:
             break
         }
@@ -190,8 +197,7 @@ class GameScene: Scene {
             case .theme:
                 userSettings.toggleTheme()
             case .tutorial:
-                let newScene = TutorialScene(size: frame.size)
-                self.presentTutorial(newScene)
+                self.presentTutorial()
             default:
                 break
             }
