@@ -50,7 +50,9 @@ class GameViewController: UIViewController {
         }
         
         interstitial = createInterstitial()
-        registerRemoteNotifications()
+        DispatchQueue.main.async {
+            self.registerRemoteNotifications()
+        }
         GADRewardBasedVideoAd.sharedInstance().delegate = self
     }
     
