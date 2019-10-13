@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-var playedGameCount: Double = 0
+var gameCount: Double = 0
 let userSettings = UserSettings()
 
 class GameScene: Scene {
@@ -253,8 +253,8 @@ class GameScene: Scene {
     
     func gameOver() {
         self.isPaused = false
-        playedGameCount += 1
-        sceneDelegate?.scene(self, shouldPresentInterstitial: playedGameCount.truncatingRemainder(dividingBy: 3) == 0)
+        gameCount += 1
+        sceneDelegate?.scene(self, shouldPresentInterstitial: gameCount.truncatingRemainder(dividingBy: 2) == 0)
         userSettings.setHighestScore(score)
         resetGame()
         state.enter(WaitingForTap.self)

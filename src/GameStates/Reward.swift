@@ -36,7 +36,7 @@ class Reward: GKState {
     }
     
     private func initialize() {
-        let (vButton, vLabel) = SKNode.generateButton(withText: "Watch a Video")
+        let (vButton, vLabel) = SKNode.generateButton(withText: "Continue Game")
         vButton.position = CGPoint(x: scene.frame.midX, y: scene.frame.midY)
         vButton.name = Identifier.continueWithVideoButton.rawValue
         vLabel.position = CGPoint(x: scene.frame.midX, y: scene.frame.midY - 8)
