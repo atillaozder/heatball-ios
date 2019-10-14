@@ -9,4 +9,4 @@ Game Features:
 - Dark mode support
 - Great time killer
 
-![](resources/heatball.gif=300x532)
+![](resources/heatball.gif | width=100)
