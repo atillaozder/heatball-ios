@@ -9,4 +9,4 @@ Game Features:
 - Dark mode support
 - Great time killer
 
-<img src="/atillaozder/heatball-ios/raw/master/resources/heatball.gif" alt="" width="300" height="532">
+<img src="resources/heatball.gif" alt="" width="300" height="532">
