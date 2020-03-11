@@ -16,9 +16,11 @@ protocol SceneDelegate: class {
 }
 
 class Scene: SKScene {
+    
+    let sound = SKAction.playSoundFileNamed("pong", waitForCompletion: false)
     weak var sceneDelegate: SceneDelegate?
     
-    var safeAreaInsets: UIEdgeInsets = .zero {
+    var insets: UIEdgeInsets = .zero {
         didSet {
             didChangeSafeArea()
         }
@@ -27,7 +29,7 @@ class Scene: SKScene {
     func presentTutorial() {
         let scene = TutorialScene(size: frame.size)
         scene.sceneDelegate = sceneDelegate
-        scene.safeAreaInsets = safeAreaInsets
+        scene.insets = insets
         scene.scaleMode = UIDevice.current.scaleMode
         self.view?.presentScene(scene)
     }

@@ -8,6 +8,7 @@
 
 import SpriteKit
 
+// MARK: - Hexagon
 class Hexagon: Shape {
     
     var radius: CGFloat

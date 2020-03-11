@@ -40,20 +40,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .load(GADRequest(), withAdUnitID: AppDelegate.rewardBasedVideoAdIdentifier)
 
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.backgroundColor = userSettings.currentTheme.asColor()
+        window.backgroundColor = userSettings.selectedColor
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
         self.window = window
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateTheme), name: .didUpdateThemeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateMode), name: .didUpdateModeNotification, object: nil)
         
         return true
     }
     
     @objc
-    func updateTheme() {
-        window?.backgroundColor = userSettings.currentTheme.asColor()
-        rootViewController.updateTheme()
+    func updateMode() {
+        window?.backgroundColor = userSettings.selectedColor
+        rootViewController.updateMode()
     }
     
     func application(_ application: UIApplication,

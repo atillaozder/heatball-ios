@@ -8,17 +8,18 @@
 
 import SpriteKit
 
+// MARK: - ShapeConvertible
 protocol ShapeConvertible {
     func asShape(radius: CGFloat) -> Shape
 }
 
+// MARK: - Shapes
 enum Shapes: Int, ShapeConvertible {
     case rectangle = 0
     case square = 1
-    case triangle = 2
-    case pentagon = 3
-    case hexagon = 4
-    case circle = 5
+    case pentagon = 2
+    case hexagon = 3
+    case circle = 4
     
     func asShape(radius: CGFloat) -> Shape {
         switch self {
@@ -32,12 +33,11 @@ enum Shapes: Int, ShapeConvertible {
             return Hexagon(radius: radius)
         case .pentagon:
             return Pentagon(radius: radius)
-        case .triangle:
-            return Triangle(radius: radius)
         }
     }
 }
 
+// MARK: - Shape
 protocol Shape {
     var node: SKShapeNode { get }
     func createPath(sides: Int, radius: CGFloat, offset: CGFloat) -> CGPath

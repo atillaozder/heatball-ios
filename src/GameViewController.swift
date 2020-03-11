@@ -17,22 +17,20 @@ class GameViewController: UIViewController {
     private var interstitial: GADInterstitial!
     
     private var scene: GameScene? {
-        if let view = self.view as? SKView,
-            let gameScene = view.scene as? GameScene {
-            return gameScene
-        }
-        return nil
+        guard let view = self.view as? SKView else { return nil }
+        return view.scene as? GameScene
     }
     
     override func loadView() {
         view = SKView(frame: UIScreen.main.bounds)
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         if #available(iOS 11.0, *) {
-            if let view = self.view as? SKView, let scene = view.scene as? Scene {
-                scene.safeAreaInsets = view.safeAreaInsets
+            guard let view = self.view as? SKView else { return }
+            if let scene = view.scene as? Scene {
+                scene.insets = view.safeAreaInsets
             }
         }
     }
@@ -40,29 +38,32 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setBackgroundColor()
-        
-        if let view = self.view as? SKView {
-            let scene = GameScene(size: view.frame.size)
-            scene.sceneDelegate = self
-            scene.scaleMode = UIDevice.current.scaleMode
-            view.ignoresSiblingOrder = true
-            view.presentScene(scene)
-        }
-        
+        presentGameScreen()
+        registerRemoteNotifications()
         interstitial = createInterstitial()
-        DispatchQueue.main.async {
-            self.registerRemoteNotifications()
-        }
         GADRewardBasedVideoAd.sharedInstance().delegate = self
     }
     
-    func updateTheme() {
+    func presentGameScreen() {
+        if let view = self.view as! SKView? {
+            let scene = GameScene(size: view.frame.size)
+            scene.sceneDelegate = self
+            scene.scaleMode = UIDevice.current.scaleMode
+            if #available(iOS 11.0, *) {
+                scene.insets = view.safeAreaInsets
+            }
+            view.presentScene(scene)
+            view.ignoresSiblingOrder = true
+        }
+    }
+    
+    func updateMode() {
         setBackgroundColor()
-        scene?.updateTheme()
+        scene?.updateMode()
     }
     
     private func setBackgroundColor() {
-        view.backgroundColor = userSettings.currentTheme.asColor()
+        view.backgroundColor = userSettings.selectedColor
     }
     
     private func createInterstitial() -> GADInterstitial {
@@ -103,8 +104,8 @@ extension GameViewController: GADRewardBasedVideoAdDelegate {
 
     func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         let _ = reward != nil ?
-            scene?.state.enter(Playing.self) :
-            scene?.state.enter(GameOver.self)
+            scene?.state.enter(PlayingState.self) :
+            scene?.state.enter(GameOverState.self)
         reward = nil
         
         GADRewardBasedVideoAd
@@ -129,7 +130,7 @@ extension GameViewController: SceneDelegate {
             rewardBasedVideoAd.present(fromRootViewController: self)
             scene.rewardBasedVideoAdPresented = true
         } else {
-            scene.state.enter(GameOver.self)
+            scene.state.enter(GameOverState.self)
             rewardBasedVideoAd
                 .load(.init(), withAdUnitID: AppDelegate.rewardBasedVideoAdIdentifier)
         }
@@ -151,7 +152,9 @@ extension GameViewController: SceneDelegate {
     func scene(_ scene: GameScene, didTapRateNode node: SKNode) {
         let urlString = "https://itunes.apple.com/app/id\(1482539751)?action=write-review"
         if let url = URL(string: urlString) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            DispatchQueue.main.async {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
         }
     }
 }

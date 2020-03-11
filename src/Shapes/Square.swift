@@ -8,6 +8,7 @@
 
 import SpriteKit
 
+// MARK: - Square
 class Square: Shape {
     
     var radius: CGFloat

@@ -14,35 +14,37 @@ let userSettings = UserSettings()
 
 class GameScene: Scene {
     
+    // MARK: - Variables
     lazy var rewardBasedVideoAdPresented = false
     private var liveNodes = [SKShapeNode]()
     private lazy var blockManager = BlockManager(scene: self)
 
     var heat: Int = 0 {
         didSet {
-            if state.currentState is Playing && heat > 0 {
+            if state.currentState is PlayingState && heat > 0 {
                 if userSettings.isSoundEnabled {
-                    run(userSettings.sound)
+                    run(sound)
                 }
                 
-                liveNodes.last?.removeFromParent()
-                liveNodes.removeLast(1)
-                
-                guard let tone = HeatTone(rawValue: heat)
-                    else {
-                        state.enter(GameOver.self)
-                        return
+                if !liveNodes.isEmpty {
+                    liveNodes.last?.removeFromParent()
+                    liveNodes.removeLast(1)
                 }
                 
-                ball.setColor(tone.asColor())
+                guard let color = HeatBall.Color(rawValue: heat) else {
+                    state.enter(GameOverState.self)
+                    return
+                }
+                
+                ball.setColor(color)
                 speedUpGame()
-
-                if tone == .red8 {
+                
+                if color == .red6 {
                     let _ = rewardBasedVideoAdPresented ?
-                        state.enter(GameOver.self) :
-                        state.enter(Reward.self)
-                } else if tone == .advRed {
-                    state.enter(GameOver.self)
+                        state.enter(GameOverState.self) :
+                        state.enter(RewardState.self)
+                } else if color == .advRed {
+                    state.enter(GameOverState.self)
                 }
             }
         }
@@ -50,15 +52,14 @@ class GameScene: Scene {
     
     var score: Int = 0 {
         didSet {
-            if let label = childNode(withIdentifier: .gameScore) as? SKLabelNode {
+            if let label = childNode(withIdentifier: .currentScore) as? SKLabelNode {
                 let text = "Score: \(score)"
                 let font = UIFont(name: label.fontName!, size: label.fontSize)!
-                let size = (text as NSString)
-                    .size(withAttributes: [.font: font])
+                let size = (text as NSString).size(withAttributes: [.font: font])
                 
                 label.position = CGPoint(
                     x: frame.maxX - (size.width / 2) - 8,
-                    y: frame.maxY - 24 - safeAreaInsets.top)
+                    y: frame.maxY - 24 - insets.top)
                 label.text = text
             }
         }
@@ -66,34 +67,26 @@ class GameScene: Scene {
     
     lazy var state: GKStateMachine = GKStateMachine(
         states: [
-            WaitingForTap(scene: self),
-            Playing(scene: self),
-            GameOver(scene: self),
-            Reward(scene: self),
-            Settings(scene: self)
+            WaitingToPlayState(scene: self),
+            PlayingState(scene: self),
+            GameOverState(scene: self),
+            RewardState(scene: self),
+            SettingsState(scene: self)
     ])
     
-    lazy var ball: GameBall = {
-        return GameBall(radius: 25 / 2)
+    lazy var ball: HeatBall = {
+        return HeatBall(radius: 25 / 2)
     }()
     
+    // MARK: - Game Life Cycle
     override func didMove(to view: SKView) {
         super.didMove(to: view)
 
-        self.updateTheme()
-        self.physicsWorld.contactDelegate = self
-        
-        let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-        borderBody.friction = 0
-        borderBody.restitution = 1
-        borderBody.angularDamping = 0
-        borderBody.linearDamping = 0
-        self.physicsBody = borderBody
-        self.physicsWorld.gravity = .zero
+        self.updateMode()
+        self.setupPhysicsWorld()
         
         ball.add(to: self)
-        
-        state.enter(WaitingForTap.self)
+        state.enter(WaitingToPlayState.self)
 
         blockManager.runSequence()
         run(.repeatForever(.sequence([
@@ -107,128 +100,17 @@ class GameScene: Scene {
         ])))
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let node = self.atPoint(touch.location(in: self))
-        
-        switch state.currentState {
-        case is WaitingForTap:
-            touchesBeganInWaitingForTapMode(node)
-        case is GameOver:
-            let newScene = GameScene(size: frame.size)
-            sceneDelegate?.scene(self, didCreateNewScene: newScene)
-            newScene.safeAreaInsets = self.safeAreaInsets
-            newScene.scaleMode = UIDevice.current.scaleMode
-            self.view?.presentScene(newScene)
-        case is Settings:
-            touchesBeganInSettingsMode(node)
-        case is Reward:
-            touchesBeganInRewardMode(node)
-        default:
-            break
-        }
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        if state.currentState is Playing {
-            guard let touch = touches.first else { return }
-            let location = touch.location(in: self)
-            if blockManager.removeBlock(at: location) {
-                score += 1
-            }
-        }
+    private func setupPhysicsWorld() {
+        self.physicsWorld.contactDelegate = self
+        let body = SKPhysicsBody(edgeLoopFrom: self.frame)
+        body.friction = 0
+        body.restitution = 1
+        body.angularDamping = 0
+        body.linearDamping = 0
+        self.physicsBody = body
+        self.physicsWorld.gravity = .zero
     }
     
-    func touchesBeganInWaitingForTapMode(_ node: SKNode) {
-        switch node.name {
-        case Identifier.settings.rawValue:
-            state.enter(Settings.self)
-        case Identifier.play.rawValue:
-            
-            if userSettings.isTutorialPresented {
-                state.enter(Playing.self)
-            } else {
-                self.presentTutorial()
-            }
-            
-        default:
-            break
-        }
-    }
-    
-    func touchesBeganInRewardMode(_ node: SKNode) {
-        switch node.name {
-        case Identifier.continueWithVideoButton.rawValue,
-             Identifier.continueWithVideoLabel.rawValue:
-            sceneDelegate?.scene(self, shouldPresentRewardBasedVideoAd: rewardBasedVideoAdPresented)
-        case Identifier.playAnotherGameButton.rawValue,
-             Identifier.playAnotherGameLabel.rawValue:
-            state.enter(GameOver.self)
-        default:
-            break
-        }
-    }
-    
-    func touchesBeganInSettingsMode(_ node: SKNode) {
-        switch node.name {
-        case Identifier.settings.rawValue:
-            state.enter(WaitingForTap.self)
-        case Identifier.play.rawValue:
-            state.enter(WaitingForTap.self)
-            state.enter(Playing.self)
-        default:
-            nodeTapped(node)
-        }
-    }
-    
-    private func nodeTapped(_ node: SKNode) {
-        if let name = node.name, let identifier = Identifier(rawValue: name) {
-            switch identifier {
-            case .sound:
-                userSettings.toggleSound()
-                let asset: Asset = userSettings.isSoundEnabled ?
-                    .icSoundEnabled :
-                    .icSoundDisabled
-                let spriteNode = node as! SKSpriteNode
-                spriteNode.texture = SKTexture(imageNamed: asset.rawValue)
-            case .rateUs:
-                sceneDelegate?.scene(self, didTapRateNode: node)
-            case .theme:
-                userSettings.toggleTheme()
-            case .tutorial:
-                self.presentTutorial()
-            default:
-                break
-            }
-        }
-    }
-    
-    private func presentScore() {
-        self.childNode(withName: Identifier.gameScore.rawValue)?.removeFromParent()
-        let score = SKLabelNode.defaultLabel
-        score.text = "Score: 0"
-        score.name = Identifier.gameScore.rawValue
-        score.zPosition = -1
-        score.position = CGPoint(
-            x: frame.maxX - 56,
-            y: frame.maxY - 24 - safeAreaInsets.top)
-        self.addChild(score)
-    }
-        
-    func updateTheme() {
-        let currentTheme = userSettings.currentTheme
-        ball.setColor()
-        self.backgroundColor = currentTheme.asColor()
-                
-        let identifiers: [Identifier] = [.totalScore, .bestScore, .gameScore]
-        identifiers.compactMap { (identifier) -> SKLabelNode? in
-            return childNode(withName: identifier.rawValue) as? SKLabelNode
-        }.forEach { (label) in
-            label.fontColor = currentTheme.inverseColor()
-        }
-    }
-        
     func initializeGame() {
         score = 0
         resetGame()
@@ -238,10 +120,10 @@ class GameScene: Scene {
     }
     
     func startGame() {
-        let posX = frame.minX + LiveCircle.diameter
-        let posY = frame.maxY - LiveCircle.diameter - 8
+        let posX = frame.minX + Life.diameter
+        let posY = frame.maxY - Life.diameter - 8
         presentLive(in: .init(x: posX, y: posY))
-        ball.setColor(HeatTone.advRed.asColor())
+        ball.setColor(.advRed)
         ball.resetSpeed()
         blockManager.reset()
         self.isPaused = false
@@ -251,51 +133,176 @@ class GameScene: Scene {
         self.isPaused = true
     }
     
-    func gameOver() {
+    func endGame() {
         self.isPaused = false
         gameCount += 1
-        sceneDelegate?.scene(self, shouldPresentInterstitial: gameCount.truncatingRemainder(dividingBy: 2) == 0)
-        userSettings.setHighestScore(score)
+        let shouldPresent = gameCount.truncatingRemainder(dividingBy: 2) == 0
+        sceneDelegate?.scene(self, shouldPresentInterstitial: shouldPresent)
+        userSettings.setBestScore(score)
         resetGame()
-        state.enter(WaitingForTap.self)
+        state.enter(WaitingToPlayState.self)
     }
     
     private func resetGame() {
         heat = 0
         blockManager.reset()
         ball.reset()
-        childNode(withIdentifier: .gameScore)?.removeFromParent()
+        childNode(withIdentifier: .currentScore)?.removeFromParent()
         removeLives()
         rewardBasedVideoAdPresented = false
     }
     
+    // MARK: - View Initializations
+    private func presentScore() {
+        childNode(withIdentifier: .currentScore)?.removeFromParent()
+        let score = SKViewFactory().buildLabel(withIdentifier: .currentScore)
+        score.text = "Score: 0"
+        score.zPosition = 999
+        score.position = CGPoint(x: frame.maxX - 56, y: frame.maxY - 24 - insets.top)
+        self.addChild(score)
+    }
+    
     private func presentLives() {
         removeLives()
-        let posX = frame.minX + LiveCircle.diameter + 4
-        let posY = frame.maxY - LiveCircle.diameter - 8
+        let posX = frame.minX + Life.diameter + 4
+        let posY = frame.maxY - Life.diameter - 8
         
-        for i in 0..<8 {
-            let rodPosX = posX + ((LiveCircle.diameter + 4) * CGFloat(i))
+        for i in 0..<6 {
+            let rodPosX = posX + ((Life.diameter + 4) * CGFloat(i))
             presentLive(in: .init(x: rodPosX, y: posY))
         }
     }
-
+    
     private func presentLive(in origin: CGPoint) {
         var mutableOrigin = origin
-        mutableOrigin.y -= safeAreaInsets.top
-        let circle = LiveCircle(origin: mutableOrigin)
+        mutableOrigin.y -= insets.top
+        let circle = Life(origin: mutableOrigin)
         self.liveNodes.append(circle.node)
         self.addChild(circle.node)
+    }
+    
+    // MARK: - Touch Handling
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let node = self.atPoint(touch.location(in: self))
+        
+        switch state.currentState {
+        case is WaitingToPlayState:
+            handleTouchWaitingForTapState(node)
+        case is GameOverState:
+            handleTouchGameOverState()
+        case is SettingsState:
+            handleTouchSettingsState(node)
+        case is RewardState:
+            handleTouchRewardState(node)
+        default:
+            break
+        }
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        if state.currentState is PlayingState {
+            guard let touch = touches.first else { return }
+            if blockManager.removeBlock(at: touch.location(in: self)) {
+                score += 1
+            }
+        }
+    }
+        
+    private func handleTouchWaitingForTapState(_ node: SKNode) {
+        guard let id = Identifier(rawValue: node.name ?? "") else { return }
+        switch id {
+        case .settings:
+            state.enter(SettingsState.self)
+        case .play:
+            userSettings.isTutorialPresented ? enterPlayingState() : presentTutorial()
+        default:
+            break
+        }
+    }
+    
+    private func enterPlayingState() {
+        state.enter(PlayingState.self)
+    }
+    
+    private func handleTouchGameOverState() {
+        let newScene = GameScene(size: frame.size)
+        sceneDelegate?.scene(self, didCreateNewScene: newScene)
+        newScene.insets = self.insets
+        newScene.scaleMode = UIDevice.current.scaleMode
+        self.view?.presentScene(newScene)
+    }
+    
+    private func handleTouchSettingsState(_ node: SKNode) {
+        guard let id = Identifier(rawValue: node.name ?? "") else {
+            nodeTapped(node)
+            return
+        }
+        
+        switch id {
+        case .settings:
+            state.enter(WaitingToPlayState.self)
+        case .play:
+            state.enter(WaitingToPlayState.self)
+            enterPlayingState()
+        default:
+            nodeTapped(node)
+        }
+    }
+    
+    private func handleTouchRewardState(_ node: SKNode) {
+        let factory = SKViewFactory()
+        switch node.name {
+        case factory.continueVideoBtn, factory.continueVideoLbl:
+            sceneDelegate?.scene(self, shouldPresentRewardBasedVideoAd: rewardBasedVideoAdPresented)
+        case factory.newGameBtn, factory.newGameLbl:
+            state.enter(GameOverState.self)
+        default:
+            break
+        }
+    }
+    
+    private func nodeTapped(_ node: SKNode) {
+        guard let id = Identifier(rawValue: node.name ?? "") else { return }
+        switch id {
+        case .sound:
+            userSettings.toggleSound()
+            let asset: Asset = userSettings.isSoundEnabled ? .icUnmute : .icMute
+            let spriteNode = node as! SKSpriteNode
+            spriteNode.texture = SKTexture(imageNamed: asset.rawValue)
+        case .rate:
+            sceneDelegate?.scene(self, didTapRateNode: node)
+        case .mode:
+            userSettings.toggleMode()
+        case .tutorial:
+            self.presentTutorial()
+        default:
+            break
+        }
+    }
+    
+    // MARK: - Helpers
+    func updateMode() {
+        ball.setColor()
+        self.backgroundColor = userSettings.selectedColor
+                
+        let identifiers: [Identifier] = [.score, .bestScore, .currentScore]
+        identifiers.compactMap { (identifier) -> SKLabelNode? in
+            return childNode(withName: identifier.rawValue) as? SKLabelNode
+        }.forEach { (label) in
+            label.fontColor = userSettings.currentMode.inverseColor()
+        }
     }
     
     private func removeLives() {
         self.liveNodes.forEach { $0.removeFromParent() }
         self.liveNodes = []
     }
-        
+    
     private func speedUpGame() {
-        if state.currentState is Playing {
-            blockManager.decreaseDuration()
+        if state.currentState is PlayingState {
+            blockManager.setDuration()
             ball.increaseSpeed()
         }
     }

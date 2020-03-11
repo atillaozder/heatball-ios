@@ -8,6 +8,7 @@
 
 import SpriteKit
 
+// MARK: - Pentagon
 class Pentagon: Shape {
     
     var radius: CGFloat
