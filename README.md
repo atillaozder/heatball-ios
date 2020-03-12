@@ -1,5 +1,5 @@
 # ![alt text][logo] Heat Ball 2D
-[logo]: https://github.com/atillaozder/heatball-ios/blob/master/src/Resources/Assets.xcassets/AppIcon.appiconset/Icon-40.png "Heat Ball 2D"
+[logo]: https://github.com/atillaozder/heatball-ios/blob/master/src/Resources/Assets.xcassets/AppIcon.appiconset/Icon-29.png "Heat Ball 2D"
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
