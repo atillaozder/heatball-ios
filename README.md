@@ -1,7 +1,8 @@
 # ![alt text][logo] Heat Ball 2D
 [logo]: https://github.com/atillaozder/heatball-ios/blob/master/src/Resources/Assets.xcassets/AppIcon.appiconset/Icon-29.png "Heat Ball 2D"
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Language: Swift](https://img.shields.io/badge/language-Swift-orange.svg)](https://developer.apple.com/swift/) [![Platform: iOS](https://img.shields.io/badge/platform-iOS-000000.svg)](https://cocoapods.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
 
 Heat Ball is a 2D game where players breaks the obstacles to clear the path of the ball. Remove all shapes by tapping on them and clear the path that the ball follows. The angle is key point! Be careful, if you miss any obstacle which ball will collide, the ball heats. Remember, overheated ball will eventually explode. How long you can survive and reach the highest score?
 
@@ -10,6 +11,8 @@ Game Features:
 - Simple and easy to play
 - Dark mode support
 - Great time killer
+
+## Appearance
 
 <img src="resources/gameplay.gif" alt="" width="300" height="532">
 
