@@ -188,7 +188,7 @@ class GameScene: Scene {
         
         switch state.currentState {
         case is WaitingToPlayState:
-            handleTouchWaitingForTapState(node)
+            handleTouchWaitingForPlayState(node)
         case is GameOverState:
             handleTouchGameOverState()
         case is SettingsState:
@@ -210,7 +210,7 @@ class GameScene: Scene {
         }
     }
         
-    private func handleTouchWaitingForTapState(_ node: SKNode) {
+    private func handleTouchWaitingForPlayState(_ node: SKNode) {
         guard let id = Identifier(rawValue: node.name ?? "") else { return }
         switch id {
         case .settings:
@@ -254,7 +254,7 @@ class GameScene: Scene {
     private func handleTouchRewardState(_ node: SKNode) {
         let factory = SKViewFactory()
         switch node.name {
-        case factory.continueVideoBtn, factory.continueVideoLbl:
+        case factory.continueVideoBtn, factory.continueVideoLbl, factory.iOS10ContinueVideoLbl:
             sceneDelegate?.scene(self, shouldPresentRewardBasedVideoAd: rewardBasedVideoAdPresented)
         case factory.newGameBtn, factory.newGameLbl:
             state.enter(GameOverState.self)

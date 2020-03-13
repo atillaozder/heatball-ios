@@ -12,6 +12,7 @@ struct SKViewFactory {
     
     let continueVideoBtn = "continueVideoBtn"
     let continueVideoLbl = "continueVideoLbl"
+    let iOS10ContinueVideoLbl = "iOS10ContinueVideoLbl"
     let newGameBtn = "newGameBtn"
     let newGameLbl = "newGameLbl"
 
@@ -30,7 +31,7 @@ struct SKViewFactory {
         return lbl
     }
     
-    func buildButton(text: String) -> (button: SKShapeNode, label: SKLabelNode) {
+    func buildButton(text: String, height: CGFloat = 50) -> (button: SKShapeNode, label: SKLabelNode) {
         let color = userSettings.currentMode.inverseColor()
 
         let label = buildLabel()
@@ -40,7 +41,7 @@ struct SKViewFactory {
         label.fontColor = color
         label.zPosition = 999
         
-        let shape = SKShapeNode(rectOf: .init(width: 220, height: 50), cornerRadius: 14)
+        let shape = SKShapeNode(rectOf: .init(width: 220, height: height), cornerRadius: 14)
         shape.lineWidth = 4
         shape.strokeColor = color
         shape.fillColor = userSettings.currentMode.asColor()
