@@ -74,12 +74,18 @@ class GameViewController: UIViewController {
     }
     
     private func registerRemoteNotifications() {
-        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current()
-            .requestAuthorization(options: options) { (_, _) in
-                DispatchQueue.main.async {
-                    UIApplication.shared.registerForRemoteNotifications()
-                }
+        if #available(iOS 10.0, *) {
+            let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current()
+                .requestAuthorization(options: options) { (_, _) in
+                    DispatchQueue.main.async {
+                        UIApplication.shared.registerForRemoteNotifications()
+                    }
+            }
+        } else {
+            let options: UIUserNotificationType = [.alert, .badge, .sound]
+            let settings = UIUserNotificationSettings(types: options, categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
         }
     }
     
