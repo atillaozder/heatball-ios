@@ -156,10 +156,15 @@ extension GameViewController: SceneDelegate {
     }
     
     func scene(_ scene: GameScene, didTapRateNode node: SKNode) {
-        let urlString = "https://itunes.apple.com/app/id\(1482539751)?action=write-review"
-        if let url = URL(string: urlString) {
-            DispatchQueue.main.async {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        DispatchQueue.main.async {
+            let urlString = "https://itunes.apple.com/app/id\(1482539751)?action=write-review"
+            let application = UIApplication.shared
+            if let url = URL(string: urlString), application.canOpenURL(url) {
+                if #available(iOS 10.0, *) {
+                    application.open(url, options: [:], completionHandler: nil)
+                } else {
+                    application.openURL(url)
+                }
             }
         }
     }
