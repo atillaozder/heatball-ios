@@ -20,7 +20,7 @@
 		FB1CA41423492A8A00C235F9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CA41323492A8A00C235F9 /* Extensions.swift */; };
 		FB30C7EE234CBAFF00935DBD /* TutorialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB30C7ED234CBAFF00935DBD /* TutorialScene.swift */; };
 		FB30C7F0234CC90D00935DBD /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB30C7EF234CC90D00935DBD /* Scene.swift */; };
-		FB88FF59234FCBDD00A2D896 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB88FF58234FCBDD00A2D896 /* GoogleService-Info.plist */; };
+		FB718F562464463400DFEB3A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB718F552464463300DFEB3A /* GoogleService-Info.plist */; };
 		FBA27AEA2349DD3200511833 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA27AE92349DD3200511833 /* UserSettings.swift */; };
 		FBA27AEE2349E24000511833 /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA27AED2349E24000511833 /* SettingsState.swift */; };
 		FBA27AF3234A131F00511833 /* pong.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FBA27AF2234A131F00511833 /* pong.aiff */; };
@@ -56,7 +56,7 @@
 		FB1CA41323492A8A00C235F9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		FB30C7ED234CBAFF00935DBD /* TutorialScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialScene.swift; sourceTree = "<group>"; };
 		FB30C7EF234CC90D00935DBD /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
-		FB88FF58234FCBDD00A2D896 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FB718F552464463300DFEB3A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBA27AE92349DD3200511833 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		FBA27AED2349E24000511833 /* SettingsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsState.swift; sourceTree = "<group>"; };
 		FBA27AF2234A131F00511833 /* pong.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = pong.aiff; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				FB00097B23487F8D00C6E9B9 /* Info.plist */,
-				FB88FF58234FCBDD00A2D896 /* GoogleService-Info.plist */,
+				FB718F552464463300DFEB3A /* GoogleService-Info.plist */,
 				FB00096923487F8C00C6E9B9 /* AppDelegate.swift */,
 				FB00097123487F8C00C6E9B9 /* GameViewController.swift */,
 				FB88FF57234FC97000A2D896 /* Resources */,
@@ -260,7 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB00097723487F8D00C6E9B9 /* Assets.xcassets in Resources */,
-				FB88FF59234FCBDD00A2D896 /* GoogleService-Info.plist in Resources */,
+				FB718F562464463400DFEB3A /* GoogleService-Info.plist in Resources */,
 				FBA27AF3234A131F00511833 /* pong.aiff in Resources */,
 				FB00097A23487F8D00C6E9B9 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -480,7 +480,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 74NMDHX448;
-				INFOPLIST_FILE = "$(SRCROOT)/src/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/HeatBall/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -505,7 +505,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 74NMDHX448;
-				INFOPLIST_FILE = "$(SRCROOT)/src/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/HeatBall/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
