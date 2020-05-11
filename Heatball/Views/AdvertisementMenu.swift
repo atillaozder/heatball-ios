@@ -67,7 +67,6 @@ class AdvertisementMenu: Menu {
 
         self.isHidden = true
         super.setup()
-        self.backgroundColor = UIColor.black.withAlphaComponent(0.4)
     }
     
     @objc

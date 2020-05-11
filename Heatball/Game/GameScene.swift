@@ -80,7 +80,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        setupBackgroundImage()
+        backgroundColor = .background
         initiateGame()
         
         let physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)

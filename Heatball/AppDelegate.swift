@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewController = AppDelegate.rootViewController
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
-        window.backgroundColor = .customBlack
+        window.backgroundColor = .background
         window.rootViewController = viewController
         window.makeKeyAndVisible()
         self.window = window

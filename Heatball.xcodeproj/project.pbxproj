@@ -31,7 +31,6 @@
 		FBD70B73234B819E000D381E /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD70B72234B819E000D381E /* Block.swift */; };
 		FBD70B75234B8F24000D381E /* BlockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD70B74234B8F24000D381E /* BlockManager.swift */; };
 		FBD70B77234B943A000D381E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD70B76234B943A000D381E /* Player.swift */; };
-		FBDC871C2469B81C00158711 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = FBDC871B2469B81C00158711 /* background.png */; };
 		FBF2333E246962FC006BE427 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF2333D246962FC006BE427 /* SplashViewController.swift */; };
 		FBF2334024696304006BE427 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF2333F24696304006BE427 /* GameViewController.swift */; };
 		FBF23342246963AF006BE427 /* AdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF23341246963AF006BE427 /* AdHelper.swift */; };
@@ -67,7 +66,6 @@
 		FBD70B72234B819E000D381E /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		FBD70B74234B8F24000D381E /* BlockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockManager.swift; sourceTree = "<group>"; };
 		FBD70B76234B943A000D381E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		FBDC871B2469B81C00158711 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		FBE66801234935840079C5E4 /* Heatball.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Heatball.entitlements; sourceTree = "<group>"; };
 		FBF2333D246962FC006BE427 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		FBF2333F24696304006BE427 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -148,7 +146,6 @@
 		FB88FF57234FC97000A2D896 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FBDC871B2469B81C00158711 /* background.png */,
 				FB6A143F2469695400B288D5 /* Sounds */,
 				FB00097623487F8D00C6E9B9 /* Assets.xcassets */,
 				FB00097823487F8D00C6E9B9 /* LaunchScreen.storyboard */,
@@ -267,7 +264,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB00097723487F8D00C6E9B9 /* Assets.xcassets in Resources */,
-				FBDC871C2469B81C00158711 /* background.png in Resources */,
 				FB4848292469735600D3A297 /* Localizable.strings in Resources */,
 				FB718F562464463400DFEB3A /* GoogleService-Info.plist in Resources */,
 				FBA27AF3234A131F00511833 /* pong.aiff in Resources */,

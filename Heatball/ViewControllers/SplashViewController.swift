@@ -41,24 +41,17 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backgroundImageView = UIImageView()
-        backgroundImageView.image = Asset.background.imageRepresentation()
-        backgroundImageView.contentMode = .scaleAspectFill
-        view.addSubview(backgroundImageView)
-        backgroundImageView.pinEdgesToUnsafeArea()
                 
         let stackView = UIStackView()
         stackView.alignment = .center
         stackView.distribution = .fill
         stackView.axis = .vertical
-        stackView.spacing = 12
+        stackView.spacing = 0
         
         let imageView = UIImageView(image: Asset.splash.imageRepresentation())
         imageView.contentMode = .scaleAspectFit
         imageView.pinSize(to: .initialize(160))
         imageView.layer.cornerRadius = 16
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor(red: 250, green: 250, blue: 250).cgColor
         imageView.clipsToBounds = true
         stackView.addArrangedSubview(imageView)
 

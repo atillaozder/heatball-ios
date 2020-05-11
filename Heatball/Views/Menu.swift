@@ -27,10 +27,9 @@ class Menu: UIView {
 
     lazy var backButton: UIButton = {
         let btn = buildButton(withTitle: .backToMenuTitle)
-        let color = UIColor.systemYellow
+        let color = UIColor.background
         btn.backgroundColor = color
-        btn.layer.borderColor = color.darker().cgColor
-        btn.setTitleColor(.customBlack, for: .normal)
+        btn.layer.borderColor = UIColor.white.cgColor
         return btn
     }()
     
@@ -54,7 +53,7 @@ class Menu: UIView {
     }
     
     func setup() {
-        self.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         let container = UIView()
         container.addSubview(stackView)
         stackView.pinCenterOfSuperview()

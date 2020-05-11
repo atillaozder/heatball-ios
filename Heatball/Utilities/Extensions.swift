@@ -63,11 +63,15 @@ extension UIColor {
     }
     
     class var main: UIColor {
-        return UIColor.systemOrange
+        return UIColor(red: 224, green: 5, blue: 95)
     }
     
     class var main2: UIColor {
-        return UIColor(red: 41, green: 84, blue: 108)
+        return .white
+    }
+    
+    class var background: UIColor {
+        return UIColor(red: 33, green: 81, blue: 159)
     }
     
     class var customBlack: UIColor {
@@ -164,16 +168,6 @@ extension UIEdgeInsets {
 extension NSNotification.Name {
     static let shouldStayPausedNotification = Notification.Name("shouldStayPausedNotification")
     static let didUpdateColorModeNotification = Notification.Name(rawValue: "didUpdateColorModeNotification")
-}
-
-// MARK: - SKScene
-extension SKScene {
-    func setupBackgroundImage() {
-        let backgroundImage = SKSpriteNode(imageNamed: Asset.background.rawValue)
-        backgroundImage.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        backgroundImage.aspectFill(to: size)
-        addChild(backgroundImage)
-    }
 }
 
 // MARK: - SKSpriteNode
