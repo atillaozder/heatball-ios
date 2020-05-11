@@ -1,0 +1,560 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BF0F67FC9503DA0E04B93A97 /* Pods_Heatball.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501BBC2EE4E1E5172E4337EE /* Pods_Heatball.framework */; };
+		FB00096A23487F8C00C6E9B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB00096923487F8C00C6E9B9 /* AppDelegate.swift */; };
+		FB00097723487F8D00C6E9B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB00097623487F8D00C6E9B9 /* Assets.xcassets */; };
+		FB00097A23487F8D00C6E9B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB00097823487F8D00C6E9B9 /* LaunchScreen.storyboard */; };
+		FB4848292469735600D3A297 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB4848272469735600D3A297 /* Localizable.strings */; };
+		FB718F562464463400DFEB3A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB718F552464463300DFEB3A /* GoogleService-Info.plist */; };
+		FBA27AF3234A131F00511833 /* pong.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FBA27AF2234A131F00511833 /* pong.aiff */; };
+		FBD644BB2469641D00249E25 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644BA2469641D00249E25 /* AudioPlayer.swift */; };
+		FBD644BD2469649000249E25 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644BC2469649000249E25 /* Extensions.swift */; };
+		FBD644BF246964EA00249E25 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644BE246964EA00249E25 /* GameManager.swift */; };
+		FBD644C12469653200249E25 /* UIView+Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644C02469653200249E25 /* UIView+Autolayout.swift */; };
+		FBD644C32469654900249E25 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644C22469654900249E25 /* Utilities.swift */; };
+		FBD644CC246965A200249E25 /* PlayingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644C4246965A100249E25 /* PlayingMenu.swift */; };
+		FBD644CD246965A200249E25 /* SettingsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644C5246965A100249E25 /* SettingsMenu.swift */; };
+		FBD644CE246965A200249E25 /* AdvertisementMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644C6246965A100249E25 /* AdvertisementMenu.swift */; };
+		FBD644CF246965A200249E25 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644C7246965A100249E25 /* Menu.swift */; };
+		FBD644D0246965A200249E25 /* PauseMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644C8246965A100249E25 /* PauseMenu.swift */; };
+		FBD644D1246965A200249E25 /* HomeMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644C9246965A200249E25 /* HomeMenu.swift */; };
+		FBD644D3246965A200249E25 /* BackslashButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644CB246965A200249E25 /* BackslashButton.swift */; };
+		FBD644DB246965C700249E25 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644D6246965C600249E25 /* GameScene.swift */; };
+		FBD644DC246965C700249E25 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644D7246965C700249E25 /* MenuScene.swift */; };
+		FBD70B73234B819E000D381E /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD70B72234B819E000D381E /* Block.swift */; };
+		FBD70B75234B8F24000D381E /* BlockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD70B74234B8F24000D381E /* BlockManager.swift */; };
+		FBD70B77234B943A000D381E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD70B76234B943A000D381E /* Player.swift */; };
+		FBF2333E246962FC006BE427 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF2333D246962FC006BE427 /* SplashViewController.swift */; };
+		FBF2334024696304006BE427 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF2333F24696304006BE427 /* GameViewController.swift */; };
+		FBF23342246963AF006BE427 /* AdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF23341246963AF006BE427 /* AdHelper.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		501BBC2EE4E1E5172E4337EE /* Pods_Heatball.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Heatball.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEE1AA39BEE4E55220826B95 /* Pods-Heatball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.debug.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.debug.xcconfig"; sourceTree = "<group>"; };
+		F8224D4065B116B0D95FD19E /* Pods-Heatball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.release.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.release.xcconfig"; sourceTree = "<group>"; };
+		FB00096623487F8C00C6E9B9 /* Heatball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heatball.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB00096923487F8C00C6E9B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FB00097623487F8D00C6E9B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FB00097923487F8D00C6E9B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FB00097B23487F8D00C6E9B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB4848282469735600D3A297 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FB48482A2469735F00D3A297 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FB718F552464463300DFEB3A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FBA27AF2234A131F00511833 /* pong.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = pong.aiff; sourceTree = "<group>"; };
+		FBD644BA2469641D00249E25 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		FBD644BC2469649000249E25 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		FBD644BE246964EA00249E25 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
+		FBD644C02469653200249E25 /* UIView+Autolayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Autolayout.swift"; sourceTree = "<group>"; };
+		FBD644C22469654900249E25 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		FBD644C4246965A100249E25 /* PlayingMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingMenu.swift; sourceTree = "<group>"; };
+		FBD644C5246965A100249E25 /* SettingsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMenu.swift; sourceTree = "<group>"; };
+		FBD644C6246965A100249E25 /* AdvertisementMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvertisementMenu.swift; sourceTree = "<group>"; };
+		FBD644C7246965A100249E25 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		FBD644C8246965A100249E25 /* PauseMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseMenu.swift; sourceTree = "<group>"; };
+		FBD644C9246965A200249E25 /* HomeMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMenu.swift; sourceTree = "<group>"; };
+		FBD644CB246965A200249E25 /* BackslashButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackslashButton.swift; sourceTree = "<group>"; };
+		FBD644D6246965C600249E25 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		FBD644D7246965C700249E25 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		FBD70B72234B819E000D381E /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		FBD70B74234B8F24000D381E /* BlockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockManager.swift; sourceTree = "<group>"; };
+		FBD70B76234B943A000D381E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		FBE66801234935840079C5E4 /* Heatball.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Heatball.entitlements; sourceTree = "<group>"; };
+		FBF2333D246962FC006BE427 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		FBF2333F24696304006BE427 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		FBF23341246963AF006BE427 /* AdHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdHelper.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FB00096323487F8C00C6E9B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF0F67FC9503DA0E04B93A97 /* Pods_Heatball.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A5FB63E6692DA01467DB1CCB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				501BBC2EE4E1E5172E4337EE /* Pods_Heatball.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C3AB2B549AE622579A1282ED /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DEE1AA39BEE4E55220826B95 /* Pods-Heatball.debug.xcconfig */,
+				F8224D4065B116B0D95FD19E /* Pods-Heatball.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FB00095D23487F8C00C6E9B9 = {
+			isa = PBXGroup;
+			children = (
+				FBE66801234935840079C5E4 /* Heatball.entitlements */,
+				FB00096823487F8C00C6E9B9 /* Heatball */,
+				FB00096723487F8C00C6E9B9 /* Products */,
+				C3AB2B549AE622579A1282ED /* Pods */,
+				A5FB63E6692DA01467DB1CCB /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		FB00096723487F8C00C6E9B9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FB00096623487F8C00C6E9B9 /* Heatball.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FB00096823487F8C00C6E9B9 /* Heatball */ = {
+			isa = PBXGroup;
+			children = (
+				FB00097B23487F8D00C6E9B9 /* Info.plist */,
+				FB718F552464463300DFEB3A /* GoogleService-Info.plist */,
+				FB00096923487F8C00C6E9B9 /* AppDelegate.swift */,
+				FB88FF57234FC97000A2D896 /* Resources */,
+				FBF2333A2469625F006BE427 /* ViewControllers */,
+				FBF2333B2469626E006BE427 /* Views */,
+				FBD1E55D2350A39C006C9CAD /* Game */,
+				FBF2333C24696277006BE427 /* Utilities */,
+			);
+			path = Heatball;
+			sourceTree = "<group>";
+		};
+		FB6A143F2469695400B288D5 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				FBA27AF2234A131F00511833 /* pong.aiff */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
+		FB88FF57234FC97000A2D896 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FB6A143F2469695400B288D5 /* Sounds */,
+				FB00097623487F8D00C6E9B9 /* Assets.xcassets */,
+				FB00097823487F8D00C6E9B9 /* LaunchScreen.storyboard */,
+				FB4848272469735600D3A297 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FBD1E55D2350A39C006C9CAD /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				FBD644D6246965C600249E25 /* GameScene.swift */,
+				FBD644D7246965C700249E25 /* MenuScene.swift */,
+				FBD70B76234B943A000D381E /* Player.swift */,
+				FBD70B72234B819E000D381E /* Block.swift */,
+				FBD70B74234B8F24000D381E /* BlockManager.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		FBF2333A2469625F006BE427 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				FBF2333D246962FC006BE427 /* SplashViewController.swift */,
+				FBF2333F24696304006BE427 /* GameViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		FBF2333B2469626E006BE427 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FBD644C7246965A100249E25 /* Menu.swift */,
+				FBD644C9246965A200249E25 /* HomeMenu.swift */,
+				FBD644C8246965A100249E25 /* PauseMenu.swift */,
+				FBD644C4246965A100249E25 /* PlayingMenu.swift */,
+				FBD644C6246965A100249E25 /* AdvertisementMenu.swift */,
+				FBD644C5246965A100249E25 /* SettingsMenu.swift */,
+				FBD644CB246965A200249E25 /* BackslashButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FBF2333C24696277006BE427 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FBF23341246963AF006BE427 /* AdHelper.swift */,
+				FBD644BA2469641D00249E25 /* AudioPlayer.swift */,
+				FBD644BE246964EA00249E25 /* GameManager.swift */,
+				FBD644BC2469649000249E25 /* Extensions.swift */,
+				FBD644C02469653200249E25 /* UIView+Autolayout.swift */,
+				FBD644C22469654900249E25 /* Utilities.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FB00096523487F8C00C6E9B9 /* Heatball */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB00097E23487F8D00C6E9B9 /* Build configuration list for PBXNativeTarget "Heatball" */;
+			buildPhases = (
+				5C3DEB0CB6DBA8A98E075447 /* [CP] Check Pods Manifest.lock */,
+				FB00096223487F8C00C6E9B9 /* Sources */,
+				FB00096323487F8C00C6E9B9 /* Frameworks */,
+				FB00096423487F8C00C6E9B9 /* Resources */,
+				F174CED1E9EB134E31D206C5 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Heatball;
+			productName = Ball;
+			productReference = FB00096623487F8C00C6E9B9 /* Heatball.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FB00095E23487F8C00C6E9B9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = "Atilla Özder";
+				TargetAttributes = {
+					FB00096523487F8C00C6E9B9 = {
+						CreatedOnToolsVersion = 11.0;
+					};
+				};
+			};
+			buildConfigurationList = FB00096123487F8C00C6E9B9 /* Build configuration list for PBXProject "Heatball" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				tr,
+			);
+			mainGroup = FB00095D23487F8C00C6E9B9;
+			productRefGroup = FB00096723487F8C00C6E9B9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FB00096523487F8C00C6E9B9 /* Heatball */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FB00096423487F8C00C6E9B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB00097723487F8D00C6E9B9 /* Assets.xcassets in Resources */,
+				FB4848292469735600D3A297 /* Localizable.strings in Resources */,
+				FB718F562464463400DFEB3A /* GoogleService-Info.plist in Resources */,
+				FBA27AF3234A131F00511833 /* pong.aiff in Resources */,
+				FB00097A23487F8D00C6E9B9 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5C3DEB0CB6DBA8A98E075447 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Heatball-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F174CED1E9EB134E31D206C5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Heatball/Pods-Heatball-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Heatball/Pods-Heatball-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Heatball/Pods-Heatball-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FB00096223487F8C00C6E9B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBD644D1246965A200249E25 /* HomeMenu.swift in Sources */,
+				FBD644CD246965A200249E25 /* SettingsMenu.swift in Sources */,
+				FBF2334024696304006BE427 /* GameViewController.swift in Sources */,
+				FBD644CF246965A200249E25 /* Menu.swift in Sources */,
+				FBD644C32469654900249E25 /* Utilities.swift in Sources */,
+				FBD644BD2469649000249E25 /* Extensions.swift in Sources */,
+				FBD644DB246965C700249E25 /* GameScene.swift in Sources */,
+				FBF23342246963AF006BE427 /* AdHelper.swift in Sources */,
+				FBD70B77234B943A000D381E /* Player.swift in Sources */,
+				FBF2333E246962FC006BE427 /* SplashViewController.swift in Sources */,
+				FBD644C12469653200249E25 /* UIView+Autolayout.swift in Sources */,
+				FBD644CC246965A200249E25 /* PlayingMenu.swift in Sources */,
+				FBD644D3246965A200249E25 /* BackslashButton.swift in Sources */,
+				FBD644BF246964EA00249E25 /* GameManager.swift in Sources */,
+				FBD644CE246965A200249E25 /* AdvertisementMenu.swift in Sources */,
+				FBD70B73234B819E000D381E /* Block.swift in Sources */,
+				FBD644D0246965A200249E25 /* PauseMenu.swift in Sources */,
+				FBD644DC246965C700249E25 /* MenuScene.swift in Sources */,
+				FBD70B75234B8F24000D381E /* BlockManager.swift in Sources */,
+				FB00096A23487F8C00C6E9B9 /* AppDelegate.swift in Sources */,
+				FBD644BB2469641D00249E25 /* AudioPlayer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FB00097823487F8D00C6E9B9 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB00097923487F8D00C6E9B9 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		FB4848272469735600D3A297 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB4848282469735600D3A297 /* Base */,
+				FB48482A2469735F00D3A297 /* tr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FB00097C23487F8D00C6E9B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FB00097D23487F8D00C6E9B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FB00097F23487F8D00C6E9B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DEE1AA39BEE4E55220826B95 /* Pods-Heatball.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Heatball.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = 74NMDHX448;
+				INFOPLIST_FILE = "$(SRCROOT)/HeatBall/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heatball.ios;
+				PRODUCT_NAME = Heatball;
+				PROVISIONING_PROFILE_SPECIFIER = "Heatball Debug";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FB00098023487F8D00C6E9B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8224D4065B116B0D95FD19E /* Pods-Heatball.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Heatball.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = 74NMDHX448;
+				INFOPLIST_FILE = "$(SRCROOT)/HeatBall/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heatball.ios;
+				PRODUCT_NAME = Heatball;
+				PROVISIONING_PROFILE_SPECIFIER = "Heatball Release";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FB00096123487F8C00C6E9B9 /* Build configuration list for PBXProject "Heatball" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB00097C23487F8D00C6E9B9 /* Debug */,
+				FB00097D23487F8D00C6E9B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB00097E23487F8D00C6E9B9 /* Build configuration list for PBXNativeTarget "Heatball" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB00097F23487F8D00C6E9B9 /* Debug */,
+				FB00098023487F8D00C6E9B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FB00095E23487F8C00C6E9B9 /* Project object */;
+}

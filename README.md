@@ -14,7 +14,12 @@ Game Features:
 
 ## Appearance
 
-<img src="resources/gameplay.gif" alt="" width="300" height="532">
+<p>
+  <img src="https://github.com/atillaozder/heatball-ios/blob/master/resources/screenshots/iphoneX/iphoneX1.png" alt="gameplay_1" width="250">
+  <img src="https://github.com/atillaozder/heatball-ios/blob/master/resources/screenshots/iphoneX/iphoneX3.png" alt="gameplay_2" width="250">
+  <img src="https://github.com/atillaozder/heatball-ios/blob/master/resources/screenshots/iphoneX/iphoneX5.png" alt="gameplay_3" width="250">
+</p>
+
 
 ## License
 

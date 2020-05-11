@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  Heatball
+
+  Created by Atilla Özder on 11.05.2020.
+  Copyright © 2020 Atilla Özder. All rights reserved.
+*/
+
+"scoreTitle" = "Skor";
+"highscoreTitle" = "En iyi";
+"newGameTitle" = "Oyna";
+"settingsTitle" = "Ayarlar";
+"backToMenuTitle" = "Ana Menü";
+"rateTitle" = "Puan Ver";
+"supportTitle" = "Destek";
+"otherAppsTitle" = "Diğer Uygulamalar";
+"privacyTitle" = "Gizlilik Sözleşmesi";
+"shareTitle" = "Paylaş";
+"continueTitle" = "Devam Et";
+"chooseTitle" = "Seç";
+"loadingTitle" = "Yükleniyor...";
+"okTitle" = "Tamam";
+"gcErrorMessage" = "Skor tablosuna erişilemiyor. Lütfen Game Center'a bağlı olduğunuzdan emin olun ve tekrar deneyin.";

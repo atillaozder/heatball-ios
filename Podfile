@@ -1,5 +1,5 @@
 
-target 'HeatBall' do
+target 'Heatball' do
   use_frameworks!
 
   pod 'Firebase/Analytics'

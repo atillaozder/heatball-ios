@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  Heatball
+
+  Created by Atilla Özder on 11.05.2020.
+  Copyright © 2020 Atilla Özder. All rights reserved.
+*/
+
+"scoreTitle" = "Score";
+"highscoreTitle" = "Highscore";
+"newGameTitle" = "New Game";
+"settingsTitle" = "Settings";
+"backToMenuTitle" = "Main Menu";
+"rateTitle" = "Rate";
+"supportTitle" = "Support";
+"otherAppsTitle" = "Other Apps";
+"privacyTitle" = "Privacy Policy";
+"shareTitle" = "Share";
+"continueTitle" = "Continue";
+"chooseTitle" = "Choose";
+"loadingTitle" = "Loading...";
+"okTitle" = "OK";
+"gcErrorMessage" = "An error occurred while presenting leaderboard. Please make sure you are connected to Game Center and try again.";
