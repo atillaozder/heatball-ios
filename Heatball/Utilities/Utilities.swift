@@ -38,16 +38,17 @@ enum Effect {
 class GameHelper {
     
     // MARK: - Properties
-    let popSound = SKAction.playSoundFileNamed("pop.aiff", waitForCompletion: false)
+//    let popSound = SKAction.playSoundFileNamed("pong.aiff", waitForCompletion: false)
             
     // MARK: - Helpers
     func playEffect(_ effect: Effect, in scene: SKScene) {
-        if UserDefaults.standard.isSoundOn {
-            switch effect {
-            case .pop:
-                scene.run(popSound)
-            }
-        }
+        return
+//        if UserDefaults.standard.isSoundOn {
+//            switch effect {
+//            case .pop:
+//                scene.run(popSound)
+//            }
+//        }
     }
 }
 
@@ -113,6 +114,8 @@ enum Asset: String {
     case menu = "menu"
     case roll = "roll"
     case splash = "splash"
+    case settings = "settings"
+    case play = "play"
     
     func imageRepresentation() -> UIImage? {
         return UIImage(named: self.rawValue)

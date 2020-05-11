@@ -11,73 +11,53 @@ import UIKit
 class HomeMenu: Menu {
     
     weak var delegate: MenuDelegate?
- 
-    override func setup() {
-        let newGameButton = buildButton(withTitle: .newGameTitle)
-        newGameButton.addTarget(self, action: #selector(didTapNewGame(_:)), for: .touchUpInside)
-        stackView.addArrangedSubview(newGameButton)
-                
-        let settingsButton = buildButton(withTitle: .settingsTitle)
-        settingsButton.addTarget(self, action: #selector(didTapSettings(_:)), for: .touchUpInside)
-        stackView.addArrangedSubview(settingsButton)
-        setupRowButtons()
-        
-        super.setup()
-    }
     
-    private func setupRowButtons() {
-        func buildMuteButton(from rowButton: UIButton) -> UIButton {
-            let btn = BackslashButton()
-            let image = Asset.music.imageRepresentation()?.withRenderingMode(.alwaysTemplate)
-            btn.setImage(image, for: .normal)
-            btn.contentEdgeInsets = .zero
-            btn.isUserInteractionEnabled = true
-            btn.imageEdgeInsets = rowButton.imageEdgeInsets
-            btn.backgroundColor = rowButton.backgroundColor
-            btn.layer.borderColor = rowButton.layer.borderColor
-            btn.layer.borderWidth = rowButton.layer.borderWidth
-            btn.layer.cornerRadius = rowButton.layer.cornerRadius
-            btn.borderColor = rowButton.layer.borderColor
-            btn.backslashDrawable = !UserDefaults.standard.isSoundOn
-            btn.pinHeight(to: btn.widthAnchor)
-            btn.addTarget(self, action: #selector(didTapToggleSound(_:)), for: .touchUpInside)
-            return btn
-        }
+    override func setup() {
+        let playButton = buildSquareButton(asset: .play)
+        playButton.pinSize(to: .initialize(100))
+        playButton.layer.cornerRadius = 20
+        playButton.addTarget(self, action: #selector(didTapPlay(_:)), for: .touchUpInside)
+        
+        stackView.alignment = .center
+        stackView.addArrangedSubview(playButton)
         
         let rateButton = buildSquareButton(asset: .star)
         rateButton.addTarget(self, action: #selector(didTapRate(_:)), for: .touchUpInside)
-                
+        
         let leaderboardButton = buildSquareButton(asset: .podium)
         leaderboardButton.addTarget(
             self, action: #selector(didTapLeaderboard(_:)), for: .touchUpInside)
         
-        let muteButton = buildMuteButton(from: rateButton)
+        let settingsButton = buildSquareButton(asset: .settings)
+        settingsButton.addTarget(self, action: #selector(didTapSettings(_:)), for: .touchUpInside)
         
-        let subviews: [UIView] = [rateButton, leaderboardButton, muteButton]
+        let subviews: [UIView] = [settingsButton, leaderboardButton, rateButton]
         let sv = UIStackView(arrangedSubviews: subviews)
         sv.alignment = .center
         sv.distribution = .fillEqually
         sv.spacing = defaultSpacing
         sv.axis = .horizontal
         stackView.addArrangedSubview(sv)
-    }
-
-    @objc
-    func didTapToggleSound(_ sender: UIButton) {
-        sender.scale()
-        let newValue = !UserDefaults.standard.isSoundOn
-        UserDefaults.standard.setSound(newValue)
-        if let button = sender as? BackslashButton {
-            button.backslashDrawable = !newValue
-        }
         
-        newValue ?
-            AudioPlayer.shared.playMusic() :
-            AudioPlayer.shared.pauseMusic()
+        super.setup()
     }
-        
+    
+    //    @objc
+    //    func didTapToggleSound(_ sender: UIButton) {
+    //        sender.scale()
+    //        let newValue = !UserDefaults.standard.isSoundOn
+    //        UserDefaults.standard.setSound(newValue)
+    //        if let button = sender as? BackslashButton {
+    //            button.backslashDrawable = !newValue
+    //        }
+    //
+    //        newValue ?
+    //            AudioPlayer.shared.playMusic() :
+    //            AudioPlayer.shared.pauseMusic()
+    //    }
+    
     @objc
-    func didTapNewGame(_ sender: UIButton) {
+    func didTapPlay(_ sender: UIButton) {
         delegate?.menu(self, didUpdateGameState: .playing)
     }
     

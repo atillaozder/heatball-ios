@@ -491,7 +491,7 @@
 				CODE_SIGN_ENTITLEMENTS = Heatball.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 74NMDHX448;
 				INFOPLIST_FILE = "$(SRCROOT)/HeatBall/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -499,7 +499,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.7;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.heatball.ios;
 				PRODUCT_NAME = Heatball;
 				PROVISIONING_PROFILE_SPECIFIER = "Heatball Debug";
@@ -516,7 +516,7 @@
 				CODE_SIGN_ENTITLEMENTS = Heatball.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 74NMDHX448;
 				INFOPLIST_FILE = "$(SRCROOT)/HeatBall/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -524,7 +524,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.7;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.heatball.ios;
 				PRODUCT_NAME = Heatball;
 				PROVISIONING_PROFILE_SPECIFIER = "Heatball Release";
