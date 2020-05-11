@@ -1,23 +1,31 @@
 # ![alt text][logo] Heatball
-[logo]: https://github.com/atillaozder/heatball-ios/blob/master/Heatball/Resources/Assets.xcassets/AppIcon.appiconset/Icon-29.png "Heat Ball 2D"
+[logo]: https://github.com/atillaozder/heatball-ios/blob/master/Heatball/Resources/Assets.xcassets/AppIcon.appiconset/Icon-29.png "Heat Ball"
 
 [![Language: Swift](https://img.shields.io/badge/language-Swift-orange.svg)](https://developer.apple.com/swift/) [![Platform: iOS](https://img.shields.io/badge/platform-iOS-000000.svg)](https://cocoapods.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 
-Heat Ball is a 2D game where players breaks the obstacles to clear the path of the ball. Remove all shapes by tapping on them and clear the path that the ball follows. The angle is key point! Be careful, if you miss any obstacle which ball will collide, the ball heats. Remember, overheated ball will eventually explode. How long you can survive and reach the highest score?
+Heat Ball is a 2D game where players breaks the obstacles to clear the path of the ball. Remove all shapes by tapping on them and clear the path that the ball follows. The angle is key point! Be careful, if you miss any obstacle which ball will collide, the ball heats. Remember, overheated ball will eventually explode. 
 
-Game Features:
-- Challenge your friends
-- Simple and easy to play
-- Dark mode support
-- Great time killer
+Features:
+
+- Challenge your friends,
+- Simple and easy to play,
+- Fun gameplay,
+- Great time killer,
+- Visual stunning 2 dimensional graphics.
+
+How to Play:
+
+- Tap obstacles to break them,
+
+How long you can survive and reach the highest score? Download Heat Ball now, and start your challenge.
 
 ## Appearance
 
 <p>
   <img src="https://github.com/atillaozder/heatball-ios/blob/master/resources/screenshots/iphoneX/iphoneX1.png" alt="gameplay_1" width="250">
-  <img src="https://github.com/atillaozder/heatball-ios/blob/master/resources/screenshots/iphoneX/iphoneX3.png" alt="gameplay_2" width="250">
-  <img src="https://github.com/atillaozder/heatball-ios/blob/master/resources/screenshots/iphoneX/iphoneX5.png" alt="gameplay_3" width="250">
+  <img src="https://github.com/atillaozder/heatball-ios/blob/master/resources/screenshots/iphoneX/iphoneX2.png" alt="gameplay_2" width="250">
+  <img src="https://github.com/atillaozder/heatball-ios/blob/master/resources/screenshots/iphoneX/iphoneX3.png" alt="gameplay_3" width="250">
 </p>
 
 
