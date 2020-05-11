@@ -41,7 +41,11 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .customPurple
+        let backgroundImageView = UIImageView()
+        backgroundImageView.image = Asset.background.imageRepresentation()
+        backgroundImageView.contentMode = .scaleAspectFill
+        view.addSubview(backgroundImageView)
+        backgroundImageView.pinEdgesToUnsafeArea()
                 
         let stackView = UIStackView()
         stackView.alignment = .center

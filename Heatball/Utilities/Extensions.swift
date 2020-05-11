@@ -62,28 +62,16 @@ extension UIColor {
         )
     }
     
-    class var customBlue: UIColor {
-        return UIColor(red: 17, green: 52, blue: 68)
+    class var main: UIColor {
+        return UIColor.systemOrange
     }
     
-    class var customBlue2: UIColor {
+    class var main2: UIColor {
         return UIColor(red: 41, green: 84, blue: 108)
     }
     
     class var customBlack: UIColor {
         return .init(red: 34, green: 34, blue: 34)
-    }
-    
-    class var customPurple: UIColor {
-        return .init(red: 52, green: 39, blue: 90)
-    }
-    
-    class var random: UIColor {
-        return UIColor(
-            red: .random(in: 0..<1),
-            green: .random(in: 0..<1),
-            blue: .random(in: 0..<1),
-            alpha: 1)
     }
     
     func lighter(by percentage: CGFloat = 20) -> UIColor {
@@ -94,7 +82,7 @@ extension UIColor {
         return self.adjust(by: -1 * abs(percentage))
     }
     
-    func adjust(by percentage: CGFloat = 30.0) -> UIColor {
+    private func adjust(by percentage: CGFloat = 30.0) -> UIColor {
         var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
         if self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
             return UIColor(red: min(red + percentage/100, 1.0),
@@ -178,15 +166,41 @@ extension NSNotification.Name {
     static let didUpdateColorModeNotification = Notification.Name(rawValue: "didUpdateColorModeNotification")
 }
 
-// MARK: - CGFloat
-extension CGFloat {
-    func radians() -> CGFloat {
-        return CGFloat.pi * (self / 180)
+// MARK: - SKScene
+extension SKScene {
+    func setupBackgroundImage() {
+        let backgroundImage = SKSpriteNode(imageNamed: Asset.background.rawValue)
+        backgroundImage.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        backgroundImage.aspectFill(to: size)
+        addChild(backgroundImage)
     }
 }
 
-// MARK: - Int
-extension Int {
-    var toRadians: Double { return Double(self) * .pi / 180 }
-    var toDegrees: Double { return Double(self) * 180 / .pi }
+// MARK: - SKSpriteNode
+extension SKSpriteNode {
+    func aspectFill(to size: CGSize) {
+        if let texture = self.texture {
+            self.size = texture.size()
+            let vRatio = size.height / texture.size().height
+            let hRatio = size.width /  texture.size().width
+            let ratio = max(hRatio, vRatio)
+            self.setScale(ratio)
+        }
+    }
+    
+    func aspectFit(to size: CGSize) {
+        if let texture = self.texture {
+            self.size = texture.size()
+            let vRatio = size.height / texture.size().height
+            let hRatio = size.width /  texture.size().width
+            let ratio = min(hRatio, vRatio)
+            self.setScale(ratio)
+        }
+    }
+    
+    func setScale(to value: CGFloat) {
+        if let texture = self.texture {
+            self.setScale((value / texture.size().width))
+        }
+    }
 }

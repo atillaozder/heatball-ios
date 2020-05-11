@@ -112,6 +112,7 @@ enum Asset: String {
     case fuel = "fuel"
     case menu = "menu"
     case roll = "roll"
+    case background = "background"
     case splash = "splash"
     
     func imageRepresentation() -> UIImage? {

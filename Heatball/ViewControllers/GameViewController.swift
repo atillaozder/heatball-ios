@@ -185,8 +185,8 @@ class GameViewController: UIViewController {
 
     private func presentEmptyScene() {
         let scene = SKScene(size: skView.frame.size)
-        scene.backgroundColor = .customPurple
         scene.scaleMode = .aspectFit
+        scene.setupBackgroundImage()
         skView.presentScene(scene)
     }
 

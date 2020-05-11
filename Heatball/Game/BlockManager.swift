@@ -13,7 +13,6 @@ import GameKit
 final class BlockManager {
     
     weak var scene: GameScene!
-    
     private let addBlockKey = "addBlock"
     private var blocks: Set<SKNode>
     private var duration: TimeInterval = 1.0 {
@@ -50,13 +49,13 @@ final class BlockManager {
         let radius = CGFloat.random(in: 10...35) / 2
         let newBlock = Block(radius: radius).node
 
-        var position = self.randomPosition()
+        var position = self.randomPosition(blockSize: newBlock.frame.size)
         let player = scene.player.node
         var area = player.frame.insetBy(dx: -20, dy: -20)
         
         while area.contains(position) {
             area = player.frame.insetBy(dx: -20, dy: -20)
-            position = self.randomPosition()
+            position = self.randomPosition(blockSize: newBlock.frame.size)
         }
         
         newBlock.position = position
@@ -106,9 +105,30 @@ final class BlockManager {
         }
     }
     
-    private func randomPosition() -> CGPoint {
-        let x = CGFloat(Float(arc4random()) / Float(UInt32.max)) * scene.size.width
-        let y = CGFloat(Float(arc4random()) / Float(UInt32.max)) * scene.size.height
+    private func randomPosition(blockSize: CGSize) -> CGPoint {
+        var x = CGFloat(Float(arc4random()) / Float(UInt32.max)) * scene.size.width
+        var y = CGFloat(Float(arc4random()) / Float(UInt32.max)) * scene.size.height
+        
+        if (x - (blockSize.width / 2)) < scene.frame.minX {
+            x += blockSize.width
+            x += scene.insets.right
+        }
+        
+        if (x + (blockSize.width / 2)) > scene.frame.maxX {
+            x -= blockSize.width
+            x -= scene.insets.left
+        }
+        
+        if (y - (blockSize.height / 2)) < scene.frame.minY {
+            y += blockSize.height
+            y += scene.insets.top
+        }
+        
+        if (y + (blockSize.height / 2)) > scene.frame.maxY {
+            y -= blockSize.height
+            y -= scene.insets.bottom
+        }
+    
         return CGPoint(x: x, y: y)
     }
 }

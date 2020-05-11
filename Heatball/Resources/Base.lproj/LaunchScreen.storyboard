@@ -18,12 +18,27 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.20392156862745098" green="0.15294117647058825" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.png" translatesAutoresizingMaskIntoConstraints="NO" id="rAI-N5-cah">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="rAI-N5-cah" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="06c-3T-AcU"/>
+                            <constraint firstItem="rAI-N5-cah" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="3R9-eg-qlQ"/>
+                            <constraint firstAttribute="trailing" secondItem="rAI-N5-cah" secondAttribute="trailing" id="3oa-zc-v7L"/>
+                            <constraint firstItem="rAI-N5-cah" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="HGb-Oj-CIc"/>
+                            <constraint firstAttribute="bottom" secondItem="rAI-N5-cah" secondAttribute="bottom" id="M9k-KE-1dW"/>
+                            <constraint firstItem="rAI-N5-cah" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="p9E-kZ-ZKQ"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="background.png" width="1920" height="1080"/>
+    </resources>
 </document>

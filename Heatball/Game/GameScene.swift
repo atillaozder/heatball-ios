@@ -80,7 +80,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        backgroundColor = .customPurple
+        setupBackgroundImage()
         initiateGame()
         
         let physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
@@ -99,6 +99,7 @@ class GameScene: SKScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
+        guard !isPaused else { return }
         guard let touch = touches.first else { return }
         if blockManager.removeBlock(at: touch.location(in: self)) {
             score += 1
@@ -157,11 +158,7 @@ class GameScene: SKScene {
     
     func setPausedAndNotify(_ isPaused: Bool) {
         self.isPaused = isPaused
-        self.didChangePauseState()
-    }
-    
-    func didChangePauseState() {
-        blockManager.didChangePauseState(isPaused)
+        self.blockManager.didChangePauseState(isPaused)
     }
     
     func updateDifficulty() {

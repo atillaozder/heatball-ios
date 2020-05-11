@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import RandomColorSwift
 
 // MARK: - Block
 class Block {
@@ -20,8 +21,9 @@ class Block {
     lazy var node: SKShapeNode = {
         let rad: CGFloat = radius == 0 ? .random(in: 10...35) / 2 : radius
         let node = SKShapeNode(circleOfRadius: rad)
-        node.fillColor = UIColor.random
-        node.strokeColor = UIColor.random.darker()
+        let color = randomColor(hue: .random, luminosity: .light)
+        node.fillColor = color
+        node.strokeColor = color
         node.lineWidth = 2
         node.name = GameObject.block.rawValue
         node.zPosition = 1

@@ -78,7 +78,7 @@ class BackslashButton: UIButton {
     
     func buildContainer(withSize size: CGSize, cornerRadius: CGFloat) -> UIView {
         let container = UIView()
-        container.backgroundColor = .customBlue
+        container.backgroundColor = .main
         container.clipsToBounds = true
         container.layer.borderWidth = 0
         container.layer.borderColor = nil

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF0F67FC9503DA0E04B93A97 /* Pods_Heatball.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501BBC2EE4E1E5172E4337EE /* Pods_Heatball.framework */; };
+		D29B91456E393415ACD7C20E /* Pods_Heatball.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA6F4FF1B999D86671DB5EAA /* Pods_Heatball.framework */; };
 		FB00096A23487F8C00C6E9B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB00096923487F8C00C6E9B9 /* AppDelegate.swift */; };
 		FB00097723487F8D00C6E9B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB00097623487F8D00C6E9B9 /* Assets.xcassets */; };
 		FB00097A23487F8D00C6E9B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB00097823487F8D00C6E9B9 /* LaunchScreen.storyboard */; };
@@ -31,15 +31,16 @@
 		FBD70B73234B819E000D381E /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD70B72234B819E000D381E /* Block.swift */; };
 		FBD70B75234B8F24000D381E /* BlockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD70B74234B8F24000D381E /* BlockManager.swift */; };
 		FBD70B77234B943A000D381E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD70B76234B943A000D381E /* Player.swift */; };
+		FBDC871C2469B81C00158711 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = FBDC871B2469B81C00158711 /* background.png */; };
 		FBF2333E246962FC006BE427 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF2333D246962FC006BE427 /* SplashViewController.swift */; };
 		FBF2334024696304006BE427 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF2333F24696304006BE427 /* GameViewController.swift */; };
 		FBF23342246963AF006BE427 /* AdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF23341246963AF006BE427 /* AdHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		501BBC2EE4E1E5172E4337EE /* Pods_Heatball.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Heatball.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DEE1AA39BEE4E55220826B95 /* Pods-Heatball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.debug.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.debug.xcconfig"; sourceTree = "<group>"; };
-		F8224D4065B116B0D95FD19E /* Pods-Heatball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.release.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.release.xcconfig"; sourceTree = "<group>"; };
+		0C5969C397B1580947723890 /* Pods-Heatball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.debug.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.debug.xcconfig"; sourceTree = "<group>"; };
+		A2C83D050483E2EBA889D28D /* Pods-Heatball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.release.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.release.xcconfig"; sourceTree = "<group>"; };
+		AA6F4FF1B999D86671DB5EAA /* Pods_Heatball.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Heatball.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB00096623487F8C00C6E9B9 /* Heatball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heatball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB00096923487F8C00C6E9B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB00097623487F8D00C6E9B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -66,6 +67,7 @@
 		FBD70B72234B819E000D381E /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		FBD70B74234B8F24000D381E /* BlockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockManager.swift; sourceTree = "<group>"; };
 		FBD70B76234B943A000D381E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		FBDC871B2469B81C00158711 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		FBE66801234935840079C5E4 /* Heatball.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Heatball.entitlements; sourceTree = "<group>"; };
 		FBF2333D246962FC006BE427 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		FBF2333F24696304006BE427 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -77,17 +79,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF0F67FC9503DA0E04B93A97 /* Pods_Heatball.framework in Frameworks */,
+				D29B91456E393415ACD7C20E /* Pods_Heatball.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A5FB63E6692DA01467DB1CCB /* Frameworks */ = {
+		B3CE2FC4A13AC9081E475DE6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				501BBC2EE4E1E5172E4337EE /* Pods_Heatball.framework */,
+				AA6F4FF1B999D86671DB5EAA /* Pods_Heatball.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -95,8 +97,8 @@
 		C3AB2B549AE622579A1282ED /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DEE1AA39BEE4E55220826B95 /* Pods-Heatball.debug.xcconfig */,
-				F8224D4065B116B0D95FD19E /* Pods-Heatball.release.xcconfig */,
+				0C5969C397B1580947723890 /* Pods-Heatball.debug.xcconfig */,
+				A2C83D050483E2EBA889D28D /* Pods-Heatball.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -108,7 +110,7 @@
 				FB00096823487F8C00C6E9B9 /* Heatball */,
 				FB00096723487F8C00C6E9B9 /* Products */,
 				C3AB2B549AE622579A1282ED /* Pods */,
-				A5FB63E6692DA01467DB1CCB /* Frameworks */,
+				B3CE2FC4A13AC9081E475DE6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -146,6 +148,7 @@
 		FB88FF57234FC97000A2D896 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FBDC871B2469B81C00158711 /* background.png */,
 				FB6A143F2469695400B288D5 /* Sounds */,
 				FB00097623487F8D00C6E9B9 /* Assets.xcassets */,
 				FB00097823487F8D00C6E9B9 /* LaunchScreen.storyboard */,
@@ -195,9 +198,9 @@
 				FBF23341246963AF006BE427 /* AdHelper.swift */,
 				FBD644BA2469641D00249E25 /* AudioPlayer.swift */,
 				FBD644BE246964EA00249E25 /* GameManager.swift */,
-				FBD644BC2469649000249E25 /* Extensions.swift */,
 				FBD644C02469653200249E25 /* UIView+Autolayout.swift */,
 				FBD644C22469654900249E25 /* Utilities.swift */,
+				FBD644BC2469649000249E25 /* Extensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -209,11 +212,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB00097E23487F8D00C6E9B9 /* Build configuration list for PBXNativeTarget "Heatball" */;
 			buildPhases = (
-				5C3DEB0CB6DBA8A98E075447 /* [CP] Check Pods Manifest.lock */,
+				F1B84F4E14FF23BC82E1931E /* [CP] Check Pods Manifest.lock */,
 				FB00096223487F8C00C6E9B9 /* Sources */,
 				FB00096323487F8C00C6E9B9 /* Frameworks */,
 				FB00096423487F8C00C6E9B9 /* Resources */,
-				F174CED1E9EB134E31D206C5 /* [CP] Embed Pods Frameworks */,
+				7C0523B89285875876664DF8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -264,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB00097723487F8D00C6E9B9 /* Assets.xcassets in Resources */,
+				FBDC871C2469B81C00158711 /* background.png in Resources */,
 				FB4848292469735600D3A297 /* Localizable.strings in Resources */,
 				FB718F562464463400DFEB3A /* GoogleService-Info.plist in Resources */,
 				FBA27AF3234A131F00511833 /* pong.aiff in Resources */,
@@ -274,7 +278,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5C3DEB0CB6DBA8A98E075447 /* [CP] Check Pods Manifest.lock */ = {
+		7C0523B89285875876664DF8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Heatball/Pods-Heatball-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Heatball/Pods-Heatball-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Heatball/Pods-Heatball-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F1B84F4E14FF23BC82E1931E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -294,23 +315,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F174CED1E9EB134E31D206C5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Heatball/Pods-Heatball-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Heatball/Pods-Heatball-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Heatball/Pods-Heatball-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -485,7 +489,7 @@
 		};
 		FB00097F23487F8D00C6E9B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DEE1AA39BEE4E55220826B95 /* Pods-Heatball.debug.xcconfig */;
+			baseConfigurationReference = 0C5969C397B1580947723890 /* Pods-Heatball.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Heatball.entitlements;
@@ -510,7 +514,7 @@
 		};
 		FB00098023487F8D00C6E9B9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F8224D4065B116B0D95FD19E /* Pods-Heatball.release.xcconfig */;
+			baseConfigurationReference = A2C83D050483E2EBA889D28D /* Pods-Heatball.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Heatball.entitlements;

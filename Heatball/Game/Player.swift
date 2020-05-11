@@ -65,9 +65,9 @@ class Player: Block {
             case .none:
                 return UIColor(red: 250, green: 250, blue: 250)
             case .easy:
-                return .init(red: 244, green: 67, blue: 54)
-            case .normal:
                 return .init(red: 239, green: 83, blue: 80)
+            case .normal:
+                return .init(red: 244, green: 67, blue: 54)
             }
         }
     }
