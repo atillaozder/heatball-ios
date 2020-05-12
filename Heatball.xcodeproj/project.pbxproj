@@ -40,7 +40,7 @@
 		0C5969C397B1580947723890 /* Pods-Heatball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.debug.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.debug.xcconfig"; sourceTree = "<group>"; };
 		A2C83D050483E2EBA889D28D /* Pods-Heatball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.release.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.release.xcconfig"; sourceTree = "<group>"; };
 		AA6F4FF1B999D86671DB5EAA /* Pods_Heatball.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Heatball.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB00096623487F8C00C6E9B9 /* Heatball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heatball.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB00096623487F8C00C6E9B9 /* Heat Ball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Heat Ball.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB00096923487F8C00C6E9B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB00097623487F8D00C6E9B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB00097923487F8D00C6E9B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 		FB00096723487F8C00C6E9B9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FB00096623487F8C00C6E9B9 /* Heatball.app */,
+				FB00096623487F8C00C6E9B9 /* Heat Ball.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,7 +221,7 @@
 			);
 			name = Heatball;
 			productName = Ball;
-			productReference = FB00096623487F8C00C6E9B9 /* Heatball.app */;
+			productReference = FB00096623487F8C00C6E9B9 /* Heat Ball.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -501,7 +501,7 @@
 				);
 				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.heatball.ios;
-				PRODUCT_NAME = Heatball;
+				PRODUCT_NAME = "Heat Ball";
 				PROVISIONING_PROFILE_SPECIFIER = "Heatball Debug";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -526,7 +526,7 @@
 				);
 				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.heatball.ios;
-				PRODUCT_NAME = Heatball;
+				PRODUCT_NAME = "Heat Ball";
 				PROVISIONING_PROFILE_SPECIFIER = "Heatball Release";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
