@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FB00096523487F8C00C6E9B9"
-               BuildableName = "Heatball.app"
+               BuildableName = "Heat Ball.app"
                BlueprintName = "Heatball"
                ReferencedContainer = "container:Heatball.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FB00096523487F8C00C6E9B9"
-            BuildableName = "Heatball.app"
+            BuildableName = "Heat Ball.app"
             BlueprintName = "Heatball"
             ReferencedContainer = "container:Heatball.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FB00096523487F8C00C6E9B9"
-            BuildableName = "Heatball.app"
+            BuildableName = "Heat Ball.app"
             BlueprintName = "Heatball"
             ReferencedContainer = "container:Heatball.xcodeproj">
          </BuildableReference>

@@ -109,7 +109,7 @@ class PlayingMenu: Menu {
         let constant: CGFloat = UIDevice.current.isPad ? 25 : 15
         for _ in 0..<count {
             let imageView = UIImageView(image: Asset.heart.imageRepresentation()?.withRenderingMode(.alwaysTemplate))
-            imageView.tintColor = .main
+            imageView.tintColor = .mainColor
             imageView.contentMode = .scaleAspectFit
             imageView.makeSquare(constant: constant)
             livesStackView.addArrangedSubview(imageView)

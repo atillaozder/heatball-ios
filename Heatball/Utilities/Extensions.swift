@@ -62,11 +62,11 @@ extension UIColor {
         )
     }
     
-    class var main: UIColor {
+    class var mainColor: UIColor {
         return UIColor(red: 224, green: 5, blue: 95)
     }
     
-    class var main2: UIColor {
+    class var mainBorderColor: UIColor {
         return .white
     }
     
