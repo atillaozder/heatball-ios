@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D29B91456E393415ACD7C20E /* Pods_Heatball.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA6F4FF1B999D86671DB5EAA /* Pods_Heatball.framework */; };
+		24E54D8EA72BDFFF4766C29F /* Pods_Heatball.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F293940FA1E5183B8814C0B /* Pods_Heatball.framework */; };
 		FB00096A23487F8C00C6E9B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB00096923487F8C00C6E9B9 /* AppDelegate.swift */; };
 		FB00097723487F8D00C6E9B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB00097623487F8D00C6E9B9 /* Assets.xcassets */; };
 		FB00097A23487F8D00C6E9B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB00097823487F8D00C6E9B9 /* LaunchScreen.storyboard */; };
 		FB4848292469735600D3A297 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB4848272469735600D3A297 /* Localizable.strings */; };
 		FB718F562464463400DFEB3A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB718F552464463300DFEB3A /* GoogleService-Info.plist */; };
 		FBA27AF3234A131F00511833 /* pong.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FBA27AF2234A131F00511833 /* pong.aiff */; };
+		FBC8D4FE24EE8B0D00352200 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8D4FD24EE8B0D00352200 /* View.swift */; };
+		FBC8D50024EE8BF800352200 /* ConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8D4FF24EE8BF800352200 /* ConsentManager.swift */; };
+		FBC8D50224EE8CCD00352200 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8D50124EE8CCD00352200 /* Toast.swift */; };
 		FBD644BB2469641D00249E25 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644BA2469641D00249E25 /* AudioPlayer.swift */; };
 		FBD644BD2469649000249E25 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644BC2469649000249E25 /* Extensions.swift */; };
 		FBD644BF246964EA00249E25 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD644BE246964EA00249E25 /* GameManager.swift */; };
@@ -37,9 +40,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0C5969C397B1580947723890 /* Pods-Heatball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.debug.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.debug.xcconfig"; sourceTree = "<group>"; };
-		A2C83D050483E2EBA889D28D /* Pods-Heatball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.release.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.release.xcconfig"; sourceTree = "<group>"; };
-		AA6F4FF1B999D86671DB5EAA /* Pods_Heatball.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Heatball.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F293940FA1E5183B8814C0B /* Pods_Heatball.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Heatball.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA87C6C71B5AE1C11924CC8C /* Pods-Heatball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.debug.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.debug.xcconfig"; sourceTree = "<group>"; };
 		FB00096623487F8C00C6E9B9 /* Heat Ball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Heat Ball.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB00096923487F8C00C6E9B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB00097623487F8D00C6E9B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +51,10 @@
 		FB48482A2469735F00D3A297 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FB718F552464463300DFEB3A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBA27AF2234A131F00511833 /* pong.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = pong.aiff; sourceTree = "<group>"; };
+		FBC609AAD1D0D07C5E42DCA8 /* Pods-Heatball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heatball.release.xcconfig"; path = "Target Support Files/Pods-Heatball/Pods-Heatball.release.xcconfig"; sourceTree = "<group>"; };
+		FBC8D4FD24EE8B0D00352200 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		FBC8D4FF24EE8BF800352200 /* ConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentManager.swift; sourceTree = "<group>"; };
+		FBC8D50124EE8CCD00352200 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		FBD644BA2469641D00249E25 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		FBD644BC2469649000249E25 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		FBD644BE246964EA00249E25 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
@@ -77,17 +83,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D29B91456E393415ACD7C20E /* Pods_Heatball.framework in Frameworks */,
+				24E54D8EA72BDFFF4766C29F /* Pods_Heatball.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B3CE2FC4A13AC9081E475DE6 /* Frameworks */ = {
+		449CE31A9428608B82021E60 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA6F4FF1B999D86671DB5EAA /* Pods_Heatball.framework */,
+				3F293940FA1E5183B8814C0B /* Pods_Heatball.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -95,8 +101,8 @@
 		C3AB2B549AE622579A1282ED /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0C5969C397B1580947723890 /* Pods-Heatball.debug.xcconfig */,
-				A2C83D050483E2EBA889D28D /* Pods-Heatball.release.xcconfig */,
+				CA87C6C71B5AE1C11924CC8C /* Pods-Heatball.debug.xcconfig */,
+				FBC609AAD1D0D07C5E42DCA8 /* Pods-Heatball.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -108,7 +114,7 @@
 				FB00096823487F8C00C6E9B9 /* Heatball */,
 				FB00096723487F8C00C6E9B9 /* Products */,
 				C3AB2B549AE622579A1282ED /* Pods */,
-				B3CE2FC4A13AC9081E475DE6 /* Frameworks */,
+				449CE31A9428608B82021E60 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -178,6 +184,7 @@
 		FBF2333B2469626E006BE427 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FBC8D4FD24EE8B0D00352200 /* View.swift */,
 				FBD644C7246965A100249E25 /* Menu.swift */,
 				FBD644C9246965A200249E25 /* HomeMenu.swift */,
 				FBD644C8246965A100249E25 /* PauseMenu.swift */,
@@ -192,12 +199,14 @@
 		FBF2333C24696277006BE427 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FBD644BE246964EA00249E25 /* GameManager.swift */,
+				FBC8D4FF24EE8BF800352200 /* ConsentManager.swift */,
 				FBF23341246963AF006BE427 /* AdHelper.swift */,
 				FBD644BA2469641D00249E25 /* AudioPlayer.swift */,
-				FBD644BE246964EA00249E25 /* GameManager.swift */,
 				FBD644C02469653200249E25 /* UIView+Autolayout.swift */,
 				FBD644C22469654900249E25 /* Utilities.swift */,
 				FBD644BC2469649000249E25 /* Extensions.swift */,
+				FBC8D50124EE8CCD00352200 /* Toast.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -209,11 +218,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB00097E23487F8D00C6E9B9 /* Build configuration list for PBXNativeTarget "Heatball" */;
 			buildPhases = (
-				F1B84F4E14FF23BC82E1931E /* [CP] Check Pods Manifest.lock */,
+				BF7EAC77D5F5A58CFE01BC10 /* [CP] Check Pods Manifest.lock */,
 				FB00096223487F8C00C6E9B9 /* Sources */,
 				FB00096323487F8C00C6E9B9 /* Frameworks */,
 				FB00096423487F8C00C6E9B9 /* Resources */,
-				7C0523B89285875876664DF8 /* [CP] Embed Pods Frameworks */,
+				9D8215948CEA103F17778AFD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -274,7 +283,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7C0523B89285875876664DF8 /* [CP] Embed Pods Frameworks */ = {
+		9D8215948CEA103F17778AFD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -291,7 +300,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Heatball/Pods-Heatball-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F1B84F4E14FF23BC82E1931E /* [CP] Check Pods Manifest.lock */ = {
+		BF7EAC77D5F5A58CFE01BC10 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -321,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBD644D1246965A200249E25 /* HomeMenu.swift in Sources */,
+				FBC8D50224EE8CCD00352200 /* Toast.swift in Sources */,
 				FBD644CD246965A200249E25 /* SettingsMenu.swift in Sources */,
 				FBF2334024696304006BE427 /* GameViewController.swift in Sources */,
 				FBD644CF246965A200249E25 /* Menu.swift in Sources */,
@@ -337,9 +347,11 @@
 				FBD644CE246965A200249E25 /* AdvertisementMenu.swift in Sources */,
 				FBD70B73234B819E000D381E /* Block.swift in Sources */,
 				FBD644D0246965A200249E25 /* PauseMenu.swift in Sources */,
+				FBC8D50024EE8BF800352200 /* ConsentManager.swift in Sources */,
 				FBD644DC246965C700249E25 /* MenuScene.swift in Sources */,
 				FBD70B75234B8F24000D381E /* BlockManager.swift in Sources */,
 				FB00096A23487F8C00C6E9B9 /* AppDelegate.swift in Sources */,
+				FBC8D4FE24EE8B0D00352200 /* View.swift in Sources */,
 				FBD644BB2469641D00249E25 /* AudioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,13 +497,13 @@
 		};
 		FB00097F23487F8D00C6E9B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0C5969C397B1580947723890 /* Pods-Heatball.debug.xcconfig */;
+			baseConfigurationReference = CA87C6C71B5AE1C11924CC8C /* Pods-Heatball.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Heatball.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 74NMDHX448;
 				INFOPLIST_FILE = "$(SRCROOT)/HeatBall/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -499,7 +511,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.heatball.ios;
 				PRODUCT_NAME = "Heat Ball";
 				PROVISIONING_PROFILE_SPECIFIER = "Heatball Debug";
@@ -510,13 +522,13 @@
 		};
 		FB00098023487F8D00C6E9B9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2C83D050483E2EBA889D28D /* Pods-Heatball.release.xcconfig */;
+			baseConfigurationReference = FBC609AAD1D0D07C5E42DCA8 /* Pods-Heatball.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Heatball.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 74NMDHX448;
 				INFOPLIST_FILE = "$(SRCROOT)/HeatBall/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -524,7 +536,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.heatball.ios;
 				PRODUCT_NAME = "Heat Ball";
 				PROVISIONING_PROFILE_SPECIFIER = "Heatball Release";
