@@ -9,7 +9,8 @@
 import SpriteKit
 
 // MARK: - Player
-class Player: Block {
+
+final class Player: Block {
     
     var position: CGPoint {
         return node.position
@@ -23,7 +24,7 @@ class Player: Block {
     
     override init(radius: CGFloat) {
         super.init(radius: radius)
-        node.name = GameObject.player.rawValue
+        node.name = Globals.Keys.kPlayer.rawValue
         node.physicsBody?.isDynamic = true
         node.physicsBody?.categoryBitMask = Category.player.rawValue
         node.physicsBody?.contactTestBitMask = Category.block.rawValue
@@ -55,6 +56,7 @@ class Player: Block {
     }
     
     // MARK: - Color
+    
     enum Color: Int {
         case none = 0
         case normal = 1
@@ -65,9 +67,9 @@ class Player: Block {
             case .none:
                 return UIColor(red: 250, green: 250, blue: 250)
             case .easy:
-                return UIColor.mainColor.lighter()
+                return UIColor.primary.lighter()
             case .normal:
-                return .mainColor
+                return .primary
             }
         }
     }

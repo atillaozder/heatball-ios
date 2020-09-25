@@ -1,6 +1,6 @@
 //
 //  ConsentManager.swift
-//  Heatball
+//  HeatBall
 //
 //  Created by Atilla Özder on 20.08.2020.
 //  Copyright © 2020 Atilla Özder. All rights reserved.
@@ -12,10 +12,9 @@ import UserMessagingPlatform
 
 final class ConsentManager {
     
-    static let shared = ConsentManager()
     private var requestForConsent: Bool
     
-    private init() {
+    init() {
         self.requestForConsent = false
     }
         
@@ -83,4 +82,3 @@ final class ConsentManager {
         }
     }
 }
-

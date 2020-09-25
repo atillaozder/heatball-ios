@@ -1,54 +1,37 @@
 //
 //  AppDelegate.swift
-//  Ball
+//  HeatBall
 //
 //  Created by Atilla Özder on 5.10.2019.
 //  Copyright © 2019 Atilla Özder. All rights reserved.
 //
 
 import UIKit
-import Firebase
-
-enum RootViewControllerType {
-    case splash, game
-}
-
-let applicationViewControllerState: RootViewControllerType = .splash
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    
-    static var rootViewController: UIViewController {
-        #if DEBUG
-        switch applicationViewControllerState {
-        case .splash:
-            return SplashViewController()
-        case .game:
-            return GameViewController()
-        }
-        #else
-        return SplashViewController()
-        #endif
-    }
-    
+        
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
                 
         let window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = AppDelegate.rootViewController
+        let viewController = Globals.rootViewController
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
+        
         window.backgroundColor = .background
         window.rootViewController = viewController
-        window.makeKeyAndVisible()
-        self.window = window
         
+        self.window = window
+        window.makeKeyAndVisible()
+
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().delegate = self
         }
+        
         return true
     }
     

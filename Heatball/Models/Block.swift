@@ -10,6 +10,7 @@ import SpriteKit
 import RandomColorSwift
 
 // MARK: - Block
+
 class Block {
     
     var radius: CGFloat
@@ -20,15 +21,15 @@ class Block {
     
     lazy var node: SKShapeNode = {
         let rad: CGFloat = radius == 0 ? .random(in: 10...35) / 2 : radius
-        let node = SKShapeNode(circleOfRadius: rad)
+        let shapeNode = SKShapeNode(circleOfRadius: rad)
         let color = randomColor(hue: .random, luminosity: .light)
-        node.fillColor = color
-        node.strokeColor = color
-        node.lineWidth = 2
-        node.name = GameObject.block.rawValue
-        node.zPosition = 1
-        node.lineJoin = .round
-        node.lineCap = .round
+        shapeNode.fillColor = color
+        shapeNode.strokeColor = color
+        shapeNode.lineWidth = 2
+        shapeNode.name = Globals.Keys.kBlock.rawValue
+        shapeNode.zPosition = 1
+        shapeNode.lineJoin = .round
+        shapeNode.lineCap = .round
         
         let physicsBody = SKPhysicsBody(circleOfRadius: rad)
         physicsBody.friction = 0
@@ -40,7 +41,7 @@ class Block {
         physicsBody.affectedByGravity = false
         physicsBody.categoryBitMask = Category.block.rawValue
         physicsBody.contactTestBitMask = Category.player.rawValue
-        node.physicsBody = physicsBody
-        return node
+        shapeNode.physicsBody = physicsBody
+        return shapeNode
     }()
 }

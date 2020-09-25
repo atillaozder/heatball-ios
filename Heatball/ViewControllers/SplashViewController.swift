@@ -7,33 +7,25 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseCore
+import GoogleMobileAds
 
 // MARK: - SplashViewController
 
 final class SplashViewController: UIViewController {
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
-    let loadingProgress: UILabel = {
-        let lbl = UILabel()
-        lbl.font = .buildFont(withSize: 22)
-        lbl.text = "0%"
-        lbl.textColor = .white
-        lbl.textAlignment = .center
-        return lbl
+    override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
+    override var prefersStatusBarHidden: Bool { true }
+    override var prefersHomeIndicatorAutoHidden: Bool { true }
+
+    private lazy var loadingProgressLabel: UILabel = {
+        buildLoadingProgressLabel()
     }()
     
     var progress: Int {
-        get { return Int(loadingProgress.text ?? "0") ?? 0 }
+        get { return Int(loadingProgressLabel.text ?? "0") ?? 0 }
         set {
-            self.loadingProgress.text =  "\(newValue)%"
+            self.loadingProgressLabel.text =  "\(newValue)%"
             if newValue >= 100 {
                 guard presentedViewController == nil else { return }
                 self.presentGameController()
@@ -43,60 +35,17 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        let stackView = UIStackView()
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        stackView.axis = .vertical
-        stackView.spacing = 0
+        view.backgroundColor = .background
         
-        let imageView = UIImageView(image: Asset.splash.imageRepresentation())
-        imageView.contentMode = .scaleAspectFit
-        imageView.pinSize(to: .initialize(160))
-        imageView.layer.cornerRadius = 16
-        imageView.clipsToBounds = true
-        stackView.addArrangedSubview(imageView)
-
-        let titleLabel = UILabel()
-        titleLabel.text = "HEATBALL"
-        titleLabel.font = .buildFont(Fonts.AmericanTypeWriter.bold, withSize: 24)
-        titleLabel.textAlignment = .center
-        titleLabel.textColor = .white
-        stackView.addArrangedSubview(titleLabel)
+        let innerVerticalStackView = buildInnerVerticalStackView()
+        let loadingTitleLabel = buildLoadingTitleLabel()
         
-        let spacer = UIView()
-        spacer.pinHeight(to: 24)
-        stackView.addArrangedSubview(spacer)
-        
-        let loadingTitleLabel = UILabel()
-        loadingTitleLabel.text = MainStrings.loadingTitle.localized
-        loadingTitleLabel.font = .buildFont(Fonts.AmericanTypeWriter.semibold, withSize: 18)
-        loadingTitleLabel.textAlignment = .center
-        loadingTitleLabel.textColor = .white
-        
-        let rootStackView = UIStackView()
-        rootStackView.alignment = .fill
-        rootStackView.distribution = .fill
-        rootStackView.axis = .vertical
-        rootStackView.spacing = 12
-        
-        rootStackView.addArrangedSubview(stackView)
-        rootStackView.addArrangedSubview(loadingProgress)
-        rootStackView.addArrangedSubview(loadingTitleLabel)
-
-        loadingProgress.pinHeight(to: 26)
-        
-        view.addSubview(rootStackView)
-        rootStackView.pinCenterOfSuperview()
-        if UIDevice.current.isPad {
-            rootStackView.pinWidth(to: 300)
-        } else {
-            rootStackView.pinEdgesToView(
-                view, insets: .viewEdge(32), exclude: [.top, .bottom])
-        }
-        
+        setupVerticalStackView([innerVerticalStackView, loadingProgressLabel, loadingTitleLabel])
+        loadingProgressLabel.pinHeight(to: 26)
         startLoading()
     }
+    
+    // MARK: - Private Helper Methods
     
     private func startLoading() {
         FirebaseApp.configure()
@@ -110,7 +59,7 @@ final class SplashViewController: UIViewController {
         GameManager.shared.authenticatePlayer(presentingViewController: self)
         
         GameManager.shared.progress = { [weak self] (progress) in
-            guard let `self` = self else { return }
+            guard let self = self else { return }
             self.progress = Int(progress * 100)
         }
     }
@@ -121,5 +70,74 @@ final class SplashViewController: UIViewController {
         viewController.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true, completion: nil)
     }
+    
+    private func setupVerticalStackView(_ arrangedSubviews: [UIView]) {
+        let verticalStackView = buildVerticalStackView()
+        arrangedSubviews.forEach(verticalStackView.addArrangedSubview(_:))
+        
+        view.addSubview(verticalStackView)
+        verticalStackView.pinCenterOfSuperview()
+        
+        if UIDevice.current.isPad {
+            verticalStackView.pinWidth(to: 300)
+        } else {
+            verticalStackView.pinEdgesToView(
+                view, insets: .viewEdge(32), exclude: [.top, .bottom])
+        }
+    }
+    
+    private func buildLoadingTitleLabel() -> UILabel {
+        let loadingTitleLabel = UILabel()
+        loadingTitleLabel.text = Strings.loading.localized
+        loadingTitleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
+        loadingTitleLabel.textAlignment = .center
+        loadingTitleLabel.textColor = .white
+        return loadingTitleLabel
+    }
+    
+    private func buildInnerVerticalStackView() -> UIStackView {
+        let innerVerticalStackView = buildVerticalStackView(alignment: .center)
+        
+        let imageView = UIImageView(image: Asset.splash.imageRepresentation())
+        imageView.contentMode = .scaleAspectFit
+        imageView.pinSize(to: .initialize(160))
+        imageView.layer.cornerRadius = 16
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor(red: 250, green: 250, blue: 250).cgColor
+        imageView.clipsToBounds = true
+        innerVerticalStackView.addArrangedSubview(imageView)
+
+        let titleLabel = UILabel()
+        titleLabel.text = "HEATBALL"
+        titleLabel.font = .systemFont(ofSize: 24, weight: .black)
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = .white
+        innerVerticalStackView.addArrangedSubview(titleLabel)
+        
+        let spacer = UIView()
+        spacer.pinHeight(to: 24)
+        innerVerticalStackView.addArrangedSubview(spacer)
+        
+        return innerVerticalStackView
+    }
+    
+    private func buildVerticalStackView(alignment: UIStackView.Alignment = .fill) -> UIStackView {
+        let verticalStackView = UIStackView()
+        verticalStackView.alignment = alignment
+        verticalStackView.distribution = .fill
+        verticalStackView.axis = .vertical
+        verticalStackView.spacing = 12
+        return verticalStackView
+    }
+    
+    private func buildLoadingProgressLabel() -> UILabel {
+        let progressLabel = UILabel()
+        progressLabel.font = .systemFont(ofSize: 22, weight: .semibold)
+        progressLabel.text = "0%"
+        progressLabel.textColor = .white
+        progressLabel.textAlignment = .center
+        return progressLabel
+    }
 }
+
 

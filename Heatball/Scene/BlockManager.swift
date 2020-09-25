@@ -10,10 +10,13 @@ import SpriteKit
 import GameKit
 
 // MARK: - BlockManager
+
 final class BlockManager {
     
-    weak var scene: GameScene!
-    private let addBlockKey = "addBlock"
+    // MARK: - Properties
+    
+    private weak var scene: GameScene!
+    
     private var blocks: Set<SKNode>
     private var duration: TimeInterval = 1.0 {
         didSet {
@@ -26,15 +29,15 @@ final class BlockManager {
         self.blocks = Set()
     }
         
-    // MARK: - Helpers
+    // MARK: - Helper Methods
     
     func initiateBlockSeq() {
-        scene.removeAction(forKey: addBlockKey)
+        scene.removeAction(forKey: Globals.Keys.kAddBlock.rawValue)
         let sequence = SKAction.sequence([
             .wait(forDuration: duration),
             .run(addBlock, queue: .global())
         ])
-        scene.run(.repeatForever(sequence), withKey: addBlockKey)
+        scene.run(.repeatForever(sequence), withKey: Globals.Keys.kAddBlock.rawValue)
     }
     
     func block(at location: CGPoint) -> SKNode? {
@@ -100,10 +103,12 @@ final class BlockManager {
     }
     
     func didChangePauseState(_ isPaused: Bool) {
-        if let seq = scene.action(forKey: addBlockKey) {
+        if let seq = scene.action(forKey: Globals.Keys.kAddBlock.rawValue) {
             seq.speed = isPaused ? 0 : 1
         }
     }
+    
+    // MARK: - Private Helper Methods
     
     private func randomPosition(blockSize: CGSize) -> CGPoint {
         var x = CGFloat(Float(arc4random()) / Float(UInt32.max)) * scene.size.width

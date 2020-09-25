@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 
 // MARK: - SceneDelegate
+
 protocol SceneDelegate: AnyObject {
     func scene(_ scene: GameScene, didUpdateScore score: Double)
     func scene(_ scene: GameScene, willUpdateLifeCount count: Int)
@@ -18,15 +19,16 @@ protocol SceneDelegate: AnyObject {
 }
 
 // MARK: - GameScene
+
 class GameScene: SKScene {
     
     // MARK: - Properties
     
     /// safe area insets of the game view controller
     lazy var insets: UIEdgeInsets = .zero
+    
     private var gotReward: Bool = false
     private var gameOver: Bool = false
-    
     private var stayPaused = false
     
     override var isPaused: Bool {
@@ -40,15 +42,12 @@ class GameScene: SKScene {
         }
     }
     
-    var gameStarted: Bool {
-        return true
-    }
+    var gameStarted: Bool { true }
     
     weak var sceneDelegate: SceneDelegate?
     fileprivate lazy var blockManager = BlockManager(scene: self)
-    let gameHelper = GameHelper()
     
-    lazy var player: Player = {
+    private(set) lazy var player: Player = {
         return Player(radius: 25 / 2)
     }()
     
@@ -73,6 +72,7 @@ class GameScene: SKScene {
     }
     
     // MARK: - Game Life Cycle
+    
     override func willMove(from view: SKView) {
         super.willMove(from: view)
         resetGame()
@@ -106,6 +106,8 @@ class GameScene: SKScene {
         }
     }
     
+    // MARK: - Helper Methods
+    
     func initiateGame() {
         GameManager.shared.gameCount += 1
         player.add(toScene: self)
@@ -115,16 +117,7 @@ class GameScene: SKScene {
             .run(updateDifficulty)
         ])))
     }
-    
-    fileprivate func stopGame() {
-        if !gotReward {
-            self.setPausedAndNotify(true)
-            self.sceneDelegate?.scene(self, didUpdateGameState: .advertisement)
-        } else {
-            self.sceneDelegate?.scene(self, didUpdateGameState: .home)
-        }
-    }
-    
+        
     func gameDidFinish() {
         self.gameOver = true
         self.player.node.removeFromParent()
@@ -144,7 +137,7 @@ class GameScene: SKScene {
     func willPresentRewardBasedVideoAd() {
         self.gotReward = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.enumerateChildNodes(withName: GameObject.block.rawValue) { (node, ptr) in
+            self.enumerateChildNodes(withName: Globals.Keys.kBlock.rawValue) { (node, ptr) in
                 node.removeFromParent()
             }
         }
@@ -175,6 +168,16 @@ class GameScene: SKScene {
     }
     
     // MARK: - Private Helper Methods
+    
+    private func stopGame() {
+        if !gotReward {
+            self.setPausedAndNotify(true)
+            self.sceneDelegate?.scene(self, didUpdateGameState: .advertisement)
+        } else {
+            self.sceneDelegate?.scene(self, didUpdateGameState: .home)
+        }
+    }
+    
     private func resetGame() {
         self.removeAllActions()
         self.removeAllChildren()
@@ -184,6 +187,7 @@ class GameScene: SKScene {
 }
 
 // MARK: - SKPhysicsContactDelegate
+
 extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let isPlayer = contact.bodyA.category == .player
@@ -193,10 +197,6 @@ extension GameScene: SKPhysicsContactDelegate {
         switch (bodyA.category, bodyB.category) {
         case (.player, .block):
             if let block = bodyB.node {
-                if lifeCount > 1 {
-                    gameHelper.playEffect(.pop, in: self)
-                }
-                
                 blockManager.removeBlock(block)
                 updateLifeCount()
             }
@@ -207,6 +207,7 @@ extension GameScene: SKPhysicsContactDelegate {
 }
 
 // MARK: - SKPhysicsBody
+
 extension SKPhysicsBody {
     var category: Category {
         return Category(rawValue: categoryBitMask) ?? .none
