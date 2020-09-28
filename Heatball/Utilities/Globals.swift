@@ -35,7 +35,7 @@ struct Globals {
     static var borderWidth: CGFloat { 2 }
     static var bundleID: String { "com.atillaozder.Heatball" }
     static var leaderboardID: String { "\(bundleID).Leaderboard" }
-    static var appID: Double { 1482539751 }
+    static var appID: String { "1482539751" }
     
     private static var applicationViewControllerState: RootViewControllerType { .splash }
     
