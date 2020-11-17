@@ -18,7 +18,7 @@ enum Asset: String {
     case pause = "pause"
     case fuel = "fuel"
     case menu = "menu"
-    case roll = "roll"
+    case playVideo = "play-video"
     case splash = "splash"
     case settings = "settings"
     case play = "play"
